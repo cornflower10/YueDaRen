@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+repositories {
+    maven { url "https://jitpack.io" }
+}
 
 def releaseTime() {
     return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
@@ -9,7 +12,7 @@ android {
     compileSdkVersion 24
     buildToolsVersion '25.0.3'
     defaultConfig {
-        applicationId "com.qingmang"
+        applicationId "com.yuedaren"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -48,7 +51,7 @@ android {
         variant.outputs.each { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                def fileName = "qingmang_${variant.productFlavors[0].name}-${defaultConfig.versionCode}-${defaultConfig.versionName}-${releaseTime()}.apk"
+                def fileName = "yuedaren_${variant.productFlavors[0].name}-${defaultConfig.versionCode}-${defaultConfig.versionName}-${releaseTime()}.apk"
                 output.outputFile = new File(outputFile.parent, fileName)
             }
         }
@@ -67,6 +70,8 @@ dependencies {
     compile rootProject.ext.dependencies.design
     compile rootProject.ext.dependencies.appCompat
     compile rootProject.ext.dependencies.support_v4
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.27'
     compile 'pub.devrel:easypermissions:1.0.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.jakewharton:butterknife:8.5.1'
@@ -77,4 +82,5 @@ dependencies {
     compile 'com.facebook.stetho:stetho:1.3.1'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile  rootProject.ext.dependencies.cardView
 }

@@ -28,4 +28,7 @@ dependencies {
     })
     releaseCompile project(path: ':baselibrary', configuration: 'release')
     debugCompile project(path: ':baselibrary', configuration: 'debug')
+
+    compile rootProject.ext.dependencies.recyclerView
+    compile rootProject.ext.dependencies.appCompat
 }

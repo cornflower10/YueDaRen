@@ -1,14 +1,16 @@
 package com.qingmang;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 
-import com.qingmang.home.FindFragment;
 import com.qingmang.home.HomeFragment;
 import com.qingmang.home.MyFragment;
+import com.qingmang.home.PeopleFragment;
 import com.qingmang.uilibrary.BottomBar;
 import com.qingmang.uilibrary.BottomBarTab;
 
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Fragment> mFragments = new ArrayList<Fragment>();
     private HomeFragment homeFragment;
     private MyFragment myFragment;
-    private FindFragment findFragment;
+    private PeopleFragment findFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +46,14 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         mBottomBar = (BottomBar) findViewById(R.id.bottomBar);
 
-        mBottomBar.addItem(new BottomBarTab(this, R.mipmap.index))
-                .addItem(new BottomBarTab(this, R.mipmap.find))
-                .addItem(new BottomBarTab(this, R.mipmap.my));
+        mBottomBar.addItem(new BottomBarTab(this, R.drawable.icon_index,R.drawable.icon_index_cur))
+                .addItem(new BottomBarTab(this, R.drawable.icon_people,R.drawable.icon_people_cur))
+                .addItem(new BottomBarTab(this, R.drawable.icon_my,R.drawable.icon_my_cur));
 
         mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position, int prePosition) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                switch (position){
                    case 0:
                        if(null==homeFragment){
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                        break;
                    case 1:
                        if(null==findFragment){
-                           findFragment = FindFragment.newInstance();
+                           findFragment = PeopleFragment.newInstance();
                            transaction.add(R.id.fl_container,findFragment);
                        }
                        showHideFragment(findFragment);
@@ -121,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        android.app.FragmentManager manager = getFragmentManager();
+     FragmentManager manager = getSupportFragmentManager();
         if (null!=homeFragment&&homeFragment.isAdded()) {
             manager.putFragment(outState, "homeFragment", homeFragment);
         }
@@ -140,12 +142,12 @@ public class MainActivity extends AppCompatActivity {
      * @param savedInstanceState
      */
     private void initFragment(Bundle savedInstanceState) {
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (savedInstanceState != null) {
 
-            homeFragment = (HomeFragment) getFragmentManager().getFragment(savedInstanceState, "homeFragment");
-            myFragment = (MyFragment) getFragmentManager().getFragment(savedInstanceState, "myFragment");
-            findFragment = (FindFragment) getFragmentManager().getFragment(savedInstanceState, "findFragment");
+            homeFragment = (HomeFragment) getSupportFragmentManager().getFragment(savedInstanceState, "homeFragment");
+            myFragment = (MyFragment) getSupportFragmentManager().getFragment(savedInstanceState, "myFragment");
+            findFragment = (PeopleFragment) getSupportFragmentManager().getFragment(savedInstanceState, "findFragment");
 
         } else {
             homeFragment = HomeFragment.newInstance();
@@ -173,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
     public void showHideFragment(Fragment fragment){
-       FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+       FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         if(!mFragments.contains(fragment)){
             mFragments.add(fragment);

@@ -3,12 +3,10 @@ package com.qingmang.baselibrary.utils;
 import android.util.Log;
 
 
-/**
- * Created by caomingyu on 15/10/29.
- */
+
 public class LogManager {
 
-    private static final String TAG = "QINGMANG";
+    private static final String TAG = "YUEDAREN";
     public static final boolean DEBUG = AppUtils.isDebug();
     public static void i(String msg){
         if(DEBUG){
