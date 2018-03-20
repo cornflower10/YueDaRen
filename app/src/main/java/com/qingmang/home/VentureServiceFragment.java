@@ -11,6 +11,7 @@ import com.qingmang.adapter.VentureServiceAdapter;
 import com.qingmang.base.BaseMvpFragment;
 import com.qingmang.baselibrary.utils.LogManager;
 import com.qingmang.moudle.entity.VenService;
+import com.qingmang.serviceIntroduce.ServiceIntroduceActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ public class VentureServiceFragment extends BaseMvpFragment<VentureServicePresen
         ventureServiceAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                    startActivity(ServiceIntroduceActivity.class);
             }
         });
     }
