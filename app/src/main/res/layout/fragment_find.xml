@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@android:color/transparent"
+    android:background="@color/page_bg_color"
     android:orientation="vertical">
 
  <LinearLayout
@@ -14,9 +14,9 @@
       android:id="@+id/tablayout"
       android:layout_width="0dp"
       android:layout_height="match_parent"
-      android:layout_weight="1"
-      android:background="#EDEDED"
-      app:indicator_color="@color/colorAccent"
+      android:layout_weight="1.4"
+      android:background="@android:color/white"
+      app:indicator_color="@color/page_bg_color"
       app:indicator_gravity="fill"
       app:tab_height="50dp"
       app:tab_mode="scrollable" />

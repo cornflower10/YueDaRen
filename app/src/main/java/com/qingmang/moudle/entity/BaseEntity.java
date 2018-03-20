@@ -11,7 +11,7 @@ public class BaseEntity<T> implements Serializable{
     //"code":"1","msg":"OK","data":"null"
     private String status;
     private String detail;
-    private T t;
+    private T data;
 
     public String getStatus() {
         return status;
@@ -29,11 +29,11 @@ public class BaseEntity<T> implements Serializable{
         this.detail = detail;
     }
 
-    public T getT() {
-        return t;
+    public T getData() {
+        return data;
     }
 
-    public void setT(T t) {
-        this.t = t;
+    public void setData(T data) {
+        this.data = data;
     }
 }

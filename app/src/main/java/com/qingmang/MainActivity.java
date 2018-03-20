@@ -10,7 +10,9 @@ import android.widget.FrameLayout;
 
 import com.qingmang.home.HomeFragment;
 import com.qingmang.home.MyFragment;
+import com.qingmang.home.OrderFragment;
 import com.qingmang.home.PeopleFragment;
+import com.qingmang.home.VentureServiceFragment;
 import com.qingmang.uilibrary.BottomBar;
 import com.qingmang.uilibrary.BottomBarTab;
 
@@ -30,8 +32,11 @@ public class MainActivity extends AppCompatActivity {
     BottomBar mBottomBar;
     private List<Fragment> mFragments = new ArrayList<Fragment>();
     private HomeFragment homeFragment;
-    private MyFragment myFragment;
     private PeopleFragment findFragment;
+    private VentureServiceFragment ventureServiceFragment;
+    private OrderFragment orderFragment;
+    private MyFragment myFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
         mBottomBar.addItem(new BottomBarTab(this, R.drawable.icon_index,R.drawable.icon_index_cur))
                 .addItem(new BottomBarTab(this, R.drawable.icon_people,R.drawable.icon_people_cur))
+                .addItem(new BottomBarTab(this, R.drawable.icon_entrep,R.drawable.icon_entrep_cur))
+                .addItem(new BottomBarTab(this, R.drawable.icon_order,R.drawable.icon_order_cur))
                 .addItem(new BottomBarTab(this, R.drawable.icon_my,R.drawable.icon_my_cur));
 
         mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
@@ -70,6 +77,20 @@ public class MainActivity extends AppCompatActivity {
                        showHideFragment(findFragment);
                        break;
                    case 2:
+                       if(null==ventureServiceFragment){
+                           ventureServiceFragment = VentureServiceFragment.newInstance();
+                           transaction.add(R.id.fl_container,ventureServiceFragment);
+                       }
+                       showHideFragment(ventureServiceFragment);
+                       break;
+                   case 3:
+                       if(null==orderFragment){
+                           orderFragment = OrderFragment.newInstance();
+                           transaction.add(R.id.fl_container,orderFragment);
+                       }
+                       showHideFragment(orderFragment);
+                       break;
+                   case 4:
                        if(null==myFragment){
                            myFragment = MyFragment.newInstance();
                            transaction.add(R.id.fl_container,myFragment);
@@ -89,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(int position) {
-                final Fragment currentFragment = mFragments.get(position);
+//                final Fragment currentFragment = mFragments.get(position);
 //                int count = currentFragment.getChildFragmentManager().getBackStackEntryCount();
 //
 //                // 如果不在该类别Fragment的主页,则回到主页;
@@ -127,12 +148,21 @@ public class MainActivity extends AppCompatActivity {
         if (null!=homeFragment&&homeFragment.isAdded()) {
             manager.putFragment(outState, "homeFragment", homeFragment);
         }
-        if (null!=myFragment&&myFragment.isAdded()) {
-            manager.putFragment(outState, "myFragment", myFragment);
-        }
         if (null!=findFragment&&findFragment.isAdded()) {
             manager.putFragment(outState, "findFragment", findFragment);
         }
+        if (null!=ventureServiceFragment&&ventureServiceFragment.isAdded()) {
+            manager.putFragment(outState, "ventureServiceFragment", ventureServiceFragment);
+        }
+
+
+        if (null!=orderFragment&&orderFragment.isAdded()) {
+            manager.putFragment(outState, "orderFragment", orderFragment);
+        }
+        if (null!=myFragment&&myFragment.isAdded()) {
+            manager.putFragment(outState, "myFragment", myFragment);
+        }
+
 
     }
 
@@ -148,30 +178,45 @@ public class MainActivity extends AppCompatActivity {
             homeFragment = (HomeFragment) getSupportFragmentManager().getFragment(savedInstanceState, "homeFragment");
             myFragment = (MyFragment) getSupportFragmentManager().getFragment(savedInstanceState, "myFragment");
             findFragment = (PeopleFragment) getSupportFragmentManager().getFragment(savedInstanceState, "findFragment");
+            ventureServiceFragment = (VentureServiceFragment) getSupportFragmentManager().getFragment(savedInstanceState, "ventureServiceFragment");
+            orderFragment = (OrderFragment) getSupportFragmentManager().getFragment(savedInstanceState, "orderFragment");
 
         } else {
             homeFragment = HomeFragment.newInstance();
 //            myFragment = MyFragment.newInstance();
 //            findFragment = FindFragment.newInstance();
         }
-        if(null!=homeFragment)
-        mFragments.add(homeFragment);
-        if(null!=findFragment)
-        mFragments.add(findFragment);
-        if(null!=myFragment)
-        mFragments.add(myFragment);
+        if(null!=homeFragment){
+            mFragments.add(homeFragment);
+            transaction.add(R.id.fl_container,homeFragment);
+        }
+        if(null!=findFragment){
+            mFragments.add(findFragment);
+            transaction.add(R.id.fl_container,findFragment);
+            transaction.hide(findFragment);
+        }
 
-        if(null!=homeFragment)
-        transaction.add(R.id.fl_container,homeFragment);
-        if(null!=findFragment)
-        transaction.add(R.id.fl_container,findFragment);
-        if(null!=myFragment)
-        transaction.add(R.id.fl_container,myFragment);
+        if(null!=ventureServiceFragment){
+            mFragments.add(ventureServiceFragment);
+            transaction.add(R.id.fl_container,ventureServiceFragment);
+            transaction.hide(ventureServiceFragment);
 
-        if(null!=myFragment)
-        transaction.hide(myFragment);
-        if(null!=findFragment)
-        transaction.hide(findFragment);
+        }
+
+        if(null!=orderFragment){
+            mFragments.add(orderFragment);
+            transaction.add(R.id.fl_container,orderFragment);
+            transaction.hide(orderFragment);
+        }
+
+
+        if(null!=myFragment){
+            mFragments.add(myFragment);
+            transaction.add(R.id.fl_container,myFragment);
+            transaction.hide(myFragment);
+        }
+
+
         transaction.commit();
     }
     public void showHideFragment(Fragment fragment){

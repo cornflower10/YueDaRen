@@ -1,16 +1,18 @@
 package com.qingmang.home;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.qingmang.R;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by xiejingbao on 2018/3/19.
@@ -27,6 +29,9 @@ public class PeopleChildFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
+    @BindView(R.id.rv)
+    RecyclerView rv;
+    Unbinder unbinder;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -52,29 +57,34 @@ public class PeopleChildFragment extends Fragment {
                 + getArguments().getInt(ARG_SECTION_NUMBER));
 
         switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
-            case 0:
-                break;
-
-            case 1:
-                rootView.setBackgroundColor(Color.BLACK);
-                break;
-
-            case 2:
-                rootView.setBackgroundColor(Color.BLUE);
-                break;
-
-            case 3:
-                rootView.setBackgroundColor(Color.GREEN);
-                break;
-
-            case 4:
-                rootView.setBackgroundColor(Color.RED);
-                break;
+//            case 0:
+//                break;
+//
+//            case 1:
+//                rootView.setBackgroundColor(Color.BLACK);
+//                break;
+//
+//            case 2:
+//                rootView.setBackgroundColor(Color.BLUE);
+//                break;
+//
+//            case 3:
+//                rootView.setBackgroundColor(Color.GREEN);
+//                break;
+//
+//            case 4:
+//                rootView.setBackgroundColor(Color.RED);
+//                break;
         }
-        final ListView listView = (ListView) rootView.findViewById(R.id.listView);
-        listView.setAdapter(new ArrayAdapter<>(getActivity(),
-                R.layout.list_item, R.id.text1, array));
 
+
+        unbinder = ButterKnife.bind(this, rootView);
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

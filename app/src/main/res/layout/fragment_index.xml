@@ -9,6 +9,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+ <TextView
+     style="@style/titleStytle"
+     android:text="创广东，找粤大人"
+    />
  <com.qingmang.uilibrary.banner.BannerLayout
      android:id="@+id/bl"
      android:layout_width="match_parent"

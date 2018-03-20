@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.qingmang.baselibrary.utils.LogManager;
 import com.qingmang.uilibrary.loadview.LoadViewHelper;
@@ -19,6 +20,7 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends Fragment {
     protected View rootView;
 
+    private Toast toast;
     private Unbinder mUnbinder;
     private int count;//记录开启进度条的情况 只能开一个
     //当前Fragment是否处于可见状态标志，防止因ViewPager的缓存机制而导致回调函数的触发
@@ -220,6 +222,17 @@ public abstract class BaseFragment extends Fragment {
      */
     protected void onFragmentVisibleChange(boolean isVisible) {
 
+    }
+
+    public void showToast(String msg){
+        if(null!=toast){
+            toast.setText(msg);
+            toast.setDuration(Toast.LENGTH_SHORT);
+        }else
+        {
+            toast = Toast.makeText(mContext,msg,Toast.LENGTH_SHORT);
+        }
+        toast.show();
     }
 
 

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@color/page_bg_color"
+             android:orientation="horizontal"
+           >
+ <FrameLayout
+     android:layout_marginRight="5dp"
+     android:layout_marginLeft="5dp"
+     android:layout_marginBottom="10dp"
+     android:layout_width="match_parent"
+     android:layout_height="120dp">
+  <ImageView
+      android:id="@+id/iv"
+      android:scaleType="centerCrop"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent" />
+  <LinearLayout
+      android:orientation="horizontal"
+      android:layout_below="@+id/tv_des"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+<RelativeLayout
+    android:layout_marginLeft="@dimen/margin_16"
+    android:layout_gravity="center_vertical"
+    android:layout_weight="1.5"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content">x
+   <TextView
+       android:textSize="@dimen/sp_16"
+       android:textColor="@color/white"
+       android:id="@+id/tv_title"
+       android:text="办理户口"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" />
+   <TextView
+       android:layout_marginTop="8dp"
+       android:textSize="@dimen/sp_14"
+       android:textColor="@color/white"
+      android:layout_below="@+id/tv_title"
+       android:id="@+id/tv_des"
+       android:text="的fish的覅还低方式发ID发送的丰富的"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" />
+</RelativeLayout>
+   <TextView
+       android:gravity="center"
+       android:background="@drawable/coner_trans"
+       android:layout_marginRight="@dimen/margin_16"
+       android:layout_gravity="center_vertical"
+       android:layout_weight="0.8"
+       android:textSize="@dimen/sp_16"
+       android:textColor="@android:color/white"
+       android:text="我要服务"
+       android:layout_width="0dp"
+       android:layout_height="wrap_content" />
+  </LinearLayout>
+ </FrameLayout>
+</LinearLayout>

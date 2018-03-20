@@ -26,13 +26,14 @@ public class VTabAdapter implements TabAdapter {
 
     {
         titles = new ArrayList<>();
-        Collections.addAll(titles, "Android", "IOS", "Web", "JAVA", "C++"
+        Collections.addAll(titles, "精品推荐", "公司注册", "代理记账",
+                "税务服务", "公司变更", "著作权", "法律服务", "商标注册", "营销工具", "人事社保", "差旅服务"
         );
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return titles.size();
     }
 
     @Override

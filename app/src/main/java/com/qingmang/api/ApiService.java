@@ -3,10 +3,13 @@ package com.qingmang.api;
 
 import com.qingmang.moudle.entity.BaseEntity;
 import com.qingmang.moudle.entity.LoginEntity;
+import com.qingmang.moudle.entity.Order;
+import com.qingmang.moudle.entity.VenService;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -39,6 +42,21 @@ public interface ApiService {
     Observable<BaseEntity<LoginEntity>> login(@Field("phone") String userName,
                                               @Field("password") String passWd
                                               );
+
+    /**
+     * 市民服务列表
+     * @return
+     */
+    @GET("goods/list/citizen")
+    Observable<BaseEntity<VenService>> VentureServices();
+
+
+
+    @FormUrlEncoded
+    @POST("orders/list")
+    Observable<BaseEntity<Order>> OrderList(@Field("pageNumber") int page,
+                                        @Field("pageSize") int size);
+
 //
 //
 //
