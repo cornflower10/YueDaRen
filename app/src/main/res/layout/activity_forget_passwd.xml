@@ -1,9 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.qingmang.user.ForgetPasswdActivity">
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/toolbar"/>
+        <View
+            style="@style/divide_line_match"/>
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/rl_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:text="该手机号未曾注册"
+            android:drawablePadding="@dimen/margin_16"
+            android:drawableLeft="@drawable/icon_error"
+            android:visibility="visible"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/red_ff2a31"
+            android:id="@+id/tv_error"
+            android:paddingLeft="@dimen/margin_16"
+            android:paddingRight="@dimen/margin_16"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="48dp" />
+            <View
+                android:layout_below="@+id/tv_error"
+                android:layout_height="10dp"
+                style="@style/divide_line_match"/>
+        </RelativeLayout>
 
-</android.support.constraint.ConstraintLayout>
+        <android.support.v7.widget.AppCompatEditText
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/text_333333"
+            android:id="@+id/et_phone"
+            android:paddingLeft="@dimen/margin_16"
+            android:paddingRight="@dimen/margin_16"
+            android:hint="请输入手机号码"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="48dp" />
+        <View
+            style="@style/divide_line_match"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.AppCompatEditText
+                android:background="@color/white"
+                android:textSize="@dimen/sp_16"
+                android:textColor="@color/text_333333"
+                android:id="@+id/et_val"
+                android:paddingLeft="@dimen/margin_16"
+                android:paddingRight="@dimen/margin_16"
+                android:hint="验证码"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="48dp" />
+            <com.qingmang.custom.CheckCodeCountDown
+                android:textSize="@dimen/sp_16"
+                android:id="@+id/cd_val"
+                android:gravity="center"
+                android:text="获取验证码"
+                android:layout_marginRight="@dimen/margin_16"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp" />
+        </RelativeLayout>
+        <View
+            style="@style/divide_line_match"/>
+        <android.support.v7.widget.AppCompatEditText
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/text_333333"
+            android:id="@+id/et_passwd"
+            android:paddingLeft="@dimen/margin_16"
+            android:paddingRight="@dimen/margin_16"
+            android:hint="输入6-16位数字密码，字母或常用符号"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="48dp" />
+        <View
+            style="@style/divide_line_match"/>
+        <android.support.v7.widget.AppCompatEditText
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/text_333333"
+            android:id="@+id/et_passwd_sure"
+            android:paddingLeft="@dimen/margin_16"
+            android:paddingRight="@dimen/margin_16"
+            android:hint="确认密码"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="48dp" />
+        <View
+            style="@style/divide_line_match"/>
+        <RelativeLayout
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_marginTop="25dp"
+                android:text="确定"
+                android:background="@color/red_ff2a31"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_18"
+                android:layout_below="@+id/cb_agreement"
+                android:layout_marginBottom="26dp"
+                android:layout_width="280dp"
+                android:layout_height="48dp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

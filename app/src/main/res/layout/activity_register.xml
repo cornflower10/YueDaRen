@@ -97,6 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <Button
+            android:id="@+id/bt_register"
             android:text="立即注册"
             android:background="@color/red_ff2a31"
             android:textColor="@color/white"
