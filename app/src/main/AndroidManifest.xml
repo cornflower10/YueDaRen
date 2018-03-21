@@ -19,7 +19,11 @@
         <activity android:name=".serviceIntroduce.ServiceIntroduceActivity" />
         <activity android:name=".user.LoginActivity" />
         <activity android:name=".user.RegisterActivity" />
-        <activity android:name=".user.ForgetPasswdActivity"></activity>
+        <activity android:name=".user.ForgetPasswdActivity" />
+        <activity android:name=".serviceIntroduce.OrderSureActivity" />
+        <activity android:name=".serviceIntroduce.AddressListActivity" />
+        <activity android:name=".serviceIntroduce.InvoiceSettingActivity" />
+        <activity android:name=".serviceIntroduce.AddAddressActivity"></activity>
     </application>
 
 </manifest>

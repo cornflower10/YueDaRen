@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@android:color/white"
+             android:orientation="vertical"
+           >
+
+   <RelativeLayout
+       android:layout_marginRight="@dimen/margin_16"
+       android:layout_marginLeft="@dimen/margin_16"
+       android:layout_marginTop="10dp"
+       android:orientation="horizontal"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_user"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/text_333333"
+        android:text="lianxiren:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_phone"
+        android:layout_alignParentRight="true"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/text_333333"
+        android:text="15856193725"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+   </RelativeLayout>
+   <TextView
+       android:id="@+id/tv_address_top"
+       android:layout_margin="@dimen/margin_16"
+       android:textSize="@dimen/sp_14"
+       android:textColor="@color/text_999999"
+       android:text="联系地址:卡号疯狂卡夫卡发挥空间錒回复卡号发开发哈哈"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" />
+    <View
+        style="@style/divide_line_match"/>
+ <RelativeLayout
+     android:layout_margin="@dimen/margin_16"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content">
+  <TextView
+      android:padding="4dp"
+      android:drawablePadding="6dp"
+      android:text="默认地址"
+      android:textColor="@color/text_999999"
+      android:textSize="@dimen/sp_14"
+      android:drawableLeft="@drawable/checkbox_style"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+  <TextView
+      android:layout_toLeftOf="@+id/tv_delete"
+      android:id="@+id/tv_edit"
+      android:padding="4dp"
+      android:drawablePadding="6dp"
+     android:layout_marginRight="@dimen/margin_16"
+      android:text="默认"
+      android:textColor="@color/text_999999"
+      android:textSize="@dimen/sp_14"
+      android:drawableLeft="@drawable/icon_delete"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+  <TextView
+      android:id="@+id/tv_delete"
+      android:padding="4dp"
+      android:drawablePadding="6dp"
+      android:layout_alignParentRight="true"
+      android:text="默认"
+      android:textColor="@color/text_999999"
+      android:textSize="@dimen/sp_14"
+      android:drawableLeft="@drawable/icon_delete"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+ </RelativeLayout>
+ <View
+     android:background="@color/divide_line"
+     android:layout_width="match_parent"
+     android:layout_height="10dp"/>
+</LinearLayout>
