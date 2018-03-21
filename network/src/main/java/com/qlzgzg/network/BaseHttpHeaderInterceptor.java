@@ -15,10 +15,7 @@ public class BaseHttpHeaderInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request original = chain.request();
         Request request = original.newBuilder()
-                .addHeader("X-App-Type", "android")
-                .addHeader("X-App-Version", String.valueOf(BuildConfig.VERSION_NAME))
-                .addHeader("X-App-Env", "dev")
-                .addHeader("X-App-Key", "android")
+                .addHeader("token", "d19fe3f49b8f4a9a8829acf80f5c5407")
                 .method(original.method(), original.body())
                 .build();
         return chain.proceed(request);

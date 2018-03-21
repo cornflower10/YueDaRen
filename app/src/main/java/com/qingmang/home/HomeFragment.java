@@ -6,10 +6,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.qingmang.BaseFragment;
 import com.qingmang.R;
 import com.qingmang.adapter.WebBannerAdapter;
+import com.qingmang.base.BaseMvpFragment;
 import com.qingmang.baselibrary.utils.LogManager;
+import com.qingmang.moudle.entity.Banner;
+import com.qingmang.moudle.entity.Message;
 import com.qingmang.uilibrary.banner.BannerLayout;
 
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ import butterknife.OnClick;
  * Created by xiejingbao on 2017/9/14.
  */
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseMvpFragment<HomePresenter,HomeView> implements HomeView<Message> {
     @BindView(R.id.bl)
     BannerLayout bl;
     @BindView(R.id.tv_ad)
@@ -59,8 +61,8 @@ public class HomeFragment extends BaseFragment {
     ImageView iv;
     @BindView(R.id.rv_message)
     RecyclerView rvMessage;
-
-
+    WebBannerAdapter mzBannerAdapter;
+    List<Banner.ContentBean> list = new ArrayList<>();
     @Override
     protected View getRootView() {
         return null;
@@ -74,14 +76,9 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initView() {
         LogManager.i("HomeFragment-----");
-        List<String> list = new ArrayList<>();
-        list.add("http://img0.imgtn.bdimg.com/it/u=1352823040,1166166164&fm=27&gp=0.jpg");
-        list.add("http://img3.imgtn.bdimg.com/it/u=2293177440,3125900197&fm=27&gp=0.jpg");
-        list.add("http://img3.imgtn.bdimg.com/it/u=3967183915,4078698000&fm=27&gp=0.jpg");
-        list.add("http://img0.imgtn.bdimg.com/it/u=3184221534,2238244948&fm=27&gp=0.jpg");
-        list.add("http://img4.imgtn.bdimg.com/it/u=1794621527,1964098559&fm=27&gp=0.jpg");
-        list.add("http://img4.imgtn.bdimg.com/it/u=1243617734,335916716&fm=27&gp=0.jpg");
-        WebBannerAdapter mzBannerAdapter=new WebBannerAdapter(mContext,list);
+
+        mPresenter.loadTopBanner();
+         mzBannerAdapter=new WebBannerAdapter(mContext,list);
         mzBannerAdapter.setOnBannerItemClickListener(new BannerLayout.OnBannerItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -119,5 +116,30 @@ public class HomeFragment extends BaseFragment {
             case R.id.tv_more:
                 break;
         }
+    }
+
+    @Override
+    public void onError(String msg) {
+        showToast(msg);
+    }
+
+    @Override
+    public void onDataSuccess(Message message) {
+
+    }
+
+    @Override
+    public void onBannerSuccess(Banner banner) {
+        if(null!=banner.getContent()&&banner.getContent().size()>0){
+            list.clear();
+            list.addAll(banner.getContent());
+            mzBannerAdapter.notifyDataSetChanged();
+        }
+
+    }
+
+    @Override
+    protected HomePresenter createPresenter() {
+        return new HomePresenter();
     }
 }

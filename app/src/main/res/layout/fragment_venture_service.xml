@@ -7,7 +7,7 @@
  <LinearLayout
      android:orientation="vertical"
      android:layout_width="match_parent"
-     android:layout_height="match_parent">
+     android:layout_height="wrap_content">
      <TextView
          style="@style/titleStytle"
          android:text="市民服务"
@@ -42,7 +42,7 @@
       android:background="@color/white"
       android:id="@+id/rv"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+      android:layout_height="match_parent">
   </android.support.v7.widget.RecyclerView>
  </LinearLayout>
 

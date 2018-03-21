@@ -1,6 +1,7 @@
 package com.qingmang.api;
 
 
+import com.qingmang.moudle.entity.Banner;
 import com.qingmang.moudle.entity.BaseEntity;
 import com.qingmang.moudle.entity.LoginEntity;
 import com.qingmang.moudle.entity.Order;
@@ -42,6 +43,13 @@ public interface ApiService {
     Observable<BaseEntity<LoginEntity>> login(@Field("phone") String userName,
                                               @Field("password") String passWd
                                               );
+    /**
+     * 首页banner
+     * @return
+     */
+    @GET("article/top")
+    Observable<BaseEntity<Banner>> topBanner();
+
 
     /**
      * 市民服务列表

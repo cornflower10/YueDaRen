@@ -6,6 +6,6 @@ package com.qingmang.serviceIntroduce;
 
 import com.qingmang.base.BaseView;
 
-public interface ServeceIntroduceView<D> extends BaseView{
+public interface ServiceIntroduceView<D> extends BaseView{
     void onDataSuccess(D d);
 }

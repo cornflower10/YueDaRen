@@ -8,12 +8,13 @@ import java.util.List;
 
 public class Order {
 
+
     /**
      * pageNumber : 1
      * pageSize : 10
      * totalCount : 8
      * pageCount : 1
-     * content : [{"id":18,"customerid":1,"createtime":1521429529000,"goodsid":1,"specials":"[{\"key\":\"服务对象\",\"type\":0,\"value\":\"老崔\"},{\"items\":\"人才引进入户,积分入户\",\"key\":\"服务项目\",\"type\":1,\"value\":\"人才引进入户\"}]","choose":null,"num":1,"price":2000,"amount":2000,"leavemsg":"请尽快办理！","step":"wait","steps":null},{"id":7,"customerid":1,"createtime":1521362447000,"goodsid":1,"specials":"[{\"key\":\"服务对象\",\"type\":0,\"value\":\"老崔\"},{\"items\":\"人才引进入户,积分入户\",\"key\":\"服务项目\",\"type\":1,\"value\":\"人才引进入户\"}]","choose":null,"num":1,"price":2000,"amount":2000,"leavemsg":"请尽快办理！","step":"wait","steps":null}]
+     * content : [{"id":18,"customerid":1,"createtime":1521429529000,"ordersno":"MST2018032015381018","goodsid":1,"specials":"[{\"key\":\"服务对象\",\"type\":0,\"value\":\"老崔\"},{\"items\":\"人才引进入户,积分入户\",\"key\":\"服务项目\",\"type\":1,\"value\":\"人才引进入户\"}]","choose":null,"num":1,"price":2000,"amount":2000,"leavemsg":"请尽快办理！","step":"wait","steps":null},{"id":7,"customerid":1,"createtime":1521362447000,"ordersno":"MST201803201538107","goodsid":1,"specials":"[{\"key\":\"服务对象\",\"type\":0,\"value\":\"老崔\"},{\"items\":\"人才引进入户,积分入户\",\"key\":\"服务项目\",\"type\":1,\"value\":\"人才引进入户\"}]","choose":null,"num":1,"price":2000,"amount":2000,"leavemsg":"请尽快办理！","step":"wait","steps":null},"......"]
      */
 
     private int pageNumber;
@@ -67,6 +68,7 @@ public class Order {
          * id : 18
          * customerid : 1
          * createtime : 1521429529000
+         * ordersno : MST2018032015381018
          * goodsid : 1
          * specials : [{"key":"服务对象","type":0,"value":"老崔"},{"items":"人才引进入户,积分入户","key":"服务项目","type":1,"value":"人才引进入户"}]
          * choose : null
@@ -81,6 +83,7 @@ public class Order {
         private int id;
         private int customerid;
         private long createtime;
+        private String ordersno;
         private int goodsid;
         private String specials;
         private Object choose;
@@ -113,6 +116,14 @@ public class Order {
 
         public void setCreatetime(long createtime) {
             this.createtime = createtime;
+        }
+
+        public String getOrdersno() {
+            return ordersno;
+        }
+
+        public void setOrdersno(String ordersno) {
+            this.ordersno = ordersno;
         }
 
         public int getGoodsid() {

@@ -20,10 +20,12 @@ public class BaseActivity extends AppCompatActivity {
 
         LogManager.i("新建"+this.getClass().getName());
         super.onCreate(savedInstanceState);
+
         mContext=this;
 //        MyApplication.getInstance().addActivity(this);
 //        PushAgent.getInstance(this).onAppStart();
     }
+
 
     @Override
     protected void onDestroy() {

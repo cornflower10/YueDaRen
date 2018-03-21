@@ -83,13 +83,14 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter,OrderView> imp
     @Override
     public void onError(String msg) {
         showToast(msg);
+        loadViewHelper.restore();
     }
 
     @Override
     public void onDataSuccess(Order order) {
         if(null!=order.getContent() &&order.getContent().size()>0){
             loadViewHelper.restore();
-            orderAdapter.replaceData(contentBeans);
+            orderAdapter.replaceData(order.getContent());
         }
     }
 

@@ -1,4 +1,4 @@
-package com.qingmang.serviceIntroduce;
+package com.qingmang.user;
 
 import com.qingmang.App;
 import com.qingmang.api.ApiService;
@@ -13,7 +13,7 @@ import io.reactivex.functions.Consumer;
  * Created by xiejingbao on 2018/3/16.
  */
 
-public class ServiceIntroducePresenter extends BaseMvpPresenter<ServiceIntroduceView> {
+public class RegisterPresenter extends BaseMvpPresenter<RegisterView> {
 
     public void loadData(){
         addSubscribe(App.getInstance().getRetrofitServiceManager().create(ApiService.class).VentureServices()

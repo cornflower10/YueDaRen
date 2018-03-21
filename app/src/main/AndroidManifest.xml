@@ -16,7 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".serviceIntroduce.ServiceIntroduceActivity"></activity>
+        <activity android:name=".serviceIntroduce.ServiceIntroduceActivity" />
+        <activity android:name=".user.LoginActivity" />
+        <activity android:name=".user.RegisterActivity" />
+        <activity android:name=".user.ForgetPasswdActivity"></activity>
     </application>
 
 </manifest>
