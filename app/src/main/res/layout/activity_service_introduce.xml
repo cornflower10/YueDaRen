@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/page_bg_color"
+    tools:context="com.qingmang.serviceIntroduce.ServiceIntroduceActivity">
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+    <include layout="@layout/toolbar"/>
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nsv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:padding="@dimen/margin_16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv"
+            android:layout_width="0dp"
+            android:layout_height="80dp" />
+        <RelativeLayout
+            android:layout_weight="1.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="@dimen/sp_18"
+                android:textColor="@color/text_333333"
+                android:text="户口办理"
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_below="@+id/tv_title"
+                android:textSize="@dimen/sp_18"
+                android:textColor="@color/text_999999"
+                android:text="人口调控"
+                android:id="@+id/tv_context"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_below="@+id/tv_context"
+                android:textSize="@dimen/sp_18"
+                android:textColor="@color/red_ff2a31"
+                android:text="2000"
+                android:id="@+id/tv_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+   <View
+       style="@style/divide_line_match"/>
+    <RelativeLayout
+        android:background="@color/white"
+        android:padding="@dimen/margin_16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_per_service"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/text_333333"
+            android:text="十年专业服务"
+            android:drawableLeft="@drawable/icon_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_toRightOf="@+id/tv_per_service"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/text_333333"
+            android:text="王牌一对一服务"
+            android:drawableLeft="@drawable/icon_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:padding="@dimen/margin_16">
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/tv_service_ob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="服务对象"
+            android:textColor="@color/text_333333"
+            android:textSize="@dimen/sp_18" />
+
+        <TextView
+            android:text="请选择服务的姓名或输入"
+            android:padding="4dp"
+            android:drawablePadding="6dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:drawableRight="@drawable/icon_more"
+            android:textColor="@color/text_888888"
+            android:textSize="@dimen/sp_16" />
+    </RelativeLayout>
+    <View
+        style="@style/divide_line_match"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/margin_16">
+
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:id="@+id/tv_pro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="服务项目"
+            android:textColor="@color/text_333333"
+            android:textSize="@dimen/sp_18" />
+
+        <TextView
+            android:background="@drawable/coner_orange_2"
+            android:id="@+id/tv_yj"
+            android:layout_below="@+id/tv_pro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="人才引进入户"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
+        <TextView
+            android:id="@+id/tv_jf"
+            android:background="@drawable/coner_gray_2"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/tv_yj"
+            android:layout_below="@+id/tv_pro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="积分入户"
+            android:textColor="@color/text_333333"
+            android:textSize="@dimen/sp_16" />
+    </RelativeLayout>
+    <View
+        style="@style/divide_line_match"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/margin_16">
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="服务区域"
+            android:textColor="@color/text_333333"
+            android:textSize="@dimen/sp_18" />
+
+        <TextView
+            android:id="@+id/tv_palce"
+            android:text="广东省 广州市"
+            android:padding="4dp"
+            android:drawablePadding="6dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:drawableRight="@drawable/icon_more"
+            android:textColor="@color/text_888888"
+            android:textSize="@dimen/sp_16" />
+    </RelativeLayout>
+    <View
+        style="@style/divide_line_match"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/margin_16">
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="服务数量"
+            android:textColor="@color/text_333333"
+            android:textSize="@dimen/sp_18" />
+
+        <LinearLayout
+            android:background="@drawable/coner_gray_2"
+            android:gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="180dp"
+            android:layout_height="44dp">
+            <ImageView
+                android:src="@drawable/icon_reduce"
+                android:layout_weight="1"
+                android:id="@+id/iv_minus"
+                android:padding="4dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="@color/text_888888"
+                android:textSize="@dimen/sp_16" />
+            <TextView
+                android:gravity="center"
+                android:text="1"
+                android:layout_weight="1.5"
+                android:id="@+id/tv_count"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="@color/text_888888"
+                android:textSize="@dimen/sp_16" />
+            <ImageView
+                android:src="@drawable/icon_add"
+                android:layout_weight="1"
+                android:id="@+id/iv_add"
+                android:padding="4dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="@color/text_888888"
+                android:textSize="@dimen/sp_16" />
+        </LinearLayout>
+
+    </RelativeLayout>
+    <View
+        style="@style/divide_line_match"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/margin_16">
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/cb_agreement"
+            android:text="已阅读并同意"
+            android:padding="4dp"
+            android:drawablePadding="6dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:button="@null"
+            android:drawableLeft="@drawable/checkbox_style"
+            android:textColor="@color/text_888888"
+            android:textSize="@dimen/sp_16" />
+    </RelativeLayout>
+        <android.support.design.widget.TabLayout
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            app:tabIndicatorColor="@color/red_ff2a31"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.design.widget.TabItem
+            android:text="服务说明"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+            <android.support.design.widget.TabItem
+                android:text="服务流程"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <android.support.design.widget.TabItem
+                android:text="承诺保障"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <android.support.design.widget.TabItem
+                android:text="常见问题"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </android.support.design.widget.TabLayout>
+        <android.support.v4.view.ViewPager
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v4.view.ViewPager>
+    </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+        <Button
+            android:id="@+id/bt_yy"
+            android:textSize="@dimen/sp_16"
+            android:text="预约下单"
+            android:textColor="@color/text_333333"
+            android:background="@color/divide_line"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/bt_buy"
+            android:textSize="@dimen/sp_16"
+            android:text="立即购买"
+            android:textColor="@color/white"
+            android:background="@color/red_ff2a31"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+</LinearLayout>

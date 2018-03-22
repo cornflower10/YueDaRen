@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/white"
+             >
+ <LinearLayout
+     android:orientation="vertical"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content">
+     <TextView
+         style="@style/titleStytle"
+         android:text="市民服务"
+         />
+<ImageView
+    android:src="@drawable/people_banner"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+  <LinearLayout
+      android:gravity="center"
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="60dp">
+   <View
+       android:layout_marginRight="@dimen/margin_16"
+       android:background="@color/divide_line"
+       android:layout_height="1dp"
+      android:layout_width="60dp"/>
+   <TextView
+       android:text="民生重点服务推荐"
+       android:textSize="@dimen/sp_16"
+       android:textColor="@color/text_333333"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" />
+   <View
+       android:layout_marginLeft="@dimen/margin_16"
+       android:background="@color/divide_line"
+       android:layout_height="1dp"
+       android:layout_width="60dp"/>
+  </LinearLayout>
+  <android.support.v7.widget.RecyclerView
+      android:background="@color/white"
+      android:id="@+id/rv"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+  </android.support.v7.widget.RecyclerView>
+ </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
