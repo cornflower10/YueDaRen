@@ -5,6 +5,7 @@ import com.qingmang.moudle.entity.Banner;
 import com.qingmang.moudle.entity.BaseEntity;
 import com.qingmang.moudle.entity.LoginEntity;
 import com.qingmang.moudle.entity.Order;
+import com.qingmang.moudle.entity.Service;
 import com.qingmang.moudle.entity.VenService;
 
 import io.reactivex.Observable;
@@ -64,6 +65,17 @@ public interface ApiService {
     @POST("orders/list")
     Observable<BaseEntity<Order>> OrderList(@Field("pageNumber") int page,
                                         @Field("pageSize") int size);
+
+    /**
+     *
+        创业服务列表查询接口
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("goods/list/job")
+    Observable<BaseEntity<Service>> ServiceList(@Field("cateid") long id);
+
+
 
 //
 //

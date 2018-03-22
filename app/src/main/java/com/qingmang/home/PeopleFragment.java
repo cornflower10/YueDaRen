@@ -3,7 +3,10 @@ package com.qingmang.home;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.qingmang.R;
 import com.qingmang.adapter.VPagerAdapter;
@@ -13,24 +16,34 @@ import com.qingmang.baselibrary.utils.LogManager;
 import com.qingmang.custom.VerticalViewPager;
 import com.qingmang.custom.verticaltablayout.TabView;
 import com.qingmang.custom.verticaltablayout.VerticalTabLayout;
+import com.qingmang.moudle.entity.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by xiejingbao on 2017/9/14.
  */
 
-public class PeopleFragment extends BaseMvpFragment<FindPresenter, FindView> implements FindView<Find> {
+public class PeopleFragment extends BaseMvpFragment<FindPresenter, FindView> implements FindView<Service> {
 
     @BindView(R.id.tablayout)
     VerticalTabLayout tablayout;
     @BindView(R.id.verticalviewpager)
     VerticalViewPager verticalviewpager;
+    @BindView(R.id.ll_root)
+    LinearLayout llRoot;
 
+    private List<Service.CatesBean> catesBeans = new ArrayList<>();
 
     private static final float MIN_SCALE = 0.75f;
     private static final float MIN_ALPHA = 0.75f;
-
+    private long id;
+    private VTabAdapter vTabAdapter;
 
 
     @Override
@@ -40,12 +53,15 @@ public class PeopleFragment extends BaseMvpFragment<FindPresenter, FindView> imp
 
     @Override
     protected void initView() {
+//        vTabAdapter = new VTabAdapter(mContext, catesBeans);
         LogManager.i("FindFragment-----");
-        tablayout.setTabAdapter(new VTabAdapter(mContext));
+
+        tablayout.setTabAdapter(new VTabAdapter(mContext, catesBeans));
         tablayout.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabView tab, int position) {
                 verticalviewpager.setCurrentItem(position);
+                id = catesBeans.get(position).getId();
             }
 
             @Override
@@ -70,7 +86,7 @@ public class PeopleFragment extends BaseMvpFragment<FindPresenter, FindView> imp
             }
         });
 
-        verticalviewpager.setAdapter(new VPagerAdapter(getFragmentManager()));
+        verticalviewpager.setAdapter(new VPagerAdapter(getFragmentManager(), catesBeans));
         verticalviewpager.setPageMargin(getResources().
                 getDimensionPixelSize(R.dimen.pagemargin));
         verticalviewpager.setPageMarginDrawable(new ColorDrawable(
@@ -113,8 +129,8 @@ public class PeopleFragment extends BaseMvpFragment<FindPresenter, FindView> imp
             }
         });
 
-//        loadViewHelper.showLoading("加载中...");
-//        mPresenter.loadData();
+        loadViewHelper.showLoading("加载中...");
+        mPresenter.loadData(1);
 
     }
 
@@ -140,18 +156,17 @@ public class PeopleFragment extends BaseMvpFragment<FindPresenter, FindView> imp
 
     @Override
     protected View getRootView() {
-        return null;
+        return llRoot;
     }
 
     @Override
     public void onError(String msg) {
-        showShortToast(msg);
+        showToast(msg);
     }
 
     @Override
-    public void onDataSuccess(Find find) {
+    public void onDataSuccess(Service service) {
         LogManager.i("-------onDataSuccess------");
     }
-
 
 }

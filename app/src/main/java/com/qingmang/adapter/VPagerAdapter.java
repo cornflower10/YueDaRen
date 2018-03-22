@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.qingmang.home.PeopleChildFragment;
+import com.qingmang.moudle.entity.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +16,12 @@ import java.util.List;
 
 public class VPagerAdapter extends FragmentPagerAdapter {
     List<PeopleChildFragment> fragments = new ArrayList<>();
+    List<Service.CatesBean> catesBeanList;
 
-    public VPagerAdapter(FragmentManager fm) {
+    public VPagerAdapter(FragmentManager fm, List<Service.CatesBean> catesBeanList) {
         super(fm);
-
-        for (int i = 0; i < 5; i++) {
+        this.catesBeanList = catesBeanList;
+        for (int i = 0; i < catesBeanList.size(); i++) {
             fragments.add(PeopleChildFragment.newInstance(i));
         }
     }
@@ -35,24 +37,12 @@ public class VPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 3 total pages.
-        return 5;
+        return catesBeanList.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0:
-                return "PAGE 0";
-            case 1:
-                return "PAGE 1";
-            case 2:
-                return "PAGE 2";
-            case 3:
-                return "PAGE 3";
-            case 4:
-                return "PAGE 4";
-        }
-        return null;
+      return   catesBeanList.get(position).getName();
     }
 
 }
