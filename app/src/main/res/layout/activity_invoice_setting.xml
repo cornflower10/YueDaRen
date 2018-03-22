@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/page_bg_color"
-    tools:context="com.qingmang.serviceIntroduce.InvoiceSettingActivity">
+    tools:context="com.qingmang.serviceIntroduce.InvoiceChooseActivity">
     <LinearLayout
         android:orientation="vertical"
         android:layout_weight="1"

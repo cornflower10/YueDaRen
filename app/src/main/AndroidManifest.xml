@@ -22,8 +22,9 @@
         <activity android:name=".user.ForgetPasswdActivity" />
         <activity android:name=".serviceIntroduce.OrderSureActivity" />
         <activity android:name=".serviceIntroduce.AddressListActivity" />
-        <activity android:name=".serviceIntroduce.InvoiceSettingActivity" />
-        <activity android:name=".serviceIntroduce.AddAddressActivity"></activity>
+        <activity android:name=".serviceIntroduce.InvoiceChooseActivity" />
+        <activity android:name=".serviceIntroduce.AddAddressActivity" />
+        <activity android:name=".serviceIntroduce.InvoiceSettingActivity"></activity>
     </application>
 
 </manifest>
