@@ -243,27 +243,7 @@
         </LinearLayout>
 
     </RelativeLayout>
-    <View
-        style="@style/divide_line_match"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="@dimen/margin_16">
-        <android.support.v7.widget.AppCompatCheckBox
-            android:id="@+id/cb_agreement"
-            android:text="已阅读并同意"
-            android:padding="4dp"
-            android:drawablePadding="6dp"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:button="@null"
-            android:drawableLeft="@drawable/checkbox_style"
-            android:textColor="@color/text_888888"
-            android:textSize="@dimen/sp_16" />
-    </RelativeLayout>
+
         <android.support.design.widget.TabLayout
             android:layout_marginTop="10dp"
             android:background="@color/white"

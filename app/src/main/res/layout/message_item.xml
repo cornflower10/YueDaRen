@@ -19,7 +19,7 @@
      android:id="@+id/tv_des"
      android:text="东方红是粉红色的哈佛少妇哈回复来电话冯老师"
      android:layout_width="wrap_content"
-     android:layout_height="wrap_content" />
+     android:layout_height="45dp" />
  <RelativeLayout
      android:gravity="bottom"
      android:layout_alignParentBottom="true"

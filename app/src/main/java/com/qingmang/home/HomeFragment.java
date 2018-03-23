@@ -1,17 +1,20 @@
 package com.qingmang.home;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qingmang.R;
+import com.qingmang.adapter.MessageAdapter;
 import com.qingmang.adapter.WebBannerAdapter;
 import com.qingmang.base.BaseMvpFragment;
 import com.qingmang.baselibrary.utils.LogManager;
 import com.qingmang.moudle.entity.Banner;
+import com.qingmang.moudle.entity.HotMessage;
 import com.qingmang.moudle.entity.Message;
+import com.qingmang.moudle.entity.Service;
 import com.qingmang.uilibrary.banner.BannerLayout;
 
 import java.util.ArrayList;
@@ -58,11 +61,14 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter,HomeView> implem
     @BindView(R.id.tv_tip_last)
     TextView tvTipLast;
     @BindView(R.id.iv)
-    ImageView iv;
+    com.yyydjk.library.BannerLayout iv;
     @BindView(R.id.rv_message)
     RecyclerView rvMessage;
     WebBannerAdapter mzBannerAdapter;
     List<Banner.ContentBean> list = new ArrayList<>();
+    List<Banner.ContentBean> listMindBanner = new ArrayList<>();
+    List<HotMessage.ContentBean> hotMessages = new ArrayList<>();
+    private MessageAdapter messageAdapter ;
     @Override
     protected View getRootView() {
         return null;
@@ -78,6 +84,8 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter,HomeView> implem
         LogManager.i("HomeFragment-----");
 
         mPresenter.loadTopBanner();
+        mPresenter.loadMindBanner();
+        mPresenter.loadHotMessage();
          mzBannerAdapter=new WebBannerAdapter(mContext,list);
         mzBannerAdapter.setOnBannerItemClickListener(new BannerLayout.OnBannerItemClickListener() {
             @Override
@@ -85,6 +93,11 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter,HomeView> implem
             }
         });
         bl.setAdapter(mzBannerAdapter);
+
+
+        messageAdapter = new MessageAdapter(hotMessages);
+        rvMessage.setAdapter(messageAdapter);
+        rvMessage.setLayoutManager(new LinearLayoutManager(mContext));
     }
 
     @Override
@@ -136,6 +149,29 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter,HomeView> implem
             mzBannerAdapter.notifyDataSetChanged();
         }
 
+    }
+
+    @Override
+    public void onMindBannerSuccess(Banner banner) {
+        listMindBanner = banner.getContent();
+        if(null==listMindBanner)
+            return;
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i <listMindBanner.size() ; i++) {
+            list.add(listMindBanner.get(i).getLogo());
+        }
+        iv.setViewUrls(list);
+
+    }
+
+    @Override
+    public void onHotServieSuccess(Service service) {
+
+    }
+
+    @Override
+    public void onHotMessageSuccess(HotMessage hotMessage) {
+          messageAdapter.replaceData(hotMessage.getContent());
     }
 
     @Override

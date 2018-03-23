@@ -3,6 +3,7 @@ package com.qingmang.api;
 
 import com.qingmang.moudle.entity.Banner;
 import com.qingmang.moudle.entity.BaseEntity;
+import com.qingmang.moudle.entity.HotMessage;
 import com.qingmang.moudle.entity.LoginEntity;
 import com.qingmang.moudle.entity.Order;
 import com.qingmang.moudle.entity.Service;
@@ -50,7 +51,27 @@ public interface ApiService {
      */
     @GET("article/top")
     Observable<BaseEntity<Banner>> topBanner();
+    /**
+     * 中间banner
+     * @return
+     */
+    @GET("article/mid")
+    Observable<BaseEntity<Banner>> MindBanner();
 
+
+    /**
+     * 热点服务
+     * @return
+     */
+    @GET("goods/top")
+    Observable<BaseEntity<Service>> HotService();
+
+    /**
+     * 热点资讯
+     * @return
+     */
+    @GET("article/hot")
+    Observable<BaseEntity<HotMessage>> HotMessages();
 
     /**
      * 市民服务列表
@@ -74,6 +95,9 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("goods/list/job")
     Observable<BaseEntity<Service>> ServiceList(@Field("cateid") long id);
+
+
+
 
 
 

@@ -3,9 +3,7 @@ package com.qingmang.home;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.qingmang.R;
@@ -22,8 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by xiejingbao on 2017/9/14.
@@ -44,6 +40,7 @@ public class PeopleFragment extends BaseMvpFragment<FindPresenter, FindView> imp
     private static final float MIN_ALPHA = 0.75f;
     private long id;
     private VTabAdapter vTabAdapter;
+    private VPagerAdapter vPagerAdapter ;
 
 
     @Override
@@ -54,9 +51,7 @@ public class PeopleFragment extends BaseMvpFragment<FindPresenter, FindView> imp
     @Override
     protected void initView() {
 //        vTabAdapter = new VTabAdapter(mContext, catesBeans);
-        LogManager.i("FindFragment-----");
 
-        tablayout.setTabAdapter(new VTabAdapter(mContext, catesBeans));
         tablayout.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabView tab, int position) {
@@ -69,24 +64,22 @@ public class PeopleFragment extends BaseMvpFragment<FindPresenter, FindView> imp
 
             }
         });
-        verticalviewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//        verticalviewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                tablayout.setTabSelected(position);
+//            }
+//
+//
+//
+//
+//        });
 
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                tablayout.setTabSelected(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-        verticalviewpager.setAdapter(new VPagerAdapter(getFragmentManager(), catesBeans));
         verticalviewpager.setPageMargin(getResources().
                 getDimensionPixelSize(R.dimen.pagemargin));
         verticalviewpager.setPageMarginDrawable(new ColorDrawable(
@@ -135,9 +128,7 @@ public class PeopleFragment extends BaseMvpFragment<FindPresenter, FindView> imp
     }
 
     public static PeopleFragment newInstance() {
-
         Bundle args = new Bundle();
-
         PeopleFragment fragment = new PeopleFragment();
         fragment.setArguments(args);
         return fragment;
@@ -167,6 +158,11 @@ public class PeopleFragment extends BaseMvpFragment<FindPresenter, FindView> imp
     @Override
     public void onDataSuccess(Service service) {
         LogManager.i("-------onDataSuccess------");
+        vTabAdapter = new VTabAdapter(mContext,service.getCates());
+        tablayout.setTabAdapter( vTabAdapter);
+
+        vPagerAdapter = new VPagerAdapter(getFragmentManager(),service.getCates());
+        verticalviewpager.setAdapter(vPagerAdapter);
     }
 
 }

@@ -19,10 +19,6 @@ import butterknife.Unbinder;
  */
 
 public class PeopleChildFragment extends Fragment {
-    String[] array = new String[]{"Android 1", "Android 2", "Android 3",
-            "Android 4", "Android 5", "Android 6", "Android 7", "Android 8",
-            "Android 9", "Android 10", "Android 11", "Android 12", "Android 13",
-            "Android 14", "Android 15", "Android 16"};
 
     /**
      * The fragment argument representing the section number for this

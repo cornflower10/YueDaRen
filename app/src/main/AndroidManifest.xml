@@ -24,7 +24,8 @@
         <activity android:name=".serviceIntroduce.AddressListActivity" />
         <activity android:name=".serviceIntroduce.InvoiceChooseActivity" />
         <activity android:name=".serviceIntroduce.AddAddressActivity" />
-        <activity android:name=".serviceIntroduce.InvoiceSettingActivity"></activity>
+        <activity android:name=".serviceIntroduce.InvoiceSettingActivity" />
+        <activity android:name=".user.AuthCompanyActivity"></activity>
     </application>
 
 </manifest>
