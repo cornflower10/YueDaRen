@@ -7,8 +7,118 @@
     android:background="@color/page_bg_color"
     android:orientation="vertical"
     tools:context="com.qingmang.user.AuthCompanyActivity">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
 <include layout="@layout/toolbar"/>
     <View
         style="@style/divide_line_match"/>
+    <android.support.v7.widget.AppCompatEditText
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/text_333333"
+        android:id="@+id/et_phone"
+        android:paddingLeft="@dimen/margin_16"
+        android:paddingRight="@dimen/margin_16"
+        android:hint="请输入公司名称"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="58dp" />
+    <View
+        style="@style/divide_line_match"/>
+    <android.support.v7.widget.AppCompatEditText
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/text_333333"
+        android:id="@+id/et_passwd"
+        android:paddingLeft="@dimen/margin_16"
+        android:paddingRight="@dimen/margin_16"
+        android:hint="请输入企业司法人"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="58dp" />
+    <View
+        style="@style/divide_line_match"/>
+    <RelativeLayout
+        android:padding="@dimen/margin_16"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/tv_zhi_zhao"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/text_333333"
+            android:text="营业执照"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/bt_up"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/text_333333"
+            android:text="上传"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tv_zhi_zhao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </RelativeLayout>
+        <FrameLayout
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/rl_choose_photo"
+            android:layout_margin="@dimen/margin_16"
+            android:background="@drawable/coner_blue"
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+            <ImageView
+                android:layout_above="@+id/tv_sczp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/tv_sczp"
+                android:text="上传照片"
+                android:textColor="@color/text_999999"
+                android:textSize="@dimen/sp_22"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        </FrameLayout>
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="58dp">
+        <Button
+            android:id="@+id/bt_update"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/white"
+            android:background="@color/red_ff2a31"
+            android:text="修改"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/bt_cancel"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/text_333333"
+            android:background="@color/white"
+            android:text="取消"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 </LinearLayout>
