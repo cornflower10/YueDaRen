@@ -6,19 +6,17 @@ import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 
-import com.qingmang.MainActivity;
 import com.qingmang.R;
 import com.qingmang.base.BaseMvpActivity;
 import com.qingmang.base.Presenter;
 import com.qingmang.base.PresenterFactory;
 import com.qingmang.base.PresenterLoder;
 import com.qingmang.custom.CheckCodeCountDown;
-import com.qingmang.moudle.entity.Register;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class RegisterActivity extends BaseMvpActivity<RegisterPresenter, RegisterView> implements RegisterView<Register> {
+public class RegisterActivity extends BaseMvpActivity<RegisterPresenter, RegisterView> implements RegisterView<String> {
 
     @BindView(R.id.et_name)
     AppCompatEditText etName;
@@ -51,11 +49,18 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter, Registe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initListener();
     }
 
     @Override
-    public void onDataSuccess(Register register) {
+    public void onDataSuccess(String sms) {
+           stopProgressDialog();
+    }
 
+    @Override
+    public void onRegister() {
+        stopProgressDialog();
+        startActivity(LoginActivity.class);
     }
 
     @Override
@@ -71,8 +76,6 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter, Registe
     @Override
     public void onLoadFinished(Loader<RegisterPresenter> loader, RegisterPresenter data) {
         super.onLoadFinished(loader, data);
-//        loadViewHelper.showLoading("");
-//        presenter.loadData();
     }
 
     @OnClick({R.id.cb_agreement, R.id.bt_register})
@@ -81,7 +84,12 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter, Registe
             case R.id.cb_agreement:
                 break;
             case R.id.bt_register:
-                startActivity(MainActivity.class);
+                startProgressDialog();
+                presenter.register(etName.getText().toString(),
+                        etPhone.getText().toString(),
+                        etPasswd.getText().toString(),
+                        etVal.getText().toString());
+
                 break;
         }
     }
@@ -99,6 +107,8 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter, Registe
             @Override
             public void sendCheckCode() {
 //                TODO 向手机发送验证码的逻辑
+                startProgressDialog();
+                presenter.sendSms(etPhone.getText().toString());
             }
         });
         cdVal.setOnFinishListener(new CheckCodeCountDown.OnFinishListener() {

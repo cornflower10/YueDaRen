@@ -3,6 +3,7 @@ package com.qingmang.home;
 import com.qingmang.App;
 import com.qingmang.api.ApiService;
 import com.qingmang.base.BaseMvpPresenter;
+import com.qingmang.moudle.entity.Banner;
 import com.qingmang.moudle.entity.VenService;
 import com.qingmang.utils.RxSchedulers;
 import com.qingmang.utils.rx.ResponseTransformer;
@@ -16,7 +17,10 @@ import io.reactivex.functions.Consumer;
 public class VentureServicePresenter extends BaseMvpPresenter<VentureServeceView> {
 
     public void loadData(){
-        addSubscribe(App.getInstance().getRetrofitServiceManager().create(ApiService.class).VentureServices()
+        addSubscribe(App.getInstance()
+                .getRetrofitServiceManager()
+                .create(ApiService.class)
+                .VentureServices()
                 .compose(ResponseTransformer.<VenService>handleResult())
                 .compose(RxSchedulers.<VenService>ObToMain())
                 .subscribe(new Consumer<VenService>() {
@@ -30,7 +34,29 @@ public class VentureServicePresenter extends BaseMvpPresenter<VentureServeceView
                         getMvpView().onError(throwable.getMessage());
                     }
                 }));
-//        addSubscribe(App.getInstance().getRetrofitServiceManager().create(ApiService.class).VentureServices());
+    }
+
+
+    /**
+     *
+     */
+    public void loadMindBanner(){
+        addSubscribe(App.getInstance().getRetrofitServiceManager()
+                .create(ApiService.class)
+                .ServiveBanner()
+                .compose(ResponseTransformer.<Banner>handleResult())
+                .compose(RxSchedulers.<Banner>ObToMain())
+                .subscribe(new Consumer<Banner>() {
+                    @Override
+                    public void accept(Banner banner) throws Exception {
+                        getMvpView().onBannerSuccess(banner);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        getMvpView().onError(throwable.getMessage());
+                    }
+                }));
 
     }
 

@@ -5,7 +5,9 @@ package com.qingmang.home;
  */
 
 import com.qingmang.base.BaseView;
+import com.qingmang.moudle.entity.Banner;
 
 public interface VentureServeceView<D> extends BaseView{
     void onDataSuccess(D d);
+    void onBannerSuccess(Banner banner);
 }

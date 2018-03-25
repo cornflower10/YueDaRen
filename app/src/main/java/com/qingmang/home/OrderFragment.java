@@ -50,7 +50,7 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter,OrderView> imp
         orderAdapter = new OrderAdapter(contentBeans);
         rv.setAdapter(orderAdapter);
         rv.setLayoutManager(new LinearLayoutManager(mContext));
-        mPresenter.loadData(1);
+        mPresenter.loadData(1,"","");
 
     }
 

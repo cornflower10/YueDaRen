@@ -12,12 +12,12 @@ import io.reactivex.functions.Consumer;
  * Created by xiejingbao on 2018/3/16.
  */
 
-public class RegisterPresenter extends BaseMvpPresenter<RegisterView> {
+public class ForgetPasswdPresenter extends BaseMvpPresenter<ForgetPasswdView> {
 
     public void sendSms(String phone){
         addSubscribe(App.getInstance()
                 .getRetrofitServiceManager()
-                .create(ApiService.class).GetSms(phone)
+                .create(ApiService.class).UpdatePasswdSms(phone)
                 .compose(ResponseTransformer.<String>handleResult())
                 .compose(RxSchedulers.<String>ObToMain())
                 .subscribe(new Consumer<String>() {
@@ -34,16 +34,16 @@ public class RegisterPresenter extends BaseMvpPresenter<RegisterView> {
 
     }
 
-    public void register(String name,String phone,String passwd,String code){
+    public void updatePasswd(String phone,String passwd,String code){
         addSubscribe(App.getInstance()
                 .getRetrofitServiceManager()
-                .create(ApiService.class).Register(name,phone,passwd,code)
+                .create(ApiService.class).UpdatePasswd(phone,passwd,code)
                 .compose(ResponseTransformer.<String>handleResult())
                 .compose(RxSchedulers.<String>ObToMain())
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String sms) throws Exception {
-                        getMvpView().onRegister();
+                        getMvpView().onUpdatePassWd();
                     }
                 }, new Consumer<Throwable>() {
                     @Override

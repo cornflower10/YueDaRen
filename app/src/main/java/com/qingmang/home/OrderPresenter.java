@@ -1,5 +1,7 @@
 package com.qingmang.home;
 
+import android.text.TextUtils;
+
 import com.qingmang.App;
 import com.qingmang.api.ApiService;
 import com.qingmang.base.BaseMvpPresenter;
@@ -15,22 +17,43 @@ import io.reactivex.functions.Consumer;
 
 public class OrderPresenter extends BaseMvpPresenter<OrderView> {
 
-    public void loadData(int page){
-
-        addSubscribe(App.getInstance().getRetrofitServiceManager().create(ApiService.class).OrderList(page,10)
-                .compose(ResponseTransformer.<Order>handleResult())
-                .compose(RxSchedulers.<Order>ObToMain())
-                .subscribe(new Consumer<Order>() {
-                    @Override
-                    public void accept(Order orderBaseEntity) throws Exception {
+    public void loadData(int page,String type,String step){
+        if(TextUtils.isEmpty(type)||TextUtils.isEmpty(step)){
+            addSubscribe(App.getInstance().getRetrofitServiceManager()
+                    .create(ApiService.class).OrderList(page,10)
+                    .compose(ResponseTransformer.<Order>handleResult())
+                    .compose(RxSchedulers.<Order>ObToMain())
+                    .subscribe(new Consumer<Order>() {
+                        @Override
+                        public void accept(Order orderBaseEntity) throws Exception {
                             getMvpView().onDataSuccess(orderBaseEntity);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        getMvpView().onError(throwable.getMessage());
-                    }
-                }));
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            getMvpView().onError(throwable.getMessage());
+                        }
+                    }));
+
+        }else {
+            addSubscribe(App.getInstance().getRetrofitServiceManager()
+                    .create(ApiService.class).OrderList(page,10,type,step)
+                    .compose(ResponseTransformer.<Order>handleResult())
+                    .compose(RxSchedulers.<Order>ObToMain())
+                    .subscribe(new Consumer<Order>() {
+                        @Override
+                        public void accept(Order orderBaseEntity) throws Exception {
+                            getMvpView().onDataSuccess(orderBaseEntity);
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            getMvpView().onError(throwable.getMessage());
+                        }
+                    }));
+        }
+
+
 
     }
 

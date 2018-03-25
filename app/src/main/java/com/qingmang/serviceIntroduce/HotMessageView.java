@@ -1,4 +1,4 @@
-package com.qingmang.user;
+package com.qingmang.serviceIntroduce;
 
 /**
  * Created by xiejingbao on 2018/3/16.
@@ -6,7 +6,6 @@ package com.qingmang.user;
 
 import com.qingmang.base.BaseView;
 
-public interface RegisterView<D> extends BaseView{
+public interface HotMessageView<D> extends BaseView{
     void onDataSuccess(D d);
-    void onRegister();
 }

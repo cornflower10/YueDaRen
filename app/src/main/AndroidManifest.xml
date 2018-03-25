@@ -25,7 +25,8 @@
         <activity android:name=".serviceIntroduce.InvoiceChooseActivity" />
         <activity android:name=".serviceIntroduce.AddAddressActivity" />
         <activity android:name=".serviceIntroduce.InvoiceSettingActivity" />
-        <activity android:name=".user.AuthCompanyActivity"></activity>
+        <activity android:name=".user.AuthCompanyActivity" />
+        <activity android:name=".serviceIntroduce.HotMessageActivity"></activity>
     </application>
 
 </manifest>

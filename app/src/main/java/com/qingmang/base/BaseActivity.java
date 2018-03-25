@@ -1,5 +1,6 @@
 package com.qingmang.base;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import com.qingmang.baselibrary.utils.LogManager;
 public class BaseActivity extends AppCompatActivity {
     private Toast toast = null;
     public Context mContext;
+    private int count = 0;
+    private ProgressDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mContext=this;
+
 //        MyApplication.getInstance().addActivity(this);
 //        PushAgent.getInstance(this).onAppStart();
     }
@@ -91,6 +95,37 @@ public class BaseActivity extends AppCompatActivity {
         startActivityForResult(intent, requestCode);
     }
 
+
+        /**
+     * 开启加载进度条
+     */
+    public void startProgressDialog() {
+        count++;
+        if (count == 1) {
+            loadingDialog = ProgressDialog.show(mContext,"","请等待...",true,false);
+        }
+    }
+
+//    /**
+//     * 开启加载进度条
+//     *
+//     * @param msg
+//     */
+//    public void startProgressDialog(String msg) {
+//        LoadingDialog.showDialogForLoading(getActivity(), msg, true);
+//
+//    }
+
+    /**
+     * 停止加载进度条
+     */
+    public void stopProgressDialog() {
+        count--;
+        if (count == 0) {
+            loadingDialog.cancel();
+        }
+
+    }
     /**
      * 含有Bundle通过Class跳转界面
      **/

@@ -1,10 +1,12 @@
 package com.qingmang.moudle.entity;
 
+import java.io.Serializable;
+
 /**
- * Created by xiejingbao on 2018/3/20.
+ * Created by xiejingbao on 2018/3/24.
  */
 
-public class ServiceIntroduce {
+public class ServiceInfo implements Serializable{
 
     /**
      * id : 7

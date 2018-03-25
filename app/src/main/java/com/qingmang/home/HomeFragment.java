@@ -16,6 +16,9 @@ import com.qingmang.moudle.entity.HotMessage;
 import com.qingmang.moudle.entity.Message;
 import com.qingmang.moudle.entity.Service;
 import com.qingmang.uilibrary.banner.BannerLayout;
+import com.qingmang.uilibrary.marqueen.SimpleMF;
+import com.qingmang.uilibrary.marqueen.SimpleMarqueeView;
+import com.qingmang.uilibrary.marqueen.util.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +30,9 @@ import butterknife.OnClick;
  * Created by xiejingbao on 2017/9/14.
  */
 
-public class HomeFragment extends BaseMvpFragment<HomePresenter,HomeView> implements HomeView<Message> {
+public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> implements HomeView<Message> {
     @BindView(R.id.bl)
     BannerLayout bl;
-    @BindView(R.id.tv_ad)
-    TextView tvAd;
     @BindView(R.id.tv_amount)
     TextView tvAmount;
     @BindView(R.id.tv_des)
@@ -68,7 +69,11 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter,HomeView> implem
     List<Banner.ContentBean> list = new ArrayList<>();
     List<Banner.ContentBean> listMindBanner = new ArrayList<>();
     List<HotMessage.ContentBean> hotMessages = new ArrayList<>();
-    private MessageAdapter messageAdapter ;
+    @BindView(R.id.marqueeView)
+    SimpleMarqueeView marqueeView;
+
+    private MessageAdapter messageAdapter;
+
     @Override
     protected View getRootView() {
         return null;
@@ -86,7 +91,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter,HomeView> implem
         mPresenter.loadTopBanner();
         mPresenter.loadMindBanner();
         mPresenter.loadHotMessage();
-         mzBannerAdapter=new WebBannerAdapter(mContext,list);
+        mzBannerAdapter = new WebBannerAdapter(mContext, list);
         mzBannerAdapter.setOnBannerItemClickListener(new BannerLayout.OnBannerItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -98,6 +103,29 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter,HomeView> implem
         messageAdapter = new MessageAdapter(hotMessages);
         rvMessage.setAdapter(messageAdapter);
         rvMessage.setLayoutManager(new LinearLayoutManager(mContext));
+
+    }
+
+    private void initQuickMessage(final List<HotMessage.ContentBean> list) {
+        SimpleMF<String> marqueeFactory3 = new SimpleMF<>(mContext);
+        List<String> datas3 = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if(i>4)
+                break;
+            datas3.add(list.get(i).getContent());
+        }
+        marqueeFactory3.setData(datas3);
+        marqueeView.setMarqueeFactory(marqueeFactory3);
+        marqueeView.startFlipping();
+
+        marqueeView.setOnItemClickListener(new OnItemClickListener<TextView, Object>() {
+            @Override
+            public void onItemClickListener(TextView mView, Object mData, int mPosition) {
+
+               list.get(mPosition);
+
+            }
+        });
     }
 
     @Override
@@ -143,7 +171,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter,HomeView> implem
 
     @Override
     public void onBannerSuccess(Banner banner) {
-        if(null!=banner.getContent()&&banner.getContent().size()>0){
+        if (null != banner.getContent() && banner.getContent().size() > 0) {
             list.clear();
             list.addAll(banner.getContent());
             mzBannerAdapter.notifyDataSetChanged();
@@ -154,10 +182,10 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter,HomeView> implem
     @Override
     public void onMindBannerSuccess(Banner banner) {
         listMindBanner = banner.getContent();
-        if(null==listMindBanner)
+        if (null == listMindBanner)
             return;
         List<String> list = new ArrayList<>();
-        for (int i = 0; i <listMindBanner.size() ; i++) {
+        for (int i = 0; i < listMindBanner.size(); i++) {
             list.add(listMindBanner.get(i).getLogo());
         }
         iv.setViewUrls(list);
@@ -171,11 +199,13 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter,HomeView> implem
 
     @Override
     public void onHotMessageSuccess(HotMessage hotMessage) {
-          messageAdapter.replaceData(hotMessage.getContent());
+        messageAdapter.replaceData(hotMessage.getContent());
+        initQuickMessage(hotMessage.getContent());
     }
 
     @Override
     protected HomePresenter createPresenter() {
         return new HomePresenter();
     }
+
 }

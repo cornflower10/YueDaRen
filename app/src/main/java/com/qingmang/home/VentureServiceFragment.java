@@ -1,5 +1,6 @@
 package com.qingmang.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +11,10 @@ import com.qingmang.R;
 import com.qingmang.adapter.VentureServiceAdapter;
 import com.qingmang.base.BaseMvpFragment;
 import com.qingmang.baselibrary.utils.LogManager;
+import com.qingmang.moudle.entity.Banner;
 import com.qingmang.moudle.entity.VenService;
 import com.qingmang.serviceIntroduce.ServiceIntroduceActivity;
+import com.yyydjk.library.BannerLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +30,12 @@ public class VentureServiceFragment extends BaseMvpFragment<VentureServicePresen
 
     @BindView(R.id.rv)
     RecyclerView rv;
+    @BindView(R.id.iv)
+    BannerLayout iv;
+
     private VentureServiceAdapter ventureServiceAdapter;
     private List<VenService.ContentBean> list = new ArrayList<>();
+    List<Banner.ContentBean> listMindBanner = new ArrayList<>();
 
     @Override
     protected View getRootView() {
@@ -44,6 +51,7 @@ public class VentureServiceFragment extends BaseMvpFragment<VentureServicePresen
     protected void initView() {
         LogManager.i("MyFragment-----");
         loadViewHelper.showLoading("加载中");
+        mPresenter.loadMindBanner();
         mPresenter.loadData();
         ventureServiceAdapter = new VentureServiceAdapter(list);
         rv.setLayoutManager(new LinearLayoutManager(mContext));
@@ -51,7 +59,9 @@ public class VentureServiceFragment extends BaseMvpFragment<VentureServicePresen
         ventureServiceAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    startActivity(ServiceIntroduceActivity.class);
+                Intent intent = new Intent(mContext,ServiceIntroduceActivity.class);
+                intent.putExtra("id",list.get(position).getId());
+                startActivity(intent);
             }
         });
     }
@@ -78,11 +88,24 @@ public class VentureServiceFragment extends BaseMvpFragment<VentureServicePresen
     @Override
     public void onDataSuccess(VenService venService) {
         List<VenService.ContentBean> contentBeans
-                =  venService.getContent();
+                = venService.getContent();
         loadViewHelper.restore();
-        if(null!=contentBeans &&contentBeans.size()>0){
+        if (null != contentBeans && contentBeans.size() > 0) {
             ventureServiceAdapter.replaceData(contentBeans);
         }
+
+    }
+
+    @Override
+    public void onBannerSuccess(Banner banner) {
+        listMindBanner = banner.getContent();
+        if(null==listMindBanner)
+            return;
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i <listMindBanner.size() ; i++) {
+            list.add(listMindBanner.get(i).getLogo());
+        }
+        iv.setViewUrls(list);
 
     }
 
@@ -90,5 +113,6 @@ public class VentureServiceFragment extends BaseMvpFragment<VentureServicePresen
     protected VentureServicePresenter createPresenter() {
         return new VentureServicePresenter();
     }
+
 
 }

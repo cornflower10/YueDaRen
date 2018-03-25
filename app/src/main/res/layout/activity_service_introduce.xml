@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/ll_root"
     android:background="@color/page_bg_color"
     tools:context="com.qingmang.serviceIntroduce.ServiceIntroduceActivity">
 
@@ -69,6 +70,7 @@
    <View
        style="@style/divide_line_match"/>
     <RelativeLayout
+        android:id="@+id/rl_light"
         android:background="@color/white"
         android:padding="@dimen/margin_16"
         android:layout_width="match_parent"
@@ -83,6 +85,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            android:id="@+id/tv_one_one"
             android:layout_marginLeft="@dimen/margin_16"
             android:layout_toRightOf="@+id/tv_per_service"
             android:textSize="@dimen/sp_14"

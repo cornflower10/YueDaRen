@@ -3,10 +3,11 @@ package com.qingmang.api;
 
 import com.qingmang.moudle.entity.Banner;
 import com.qingmang.moudle.entity.BaseEntity;
+import com.qingmang.moudle.entity.CustomerInfo;
 import com.qingmang.moudle.entity.HotMessage;
-import com.qingmang.moudle.entity.LoginEntity;
 import com.qingmang.moudle.entity.Order;
 import com.qingmang.moudle.entity.Service;
+import com.qingmang.moudle.entity.ServiceInfo;
 import com.qingmang.moudle.entity.VenService;
 
 import io.reactivex.Observable;
@@ -22,29 +23,52 @@ import retrofit2.http.POST;
 public interface ApiService {
 
     /**
-     * 注册
-     * @param userName
-     * @param type
-     * @param sign
+     * sms
+     * @param mobile
      * @return
      */
     @FormUrlEncoded
-    @POST("regist.php")
-    Observable<BaseEntity> getSms(@Field("mobile") String userName,
-                                 @Field("mobileCodeType") String type,
-                                 @Field("sign") String sign);
+    @POST("customer/regist/sms")
+    Observable<BaseEntity<String>> GetSms(@Field("mobile") String mobile);
+
+    /**
+     *
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("customer/regist")
+    Observable<BaseEntity<String>> Register(@Field("name") String name,
+                                          @Field("mobile") String mobile,
+                                          @Field("password") String password,
+                                          @Field("code") String code);
 
     /**
      * 登录
-     * @param userName
+     * @param mobile
      * @param passWd
      * @return
      */
     @FormUrlEncoded
-    @POST("regist.php")
-    Observable<BaseEntity<LoginEntity>> login(@Field("phone") String userName,
-                                              @Field("password") String passWd
-                                              );
+    @POST("customer/login")
+    Observable<BaseEntity<String>> Login(@Field("mobile") String mobile,
+                                              @Field("password") String passWd);
+    @GET("customer/info")
+    Observable<BaseEntity<CustomerInfo>> CusomerInfo();
+
+    @FormUrlEncoded
+    @POST("customer/upwd/sms")
+    Observable<BaseEntity<String>> UpdatePasswdSms(@Field("mobile") String mobile);
+
+    @FormUrlEncoded
+    @POST("customer/upwd")
+    Observable<BaseEntity<String>> UpdatePasswd(@Field("mobile") String mobile,
+                                                @Field("pwd") String pwd,
+                                                @Field("code") String code);
+
+
+
+
     /**
      * 首页banner
      * @return
@@ -73,6 +97,13 @@ public interface ApiService {
     @GET("article/hot")
     Observable<BaseEntity<HotMessage>> HotMessages();
 
+
+    /**
+     * 市民banner
+     * @return
+     */
+    @GET("article/pbl")
+    Observable<BaseEntity<Banner>> ServiveBanner();
     /**
      * 市民服务列表
      * @return
@@ -80,12 +111,26 @@ public interface ApiService {
     @GET("goods/list/citizen")
     Observable<BaseEntity<VenService>> VentureServices();
 
+    /**
+     * 服务详情
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("goods/detail")
+    Observable<BaseEntity<ServiceInfo>> ServiceDetail(@Field("id") long id);
+
 
 
     @FormUrlEncoded
     @POST("orders/list")
     Observable<BaseEntity<Order>> OrderList(@Field("pageNumber") int page,
-                                        @Field("pageSize") int size);
+                                            @Field("pageSize") int size,
+                                            @Field("type") String type,
+                                            @Field("step") String step);
+    @FormUrlEncoded
+    @POST("orders/list")
+    Observable<BaseEntity<Order>> OrderList(@Field("pageNumber") int page,
+                                            @Field("pageSize") int size);
 
     /**
      *
@@ -97,28 +142,4 @@ public interface ApiService {
     Observable<BaseEntity<Service>> ServiceList(@Field("cateid") long id);
 
 
-
-
-
-
-//
-//
-//
-//    @FormUrlEncoded
-//    @POST("agency/shuanglu/changePassword")
-//    Observable<ChangePasswdEntity> changePasswd(@Field("oldPassword") String userName,
-//                                                @Field("newPassword") String passWd,
-//                                                @Field("sign") String sign
-//    );
-//
-//    //上传同时
-//    @Multipart
-//    @POST("agency/shuanglu/submitIntentAgencyInfo")
-//    Observable<UploadEntity> uploads(@PartMap Map<String, RequestBody> params
-//    );
-//
-//    @FormUrlEncoded
-//    @POST("agency/shuanglu/isAgencyNameUsed")
-//    Observable<AgencyNameUsed> isAgencyNameUsed(@Field("customName") String customName,
-//                                                @Field("sign") String sign);
 }

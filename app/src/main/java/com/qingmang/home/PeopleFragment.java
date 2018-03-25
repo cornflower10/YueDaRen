@@ -1,6 +1,5 @@
 package com.qingmang.home;
 
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -80,10 +79,10 @@ public class PeopleFragment extends BaseMvpFragment<FindPresenter, FindView> imp
 //
 //        });
 
-        verticalviewpager.setPageMargin(getResources().
-                getDimensionPixelSize(R.dimen.pagemargin));
-        verticalviewpager.setPageMarginDrawable(new ColorDrawable(
-                getResources().getColor(android.R.color.holo_green_dark)));
+//        verticalviewpager.setPageMargin(getResources().
+//                getDimensionPixelSize(R.dimen.pagemargin));
+//        verticalviewpager.setPageMarginDrawable(new ColorDrawable(
+//                getResources().getColor(android.R.color.holo_green_dark)));
 
         verticalviewpager.setPageTransformer(true, new ViewPager.PageTransformer() {
             @Override
@@ -157,11 +156,14 @@ public class PeopleFragment extends BaseMvpFragment<FindPresenter, FindView> imp
 
     @Override
     public void onDataSuccess(Service service) {
+        loadViewHelper.restore();
         LogManager.i("-------onDataSuccess------");
-        vTabAdapter = new VTabAdapter(mContext,service.getCates());
+        catesBeans = service.getCates();
+        vTabAdapter = new VTabAdapter(mContext,catesBeans);
         tablayout.setTabAdapter( vTabAdapter);
 
-        vPagerAdapter = new VPagerAdapter(getFragmentManager(),service.getCates());
+
+        vPagerAdapter = new VPagerAdapter(getFragmentManager(),catesBeans);
         verticalviewpager.setAdapter(vPagerAdapter);
     }
 

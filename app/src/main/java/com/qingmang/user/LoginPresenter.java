@@ -1,9 +1,8 @@
-package com.qingmang.serviceIntroduce;
+package com.qingmang.user;
 
 import com.qingmang.App;
 import com.qingmang.api.ApiService;
 import com.qingmang.base.BaseMvpPresenter;
-import com.qingmang.moudle.entity.ServiceInfo;
 import com.qingmang.utils.RxSchedulers;
 import com.qingmang.utils.rx.ResponseTransformer;
 
@@ -13,19 +12,18 @@ import io.reactivex.functions.Consumer;
  * Created by xiejingbao on 2018/3/16.
  */
 
-public class ServiceIntroducePresenter extends BaseMvpPresenter<ServiceIntroduceView> {
+public class LoginPresenter extends BaseMvpPresenter<LoginView> {
 
-    public void loadData(long id){
+    public void login(String phone,String passwd){
         addSubscribe(App.getInstance()
                 .getRetrofitServiceManager()
-                .create(ApiService.class)
-                .ServiceDetail(id)
-                .compose(ResponseTransformer.<ServiceInfo>handleResult())
-                .compose(RxSchedulers.<ServiceInfo>ObToMain())
-                .subscribe(new Consumer<ServiceInfo>() {
+                .create(ApiService.class).Login(phone,passwd)
+                .compose(ResponseTransformer.<String>handleResult())
+                .compose(RxSchedulers.<String>ObToMain())
+                .subscribe(new Consumer<String>() {
                     @Override
-                    public void accept(ServiceInfo serviceInfo) throws Exception {
-                            getMvpView().onDataSuccess(serviceInfo);
+                    public void accept(String sms) throws Exception {
+                            getMvpView().onDataSuccess(sms);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -35,5 +33,6 @@ public class ServiceIntroducePresenter extends BaseMvpPresenter<ServiceIntroduce
                 }));
 
     }
+
 
 }

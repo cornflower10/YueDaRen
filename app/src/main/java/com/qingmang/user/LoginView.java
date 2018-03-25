@@ -6,7 +6,6 @@ package com.qingmang.user;
 
 import com.qingmang.base.BaseView;
 
-public interface RegisterView<D> extends BaseView{
+public interface LoginView<D> extends BaseView{
     void onDataSuccess(D d);
-    void onRegister();
 }
