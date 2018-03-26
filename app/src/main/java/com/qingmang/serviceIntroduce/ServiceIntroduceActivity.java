@@ -149,5 +149,7 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
             rlLight.setVisibility(View.GONE);
         }
 
+//        serviceIntroduce.getSpecial()
+
     }
 }

@@ -70,6 +70,7 @@
                 android:layout_width="200dp"
                 android:layout_height="48dp" />
             <com.qingmang.custom.CheckCodeCountDown
+                android:background="@drawable/coner_gray_full"
                 android:textSize="@dimen/sp_16"
                 android:id="@+id/cd_val"
                 android:gravity="center"
@@ -78,7 +79,7 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
-                android:layout_height="26dp" />
+                android:layout_height="36dp" />
         </RelativeLayout>
         <View
             style="@style/divide_line_match"/>

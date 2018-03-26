@@ -53,27 +53,6 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content" />
  </FrameLayout>
- <View
-     android:layout_gravity="center_vertical"
-     android:background="@color/divide_line"
-     android:layout_width="1dp"
-     android:layout_height="20dp"/>
- <FrameLayout
-     android:layout_gravity="center"
-     android:layout_width="0dp"
-     android:layout_height="wrap_content"
-     android:layout_weight="1">
-  <TextView
-      android:id="@+id/tv_service"
-      android:layout_gravity="center"
-      android:padding="7dp"
-      android:drawableRight="@drawable/icon_drop_dowm"
-      android:textColor="@color/text_333333"
-      android:textSize="@dimen/sp_14"
-      android:text="全部服务状态"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content" />
- </FrameLayout>
 
 </LinearLayout>
  <View

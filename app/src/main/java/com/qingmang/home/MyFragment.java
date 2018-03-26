@@ -21,7 +21,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * Created by xiejingbao on 2017/9/14.
@@ -36,12 +35,10 @@ public class MyFragment extends BaseMvpFragment<MyPresenter, MyView> implements 
     ImageView ivHeader;
     @BindView(R.id.tv_amount)
     TextView tvAmount;
-    Unbinder unbinder;
     @BindView(R.id.tv_yhj)
     TextView tvYhj;
     @BindView(R.id.tv_dzf)
     TextView tvDzf;
-    Unbinder unbinder1;
     private UtilBoxAdapter utilBoxAdapter;
     private List<UtilBox> utilBoxes = new ArrayList<>();
 
@@ -100,6 +97,9 @@ public class MyFragment extends BaseMvpFragment<MyPresenter, MyView> implements 
     @Override
     public void onDataSuccess(CustomerInfo customerInfo) {
         tvName.setText(customerInfo.getName());
+        tvAmount.setText(String.valueOf(customerInfo.getScore()));
+        tvYhj.setText(String.valueOf(customerInfo.getCouponum()));
+        tvDzf.setText(String.valueOf(customerInfo.getOrdersnum()));
 
 
     }

@@ -90,6 +90,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
 
         mPresenter.loadTopBanner();
         mPresenter.loadMindBanner();
+        mPresenter.loadHotService();
         mPresenter.loadHotMessage();
         mzBannerAdapter = new WebBannerAdapter(mContext, list);
         mzBannerAdapter.setOnBannerItemClickListener(new BannerLayout.OnBannerItemClickListener() {

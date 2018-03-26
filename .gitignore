@@ -6,6 +6,8 @@
 /baselibrary/build
 /network/build
 /uilibrary/build
+/citypickerview/build
 .gradle
 /captures
 .externalNativeBuild
+citypickerview/

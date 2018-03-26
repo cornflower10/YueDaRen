@@ -52,27 +52,6 @@ public class PeopleChildFragment extends Fragment {
         Log.d("Debug", "creating fragment "
                 + getArguments().getInt(ARG_SECTION_NUMBER));
 
-        switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
-//            case 0:
-//                break;
-//
-//            case 1:
-//                rootView.setBackgroundColor(Color.BLACK);
-//                break;
-//
-//            case 2:
-//                rootView.setBackgroundColor(Color.BLUE);
-//                break;
-//
-//            case 3:
-//                rootView.setBackgroundColor(Color.GREEN);
-//                break;
-//
-//            case 4:
-//                rootView.setBackgroundColor(Color.RED);
-//                break;
-        }
-
 
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;

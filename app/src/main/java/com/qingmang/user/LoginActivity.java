@@ -10,6 +10,7 @@ import com.qingmang.R;
 import com.qingmang.base.BaseMvpActivity;
 import com.qingmang.base.PresenterFactory;
 import com.qingmang.base.PresenterLoder;
+import com.qingmang.baselibrary.utils.ValUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -45,6 +46,14 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter,LoginView> imp
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_login:
+                if(ValUtils.isMobileNO(etPhone.getText().toString())){
+                    showToast("手机号格式不正确！");
+                    return;
+                }
+                if(ValUtils.isPassword(etPasswd.getText().toString())){
+                    showToast("密码格式不正确！");
+                    return;
+                }
                 startProgressDialog();
                 break;
             case R.id.tv_forget_passwd:

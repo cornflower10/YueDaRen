@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.qingmang.R;
+import com.qingmang.baselibrary.utils.DateUtils;
 import com.qingmang.moudle.entity.HotMessage;
 import com.qingmang.utils.imageload.ImageLoaderUtil;
 
@@ -26,7 +27,7 @@ public class MessageAdapter extends BaseQuickAdapter<HotMessage.ContentBean, Bas
     protected void convert(BaseViewHolder helper, HotMessage.ContentBean item) {
         helper.setText(R.id.tv_des,item.getIntroduce());
         helper.setText(R.id.tv_type,String.valueOf(item.getState()));
-        helper.setText(R.id.tv_date,String.valueOf(item.getCreatetime()));
+        helper.setText(R.id.tv_date, DateUtils.transferLongToDate(item.getCreatetime()));
         helper.setText(R.id.tv_place,item.getPlace());
         ImageLoaderUtil.getInstance().showImage(item.getLogo(),(ImageView) helper.getView(R.id.iv),0);
     }

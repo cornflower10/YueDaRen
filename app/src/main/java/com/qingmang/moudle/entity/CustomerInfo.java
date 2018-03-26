@@ -36,6 +36,33 @@ public class CustomerInfo {
     private int checkin;
     private int consume;
     private int audit;
+    private int score;
+    private int couponum;
+    private int ordersnum;
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getCouponum() {
+        return couponum;
+    }
+
+    public void setCouponum(int couponum) {
+        this.couponum = couponum;
+    }
+
+    public int getOrdersnum() {
+        return ordersnum;
+    }
+
+    public void setOrdersnum(int ordersnum) {
+        this.ordersnum = ordersnum;
+    }
 
     public int getId() {
         return id;

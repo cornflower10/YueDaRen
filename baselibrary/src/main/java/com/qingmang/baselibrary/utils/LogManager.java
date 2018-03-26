@@ -39,4 +39,10 @@ public class LogManager {
             Log.e(tag, msg);
         }
     }
+
+    public static void e(String tag,Throwable throwable){
+        if(DEBUG){
+            Log.e(tag,"error",throwable);
+        }
+    }
 }
