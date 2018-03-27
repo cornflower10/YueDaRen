@@ -205,7 +205,6 @@ public interface ApiService {
     );
 
 
-    @FormUrlEncoded
     @GET("customer/address/list")
     Observable<BaseEntity<List<Adress>>> AddressList();
 

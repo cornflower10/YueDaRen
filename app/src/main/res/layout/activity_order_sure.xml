@@ -29,6 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
         <LinearLayout
+            android:clickable="false"
             android:layout_gravity="center_vertical"
             android:orientation="vertical"
             android:layout_weight="4"
