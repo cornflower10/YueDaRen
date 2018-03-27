@@ -1,5 +1,6 @@
 package com.qingmang.serviceIntroduce;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -27,6 +28,8 @@ public class OrderSureActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_location:
+                Intent intent = new Intent(this,AddressListActivity.class);
+                startActivity(intent);
                 break;
             case R.id.tv_fa_piao:
                 break;

@@ -1,6 +1,7 @@
 package com.qingmang.api;
 
 
+import com.qingmang.moudle.entity.Adress;
 import com.qingmang.moudle.entity.Banner;
 import com.qingmang.moudle.entity.BaseEntity;
 import com.qingmang.moudle.entity.CustomerInfo;
@@ -10,11 +11,17 @@ import com.qingmang.moudle.entity.Service;
 import com.qingmang.moudle.entity.ServiceInfo;
 import com.qingmang.moudle.entity.VenService;
 
+import java.util.List;
+import java.util.Map;
+
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PartMap;
 
 /**
  * Created by xiejingbao on 2017/5/18.
@@ -65,9 +72,14 @@ public interface ApiService {
     Observable<BaseEntity<String>> UpdatePasswd(@Field("mobile") String mobile,
                                                 @Field("pwd") String pwd,
                                                 @Field("code") String code);
-
-
-
+//
+//      params.put("openAccountCatagory", RequestBody.create(MediaType.parse(TYPE_TEXT),customer.getOpenAccountCatagory()));
+//       params.put("op
+    //上传
+    @Multipart
+    @POST("agency/shuanglu/submitIntentAgencyInfo")
+    Observable<BaseEntity<String>> uploads(@PartMap Map<String, RequestBody> params);
+//   params.put("operatorIdentityImages"+"\";fileName=\""+file1.getName(),RequestBody.create(MediaType.parse(TYPE_STREAM), file1));
 
     /**
      * 首页banner
@@ -120,6 +132,36 @@ public interface ApiService {
     Observable<BaseEntity<ServiceInfo>> ServiceDetail(@Field("id") long id);
 
 
+    /**
+     * 下单
+     * @param id
+     * @param num
+     * @param choose
+     * @param chosecity
+     * @param chosedistrict
+     * @param addressid
+     * @param invoicetype
+     * @param invoiceraise
+     * @param company
+     * @param taxpayer
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("orders/place")
+    Observable<BaseEntity<String>> Order(@Field("goodsid") long id,
+                                         @Field("num") int num,
+                                         @Field("choose") String choose,
+                                         @Field("chosecity") String chosecity,
+                                         @Field("chosedistrict") String chosedistrict,
+                                         @Field("addressid") long addressid,
+                                         @Field("invoicetype") int invoicetype,
+                                         @Field("invoiceraise") int invoiceraise,
+                                         @Field("company") String company,
+                                         @Field("taxpayer") String taxpayer
+                                         );
+
+
+
 
     @FormUrlEncoded
     @POST("orders/list")
@@ -140,6 +182,32 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("goods/list/job")
     Observable<BaseEntity<Service>> ServiceList(@Field("cateid") long id);
+
+
+    /**
+     * 添加地址
+     * @param collector
+     * @param mobile
+     * @param province
+     * @param city
+     * @param areas
+     * @param address
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("customer/address/add")
+    Observable<BaseEntity<String>> AddAddress(@Field("collector") String collector,
+                                         @Field("mobile") String mobile,
+                                         @Field("province") String province,
+                                         @Field("city") String city,
+                                         @Field("areas") String areas,
+                                         @Field("address") String address
+    );
+
+
+    @FormUrlEncoded
+    @GET("customer/address/list")
+    Observable<BaseEntity<List<Adress>>> AddressList();
 
 
 }

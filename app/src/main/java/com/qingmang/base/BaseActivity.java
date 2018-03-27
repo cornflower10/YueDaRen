@@ -35,6 +35,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        stopProgressDialog();
 //        BaseActivity.getInstance().finishActivity(this);
     }
 
@@ -122,7 +123,10 @@ public class BaseActivity extends AppCompatActivity {
     public void stopProgressDialog() {
         count--;
         if (count == 0) {
-            loadingDialog.cancel();
+            if(null!=loadingDialog){
+                loadingDialog.cancel();
+            }
+
         }
 
     }
@@ -137,5 +141,6 @@ public class BaseActivity extends AppCompatActivity {
         }
         startActivity(intent);
     }
+
 
 }
