@@ -17,6 +17,7 @@ import io.reactivex.functions.Consumer;
 
 public class AddressListPresenter extends BaseMvpPresenter<AddressListView> {
 
+
     public void addressList(){
         addSubscribe(App.getInstance()
                 .getRetrofitServiceManager()
@@ -27,7 +28,49 @@ public class AddressListPresenter extends BaseMvpPresenter<AddressListView> {
                 .subscribe(new Consumer<List<Adress>>() {
                     @Override
                     public void accept(List<Adress> adressList) throws Exception {
-                            getMvpView().onDataSuccess(adressList);
+                        getMvpView().onDataSuccess(adressList);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        getMvpView().onError(throwable.getMessage());
+                    }
+                }));
+
+    }
+
+    public void setDefultAddress(int id){
+        addSubscribe(App.getInstance()
+                .getRetrofitServiceManager()
+                .create(ApiService.class)
+                .SetDefultAddress(Long.valueOf(id))
+                .compose(ResponseTransformer.<Object>handleResult())
+                .compose(RxSchedulers.<Object>ObToMain())
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object s) throws Exception {
+                        addressList();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        getMvpView().onError(throwable.getMessage());
+                    }
+                }));
+
+    }
+
+    public void deleteAddress(int id){
+        addSubscribe(App.getInstance()
+                .getRetrofitServiceManager()
+                .create(ApiService.class)
+                .DeleteAddress(Long.valueOf(id))
+                .compose(ResponseTransformer.<String>handleResult())
+                .compose(RxSchedulers.<String>ObToMain())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        addressList();
                     }
                 }, new Consumer<Throwable>() {
                     @Override

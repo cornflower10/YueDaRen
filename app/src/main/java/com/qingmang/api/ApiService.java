@@ -6,6 +6,7 @@ import com.qingmang.moudle.entity.Banner;
 import com.qingmang.moudle.entity.BaseEntity;
 import com.qingmang.moudle.entity.CustomerInfo;
 import com.qingmang.moudle.entity.HotMessage;
+import com.qingmang.moudle.entity.HotService;
 import com.qingmang.moudle.entity.Order;
 import com.qingmang.moudle.entity.Service;
 import com.qingmang.moudle.entity.ServiceInfo;
@@ -77,8 +78,8 @@ public interface ApiService {
 //       params.put("op
     //上传
     @Multipart
-    @POST("agency/shuanglu/submitIntentAgencyInfo")
-    Observable<BaseEntity<String>> uploads(@PartMap Map<String, RequestBody> params);
+    @POST("customer/info/update")
+    Observable<BaseEntity<String>> UpdateCustomer(@PartMap Map<String, RequestBody> params);
 //   params.put("operatorIdentityImages"+"\";fileName=\""+file1.getName(),RequestBody.create(MediaType.parse(TYPE_STREAM), file1));
 
     /**
@@ -100,7 +101,7 @@ public interface ApiService {
      * @return
      */
     @GET("goods/top")
-    Observable<BaseEntity<Service>> HotService();
+    Observable<BaseEntity<List<HotService>>> HotService();
 
     /**
      * 热点资讯
@@ -201,7 +202,31 @@ public interface ApiService {
                                          @Field("province") String province,
                                          @Field("city") String city,
                                          @Field("areas") String areas,
-                                         @Field("address") String address
+                                         @Field("address") String address,
+                                              @Field("top") int top
+    );
+
+    /**
+     * 更新地址
+     * @param collector
+     * @param mobile
+     * @param province
+     * @param city
+     * @param areas
+     * @param address
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("customer/address/update")
+    Observable<BaseEntity<String>> UpdateAddress(@Field("id") String id,
+                                                 @Field("collector") String collector,
+                                              @Field("mobile") String mobile,
+                                              @Field("province") String province,
+                                              @Field("city") String city,
+                                              @Field("areas") String areas,
+                                              @Field("address") String address,
+                                                 @Field("top") int top
+
     );
 
 
@@ -209,4 +234,20 @@ public interface ApiService {
     Observable<BaseEntity<List<Adress>>> AddressList();
 
 
+    /**
+     *
+     设置默认收货地址
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("customer/address/setdef")
+    Observable<BaseEntity<Object>> SetDefultAddress(@Field("id") long id);
+    /**
+     *
+     删除收货地址
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("customer/address/delete")
+    Observable<BaseEntity<String>> DeleteAddress(@Field("id") long id);
 }

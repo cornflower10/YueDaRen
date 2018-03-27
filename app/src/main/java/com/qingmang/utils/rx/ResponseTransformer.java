@@ -50,7 +50,7 @@ public class ResponseTransformer {
         @Override
         public ObservableSource<T> apply(BaseEntity<T> tResponse) throws Exception {
             if ("1".equals(tResponse.getStatus())) {
-                return Observable.just(tResponse.getData());
+                return (ObservableSource<T>) Observable.just(null==tResponse.getData()?"":tResponse.getData());
             } else {
                 return Observable.error(new ApiException(tResponse.getDetail()));
             }

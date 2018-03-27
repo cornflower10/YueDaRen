@@ -82,7 +82,7 @@ public abstract class BaseMvpActivity<P extends Presenter<V>,V extends BaseView>
     @Override
     public void onError(String msg) {
         showToast(msg);
-
+        stopProgressDialog();
     }
 
 

@@ -1,10 +1,13 @@
 package com.qingmang.moudle.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by xiejingbao on 2018/3/21.
  */
 
-public class Adress {
+public class Adress implements Parcelable{
 
 
     /**
@@ -99,4 +102,49 @@ public class Adress {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeInt(this.customerid);
+        dest.writeString(this.collector);
+        dest.writeString(this.mobile);
+        dest.writeString(this.province);
+        dest.writeString(this.city);
+        dest.writeString(this.areas);
+        dest.writeString(this.address);
+        dest.writeInt(this.top);
+    }
+
+    public Adress() {
+    }
+
+    protected Adress(Parcel in) {
+        this.id = in.readInt();
+        this.customerid = in.readInt();
+        this.collector = in.readString();
+        this.mobile = in.readString();
+        this.province = in.readString();
+        this.city = in.readString();
+        this.areas = in.readString();
+        this.address = in.readString();
+        this.top = in.readInt();
+    }
+
+    public static final Creator<Adress> CREATOR = new Creator<Adress>() {
+        @Override
+        public Adress createFromParcel(Parcel source) {
+            return new Adress(source);
+        }
+
+        @Override
+        public Adress[] newArray(int size) {
+            return new Adress[size];
+        }
+    };
 }

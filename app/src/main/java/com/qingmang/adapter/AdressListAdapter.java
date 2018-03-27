@@ -35,6 +35,7 @@ public class AdressListAdapter extends BaseQuickAdapter<Adress, BaseViewHolder> 
         }
         helper.addOnClickListener(R.id.tv_edit);
         helper.addOnClickListener(R.id.tv_delete);
+        helper.addOnClickListener(R.id.cb_defult);
 //        helper.setText(R.id.tv_date,String.valueOf(item.getCreatetime()));
 //        helper.setText(R.id.tv_place,item.getPlace());
     }

@@ -13,8 +13,8 @@ import com.qingmang.base.BaseMvpFragment;
 import com.qingmang.baselibrary.utils.LogManager;
 import com.qingmang.moudle.entity.Banner;
 import com.qingmang.moudle.entity.HotMessage;
+import com.qingmang.moudle.entity.HotService;
 import com.qingmang.moudle.entity.Message;
-import com.qingmang.moudle.entity.Service;
 import com.qingmang.uilibrary.banner.BannerLayout;
 import com.qingmang.uilibrary.marqueen.SimpleMF;
 import com.qingmang.uilibrary.marqueen.SimpleMarqueeView;
@@ -194,7 +194,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
     }
 
     @Override
-    public void onHotServieSuccess(Service service) {
+    public void onHotServieSuccess(List<HotService> services) {
 
     }
 

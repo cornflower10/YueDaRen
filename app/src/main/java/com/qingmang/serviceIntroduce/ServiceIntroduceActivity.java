@@ -81,7 +81,7 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
     private ServiceInfo serviceInfo;
     private int id;
     CityPickerView mCityPickerView = new CityPickerView();
-    private int count;
+    private int count  = 1;
     private List<String> list =new ArrayList<>();
     private String [] titles ={"服务说明","服务流程","服务承诺","常见问题"};
 
@@ -106,6 +106,7 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
         id = getIntent().getIntExtra("id", 0);
         mCityPickerView.init(mContext);
         initWheel();
+        tvCount.setText(String.valueOf(count));
 
     }
 

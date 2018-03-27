@@ -52,7 +52,7 @@
       android:textColor="@color/text_999999"
       android:button="@null"
       android:textSize="@dimen/sp_14"
-      android:drawableLeft="@drawable/checkbox_style"
+      android:drawableLeft="@drawable/checkbox_style_3"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content" />
   <TextView

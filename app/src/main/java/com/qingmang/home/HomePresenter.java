@@ -5,9 +5,12 @@ import com.qingmang.api.ApiService;
 import com.qingmang.base.BaseMvpPresenter;
 import com.qingmang.moudle.entity.Banner;
 import com.qingmang.moudle.entity.HotMessage;
+import com.qingmang.moudle.entity.HotService;
 import com.qingmang.moudle.entity.Service;
 import com.qingmang.utils.RxSchedulers;
 import com.qingmang.utils.rx.ResponseTransformer;
+
+import java.util.List;
 
 import io.reactivex.functions.Consumer;
 
@@ -64,12 +67,12 @@ public class HomePresenter extends BaseMvpPresenter<HomeView> {
      */
     public void loadHotService(){
         addSubscribe(App.getInstance().getRetrofitServiceManager().create(ApiService.class).HotService()
-                .compose(ResponseTransformer.<Service>handleResult())
-                .compose(RxSchedulers.<Service>ObToMain())
-                .subscribe(new Consumer<Service>() {
+                .compose(ResponseTransformer.<List<HotService>>handleResult())
+                .compose(RxSchedulers.<List<HotService>>ObToMain())
+                .subscribe(new Consumer<List<HotService>>() {
                     @Override
-                    public void accept(Service service) throws Exception {
-                        getMvpView().onHotServieSuccess(service);
+                    public void accept(List<HotService> services) throws Exception {
+                        getMvpView().onHotServieSuccess(services);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.qingmang.R;
 import com.qingmang.adapter.AdressListAdapter;
 import com.qingmang.base.BaseMvpActivity;
@@ -26,7 +27,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class AddressListActivity extends BaseMvpActivity<AddressListPresenter, AddressListView>
-        implements AddressListView<List<Adress>>,OnRefreshListener {
+        implements AddressListView<List<Adress>>, OnRefreshListener {
 
     @BindView(R.id.rv_list)
     RecyclerView rvList;
@@ -37,6 +38,7 @@ public class AddressListActivity extends BaseMvpActivity<AddressListPresenter, A
     private AdressListAdapter adressListAdapter;
     private List<Adress> adresses = new ArrayList<>();
     private static final int REQ = 123;
+    public static final String FROM = "AddressListActivity";
 
     @Override
     public String setTitleName() {
@@ -61,6 +63,8 @@ public class AddressListActivity extends BaseMvpActivity<AddressListPresenter, A
 
     @Override
     public void onDataSuccess(List<Adress> adressList) {
+        srl.finishRefresh();
+        stopProgressDialog();
         loadViewHelper.restore();
         adressListAdapter.replaceData(adressList);
     }
@@ -81,6 +85,29 @@ public class AddressListActivity extends BaseMvpActivity<AddressListPresenter, A
         srl.setOnRefreshListener(this);
         srl.setEnableLoadmore(false);
         adressListAdapter = new AdressListAdapter(adresses);
+        adressListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.tv_edit:
+                   Intent intent =new Intent(mContext,AddAddressActivity.class);
+                   intent.putExtra("address",adresses.get(position));
+                   intent.putExtra(FROM,true);
+                          startActivityForResult(intent,REQ);
+                        break;
+                    case R.id.tv_delete:
+                        startProgressDialog();
+                        presenter.deleteAddress(adresses.get(position).getId());
+                        break;
+                    case R.id.cb_defult:
+                        startProgressDialog();
+                        presenter.setDefultAddress(adresses.get(position).getId());
+
+                        break;
+                }
+
+            }
+        });
         rvList.setAdapter(adressListAdapter);
         rvList.setLayoutManager(new LinearLayoutManager(mContext));
         loadViewHelper.showLoading("");
@@ -93,6 +120,7 @@ public class AddressListActivity extends BaseMvpActivity<AddressListPresenter, A
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQ) {
             if (resultCode == RESULT_OK) {
+                loadViewHelper.restore();
                 loadViewHelper.showLoading("");
                 presenter.addressList();
             }
@@ -105,4 +133,14 @@ public class AddressListActivity extends BaseMvpActivity<AddressListPresenter, A
     public void onRefresh(RefreshLayout refreshlayout) {
         presenter.addressList();
     }
+
+    @Override
+    public void onError(String msg) {
+        super.onError(msg);
+        srl.finishRefresh();
+        stopProgressDialog();
+        loadViewHelper.restore();
+    }
+
+
 }

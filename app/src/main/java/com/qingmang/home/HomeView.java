@@ -7,12 +7,14 @@ package com.qingmang.home;
 import com.qingmang.base.BaseView;
 import com.qingmang.moudle.entity.Banner;
 import com.qingmang.moudle.entity.HotMessage;
-import com.qingmang.moudle.entity.Service;
+import com.qingmang.moudle.entity.HotService;
+
+import java.util.List;
 
 public interface HomeView<D> extends BaseView{
     void onDataSuccess(D d);
     void onBannerSuccess(Banner banner);
     void onMindBannerSuccess(Banner banner);
-    void onHotServieSuccess(Service service);
+    void onHotServieSuccess(List<HotService> services);
     void onHotMessageSuccess(HotMessage hotMessage);
 }

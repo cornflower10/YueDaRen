@@ -287,11 +287,11 @@ public class CityPickerView implements CanShow, OnWheelChangedListener {
         }
         
         //不需要港澳台数据
-        if (!config.isShowGAT()) {
-            provinceBeanList.remove(provinceBeanList.size() - 1);
-            provinceBeanList.remove(provinceBeanList.size() - 1);
-            provinceBeanList.remove(provinceBeanList.size() - 1);
-        }
+//        if (!config.isShowGAT()) {
+//            provinceBeanList.remove(provinceBeanList.size() - 1);
+//            provinceBeanList.remove(provinceBeanList.size() - 1);
+//            provinceBeanList.remove(provinceBeanList.size() - 1);
+//        }
         
         proArra = new ProvinceBean[provinceBeanList.size()];
         for (int i = 0; i < provinceBeanList.size(); i++) {
@@ -322,7 +322,7 @@ public class CityPickerView implements CanShow, OnWheelChangedListener {
                 }
             }
         }
-        
+//        mViewProvince.setCyclic(false);
         ArrayWheelAdapter arrayWheelAdapter = new ArrayWheelAdapter<ProvinceBean>(context, proArra);
         mViewProvince.setViewAdapter(arrayWheelAdapter);
         
@@ -345,7 +345,7 @@ public class CityPickerView implements CanShow, OnWheelChangedListener {
         mViewProvince.setVisibleItems(config.getVisibleItems());
         mViewCity.setVisibleItems(config.getVisibleItems());
         mViewDistrict.setVisibleItems(config.getVisibleItems());
-        mViewProvince.setCyclic(config.isProvinceCyclic());
+        mViewProvince.setCyclic(false);
         mViewCity.setCyclic(config.isCityCyclic());
         mViewDistrict.setCyclic(config.isDistrictCyclic());
         
