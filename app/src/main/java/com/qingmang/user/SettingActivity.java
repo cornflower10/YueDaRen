@@ -10,6 +10,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lljjcoder.Interface.OnCityItemClickListener;
+import com.lljjcoder.bean.CityBean;
+import com.lljjcoder.bean.DistrictBean;
+import com.lljjcoder.bean.ProvinceBean;
+import com.lljjcoder.citywheel.CityConfig;
+import com.lljjcoder.style.citypickerview.CityPickerView;
 import com.qingmang.R;
 import com.qingmang.base.BaseMvpActivity;
 import com.qingmang.base.Presenter;
@@ -58,7 +64,7 @@ public class SettingActivity extends BaseMvpActivity<SettingPresenter, SettingVi
     ImageView ivHeader;
     private CustomerInfo customerInfo;
 
-    private static final int REQUEST_GALLERY = 123;
+    public static final String FROM_UPDATE= "SettingActivity";
     private File imageFile;
 
     @Override
@@ -80,6 +86,7 @@ public class SettingActivity extends BaseMvpActivity<SettingPresenter, SettingVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_setting);
+        mCityPickerView.init(mContext);
         customerInfo = (CustomerInfo) getIntent().getSerializableExtra("customerInfo");
         if (null != customerInfo) {
             ImageLoaderUtil.getInstance().loadCircleImage(customerInfo.getAvatar(),ivHeader,R.drawable.icon_my);
@@ -118,8 +125,12 @@ public class SettingActivity extends BaseMvpActivity<SettingPresenter, SettingVi
                 startActivity(AddressListActivity.class);
                 break;
             case R.id.tv_place:
+                initWheel();
                 break;
             case R.id.tv_update_passwd:
+                Intent intent =new Intent(mContext,ForgetPasswdActivity.class);
+                intent.putExtra(FROM_UPDATE,true);
+                startActivity(intent);
                 break;
             case R.id.bt_commit:
 
@@ -153,6 +164,63 @@ public class SettingActivity extends BaseMvpActivity<SettingPresenter, SettingVi
                 break;
         }
     }
+     CityPickerView  mCityPickerView = new CityPickerView();
+
+    /**
+     * 弹出选择器
+     */
+    private void initWheel() {
+        CityConfig cityConfig = null;
+        String place = tvPlace.getText().toString();
+        String province = null, city=null ,areas=null;
+        if(!TextUtils.isEmpty(place)){
+            String [] strs=   place.split(",");
+            province = strs[0];
+            city = strs[1];
+            areas = strs[2];
+        }
+        if (!TextUtils.isEmpty(province)&&!TextUtils.isEmpty(city)
+                &&!TextUtils.isEmpty(areas)) {
+            cityConfig = new CityConfig.Builder().title("选择城市")
+                    .province(province)
+                    .city(city)
+                    .district(city)
+                    .build();
+        } else {
+            cityConfig = new CityConfig.Builder().title("选择城市")//标题
+                    .build();
+        }
+
+
+        mCityPickerView.setConfig(cityConfig);
+        mCityPickerView.setOnCityItemClickListener(new OnCityItemClickListener() {
+            @Override
+            public void onSelected(ProvinceBean province, CityBean city, DistrictBean district) {
+                StringBuilder sb = new StringBuilder();
+                if (province != null) {
+                    sb.append(province.getName() + ",");
+                }
+
+                if (city != null) {
+                    sb.append(city.getName() + ",");
+                }
+
+                if (district != null) {
+                    sb.append(district.getName());
+                }
+
+                tvPlace.setText("" + sb.toString());
+
+            }
+
+            @Override
+            public void onCancel() {
+//                ToastUtils.showLongToast(CitypickerWheelActivity.this, "已取消");
+            }
+        });
+        mCityPickerView.showCityPicker();
+
+    }
 
     private void ChooseImages() {
 //        Intent toGallery = new Intent(Intent.ACTION_PICK);
@@ -174,7 +242,7 @@ public class SettingActivity extends BaseMvpActivity<SettingPresenter, SettingVi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==REQUEST_GALLERY){
+        if(requestCode==PhotoPicker.REQUEST_CODE){
             if(resultCode==RESULT_OK){
 
                 ArrayList<String> photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);

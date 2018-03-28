@@ -63,21 +63,24 @@ public class PeopleFragment extends BaseMvpFragment<FindPresenter, FindView> imp
 
             }
         });
-//        verticalviewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                tablayout.setTabSelected(position);
-//            }
-//
-//
-//
-//
-//        });
+        verticalviewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                tablayout.setTabSelected(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+
+
+        });
 
 //        verticalviewpager.setPageMargin(getResources().
 //                getDimensionPixelSize(R.dimen.pagemargin));

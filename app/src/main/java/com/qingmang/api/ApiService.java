@@ -82,6 +82,10 @@ public interface ApiService {
     Observable<BaseEntity<String>> UpdateCustomer(@PartMap Map<String, RequestBody> params);
 //   params.put("operatorIdentityImages"+"\";fileName=\""+file1.getName(),RequestBody.create(MediaType.parse(TYPE_STREAM), file1));
 
+
+    @Multipart
+    @POST("customer/authen")
+    Observable<BaseEntity<String>> Authcompany(@PartMap Map<String, RequestBody> params);
     /**
      * 首页banner
      * @return

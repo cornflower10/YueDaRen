@@ -1,5 +1,6 @@
 package com.qingmang.serviceIntroduce;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -108,6 +109,12 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
         initWheel();
         tvCount.setText(String.valueOf(count));
 
+    }
+
+    public static void startActivity(Context context,int id){
+        Intent intent = new Intent(context,ServiceIntroduceActivity.class);
+        intent.putExtra("id",id);
+        context.startActivity(intent);
     }
 
     private void initTb(List<String> list) {

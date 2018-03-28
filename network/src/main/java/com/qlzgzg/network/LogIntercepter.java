@@ -6,7 +6,9 @@ import java.io.IOException;
 
 import okhttp3.FormBody;
 import okhttp3.Interceptor;
+import okhttp3.MultipartBody;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 
 /**
  * Created by qlzg-cmy on 2017/5/5.
@@ -29,15 +31,19 @@ public class LogIntercepter implements Interceptor {
         LogManager.i(TAG, "| "+request.toString());
         String method=request.method();
         if("POST".equals(method)){
-            StringBuilder sb = new StringBuilder();
+
             if (request.body() instanceof FormBody) {
-                FormBody body = (FormBody) request.body();
-                for (int i = 0; i < body.size(); i++) {
-                    sb.append(body.encodedName(i) + "=" + body.encodedValue(i) + ",");
+
+                requestBody(request.body());
+
+            }else if(request.body() instanceof MultipartBody){
+                MultipartBody multipartBody = (MultipartBody) request.body();
+                for (MultipartBody.Part part:multipartBody.parts()) {
+                     LogManager.i("part"+part.toString());
+
                 }
-                sb.delete(sb.length() - 1, sb.length());
-                LogManager.i(TAG, "| RequestParams:{"+sb.toString()+"}");
             }
+
         }
         LogManager.i(TAG, "| Response:" + content);
         LogManager.i(TAG,"----------End:"+duration+"毫秒----------");
@@ -45,5 +51,17 @@ public class LogIntercepter implements Interceptor {
                 .body(okhttp3.ResponseBody.create(mediaType, content))
                 .build();
 
+    }
+
+
+
+    private void requestBody(RequestBody requestBody){
+        StringBuilder sb = new StringBuilder();
+        FormBody body = (FormBody) requestBody;
+        for (int i = 0; i < body.size(); i++) {
+            sb.append(body.encodedName(i) + "=" + body.encodedValue(i) + ",");
+        }
+        sb.delete(sb.length() - 1, sb.length());
+        LogManager.i(TAG, "| RequestParams:{"+sb.toString()+"}");
     }
 }

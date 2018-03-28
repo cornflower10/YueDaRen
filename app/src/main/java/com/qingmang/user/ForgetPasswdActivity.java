@@ -31,10 +31,11 @@ public class ForgetPasswdActivity extends BaseMvpActivity<ForgetPasswdPresenter,
     AppCompatEditText etPasswd;
     @BindView(R.id.et_passwd_sure)
     AppCompatEditText etPasswdSure;
+    private boolean forUpdate;
 
     @Override
     public String setTitleName() {
-        return "修改密码";
+        return forUpdate?"修改密码":"忘记密码";
     }
 
     @Override
@@ -49,6 +50,7 @@ public class ForgetPasswdActivity extends BaseMvpActivity<ForgetPasswdPresenter,
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        forUpdate = getIntent().getBooleanExtra(SettingActivity.FROM_UPDATE,false);
         super.onCreate(savedInstanceState);
         initListener();
     }
@@ -56,11 +58,13 @@ public class ForgetPasswdActivity extends BaseMvpActivity<ForgetPasswdPresenter,
     @Override
     public void onDataSuccess(String s) {
         stopProgressDialog();
+
     }
 
     @Override
     public void onUpdatePassWd() {
         stopProgressDialog();
+        finish();
     }
 
     @OnClick(R.id.bt_sure)
@@ -90,6 +94,7 @@ public class ForgetPasswdActivity extends BaseMvpActivity<ForgetPasswdPresenter,
             return;
         }
         startProgressDialog();
+
         presenter.updatePasswd(etPhone.getText().toString(),
                 etPasswd.getText().toString(),
                 etVal.getText().toString());

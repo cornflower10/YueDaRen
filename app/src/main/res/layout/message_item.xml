@@ -62,6 +62,7 @@
 
 </RelativeLayout>
  <ImageView
+     android:scaleType="centerCrop"
      android:id="@+id/iv"
      android:layout_marginTop="@dimen/margin_16"
      android:layout_weight="1"

@@ -18,7 +18,7 @@
     <android.support.v7.widget.AppCompatEditText
         android:textSize="@dimen/sp_16"
         android:textColor="@color/text_333333"
-        android:id="@+id/et_phone"
+        android:id="@+id/et_company_name"
         android:paddingLeft="@dimen/margin_16"
         android:paddingRight="@dimen/margin_16"
         android:hint="请输入公司名称"
@@ -31,7 +31,7 @@
     <android.support.v7.widget.AppCompatEditText
         android:textSize="@dimen/sp_16"
         android:textColor="@color/text_333333"
-        android:id="@+id/et_passwd"
+        android:id="@+id/et_company_user_name"
         android:paddingLeft="@dimen/margin_16"
         android:paddingRight="@dimen/margin_16"
         android:hint="请输入企业司法人"
@@ -58,6 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <Button
+            android:visibility="gone"
             android:id="@+id/bt_up"
             android:textSize="@dimen/sp_16"
             android:textColor="@color/text_333333"
@@ -70,15 +71,16 @@
         </RelativeLayout>
     </RelativeLayout>
         <FrameLayout
+            android:padding="@dimen/margin_16"
             android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="150dp">
+
         <RelativeLayout
             android:id="@+id/rl_choose_photo"
-            android:layout_margin="@dimen/margin_16"
             android:background="@drawable/coner_blue"
             android:layout_width="match_parent"
-            android:layout_height="150dp">
+            android:layout_height="match_parent">
             <ImageView
                 android:layout_above="@+id/tv_sczp"
                 android:layout_centerInParent="true"
@@ -95,6 +97,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
+            <ImageView
+                android:id="@+id/iv"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </FrameLayout>
     </LinearLayout>
 

@@ -18,11 +18,12 @@ public class VPagerAdapter extends FragmentPagerAdapter {
     List<PeopleChildFragment> fragments = new ArrayList<>();
     List<Service.CatesBean> catesBeanList;
 
-    public VPagerAdapter(FragmentManager fm, List<Service.CatesBean> catesBeanList) {
+    public VPagerAdapter(FragmentManager fm,
+                         List<Service.CatesBean> catesBeanList) {
         super(fm);
         this.catesBeanList = catesBeanList;
         for (int i = 0; i < catesBeanList.size(); i++) {
-            fragments.add(PeopleChildFragment.newInstance(i));
+            fragments.add(PeopleChildFragment.newInstance(catesBeanList.get(i).getId()));
         }
     }
 
