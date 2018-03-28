@@ -1,5 +1,6 @@
 package com.qingmang.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import com.qingmang.baselibrary.utils.LogManager;
 import com.qingmang.moudle.entity.CustomerInfo;
 import com.qingmang.moudle.entity.UtilBox;
 import com.qingmang.user.AuthCompanyActivity;
+import com.qingmang.user.SettingActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,7 @@ public class MyFragment extends BaseMvpFragment<MyPresenter, MyView> implements 
     TextView tvDzf;
     private UtilBoxAdapter utilBoxAdapter;
     private List<UtilBox> utilBoxes = new ArrayList<>();
+    private CustomerInfo customerInfo;
 
     @Override
     protected View getRootView() {
@@ -96,6 +99,7 @@ public class MyFragment extends BaseMvpFragment<MyPresenter, MyView> implements 
 
     @Override
     public void onDataSuccess(CustomerInfo customerInfo) {
+        this.customerInfo = customerInfo;
         tvName.setText(customerInfo.getName());
         tvAmount.setText(String.valueOf(customerInfo.getScore()));
         tvYhj.setText(String.valueOf(customerInfo.getCouponum()));
@@ -115,6 +119,9 @@ public class MyFragment extends BaseMvpFragment<MyPresenter, MyView> implements 
         switch (view.getId()) {
             case R.id.iv_setting:
 //                startActivity();
+                Intent intent = new Intent(mContext, SettingActivity.class);
+                intent.putExtra("customerInfo",customerInfo);
+                startActivity(intent);
                 break;
             case R.id.ll_rzqy:
                 startActivity(AuthCompanyActivity.class);

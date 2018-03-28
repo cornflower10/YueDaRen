@@ -2,6 +2,8 @@ package com.qingmang.utils.imageload;
 
 import android.widget.ImageView;
 
+import java.io.File;
+
 
 public class ImageLoaderUtil implements ImageLoader {
 
@@ -44,8 +46,18 @@ public class ImageLoaderUtil implements ImageLoader {
     }
 
     @Override
-    public void loadCircleImage(String url, ImageView imageView, int defaultImage) {
+    public void loadLocalCircleImage(String url, ImageView imageView, int defaultImage) {
+        imageLoader.loadLocalCircleImage(url,imageView,defaultImage);
+    }
 
+    @Override
+    public void loadLocalCircleImage(File file, ImageView imageView, int defaultImage) {
+        imageLoader.loadLocalCircleImage(file,imageView,defaultImage);
+    }
+
+    @Override
+    public void loadCircleImage(String url, ImageView imageView, int defaultImage) {
+        imageLoader.loadCircleImage(url,imageView,defaultImage);
     }
 
     @Override

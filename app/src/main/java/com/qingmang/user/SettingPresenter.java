@@ -16,13 +16,14 @@ import io.reactivex.functions.Consumer;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
-import static android.text.style.TtsSpan.TYPE_TEXT;
-
 /**
  * Created by xiejingbao on 2018/3/16.
  */
 
-public class SettingPresenter extends BaseMvpPresenter<ForgetPasswdView> {
+public class SettingPresenter extends BaseMvpPresenter<SettingView> {
+
+    private static final String TYPE_TEXT = "text/plain";
+    private static final String TYPE_STREAM = "application/otcet-stream";
 
     public void updateInfo(String name,
                            File file,
@@ -36,6 +37,7 @@ public class SettingPresenter extends BaseMvpPresenter<ForgetPasswdView> {
         Map<String, RequestBody> params =new HashMap<>();
         if(!TextUtils.isEmpty(name))
         params.put("name",RequestBody.create(MediaType.parse(TYPE_TEXT),name));
+        if(null!=file)
         params.put("file",RequestBody.create(MediaType.parse(TYPE_STREAM),file));
         if(!TextUtils.isEmpty(province))
         params.put("province",RequestBody.create(MediaType.parse(TYPE_TEXT),province));

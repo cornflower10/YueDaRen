@@ -1,6 +1,8 @@
 package com.qingmang.adapter;
 
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -42,6 +44,7 @@ public class OrderAdapter extends BaseQuickAdapter<Order.ContentBean, BaseViewHo
             helper.setVisible(R.id.tv_wait,true);
             helper.setText(R.id.tv_wait,item.getIntroduce());
         }
+        code2Color(item.getStep(),(TextView) helper.getView(R.id.tv_wait));
 
     }
 
@@ -65,6 +68,27 @@ public class OrderAdapter extends BaseQuickAdapter<Order.ContentBean, BaseViewHo
             return "";
 
     }
+    private void code2Color(String code, TextView textView){
+        if("wait".equals(code)){
+
+        }else   if("ensure".equals(code)){
+            textView.setBackground(ContextCompat.getDrawable(mContext,R.drawable.coner_green));
+            textView.setTextColor(ContextCompat.getColor(mContext,R.color.green_58c04e));
+        }
+        else   if("stage".equals(code)){
+            textView.setBackground(ContextCompat.getDrawable(mContext,R.drawable.coner_yellow));
+            textView.setTextColor(ContextCompat.getColor(mContext,R.color.orange));
+        }
+        else   if("complete".equals(code)){
+            textView.setBackground(ContextCompat.getDrawable(mContext,R.drawable.coner_red));
+            textView.setTextColor(ContextCompat.getColor(mContext,R.color.red_ff2a31));
+        }
+        else   if("close".equals(code)){
+            textView.setBackground(ContextCompat.getDrawable(mContext,R.drawable.coner_red));
+            textView.setTextColor(ContextCompat.getColor(mContext,R.color.red_ff2a31));
+        }
+    }
+
 
 
 }
