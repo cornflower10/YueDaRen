@@ -1,6 +1,8 @@
 package com.qlzgzg.network;
 
 
+import android.content.Context;
+
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.util.concurrent.TimeUnit;
@@ -19,18 +21,18 @@ public class RetrofitServiceManager {
 
     private static RetrofitServiceManager instance;
 
-    private RetrofitServiceManager(String baseUrl){
+    private RetrofitServiceManager(String baseUrl,Context context){
         // 创建 OKHttpClient
-        OkHttpClient.Builder builder = getBuild();
+        OkHttpClient.Builder builder = getBuild(context);
         // 创建Retrofit
         mRetrofit= getmRetrofit(baseUrl,builder);
     }
 
-    public static synchronized RetrofitServiceManager getInstance(String baseUrl) {
+    public static synchronized RetrofitServiceManager getInstance(String baseUrl,Context context) {
         if(instance==null){
             synchronized (RetrofitServiceManager.class){
                 if(instance==null){
-                    instance = new RetrofitServiceManager(baseUrl);
+                    instance = new RetrofitServiceManager(baseUrl,context);
                 }
             }
         }
@@ -48,7 +50,7 @@ public class RetrofitServiceManager {
     }
 
 
-    private OkHttpClient.Builder getBuild(){
+    private OkHttpClient.Builder getBuild(Context context){
         // 创建 OKHttpClient
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIME_OUT, TimeUnit.SECONDS);//连接超时时间
@@ -56,7 +58,7 @@ public class RetrofitServiceManager {
         builder.readTimeout(DEFAULT_READ_TIME_OUT,TimeUnit.SECONDS);//读操作超时时间
 //        builder.cookieJar(new JavaNetCookieJar(new CookieManager(new PersistentCookieStoreS(context), CookiePolicy.ACCEPT_ALL)));
         // 添加公共参数拦截器,请求头
-        builder.addInterceptor(new BaseHttpHeaderInterceptor());
+        builder.addInterceptor(new BaseHttpHeaderInterceptor(context));
 //
      return   builder.addInterceptor(new LogIntercepter());//请求日志
 

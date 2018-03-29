@@ -1,4 +1,4 @@
-package com.qingmang.home;
+package com.qingmang.serviceIntroduce;
 
 /**
  * Created by xiejingbao on 2018/3/16.
@@ -6,7 +6,6 @@ package com.qingmang.home;
 
 import com.qingmang.base.BaseView;
 
-public interface OrderView<D> extends BaseView{
+public interface OrderSureView<D> extends BaseView{
     void onDataSuccess(D d);
-    void onCancelSuccess();
 }

@@ -35,6 +35,7 @@ public class OrderAdapter extends BaseQuickAdapter<Order.ContentBean, BaseViewHo
         if("wait".equals(item.getStep())){
             helper.setVisible(R.id.tv_wait,false);
             helper.setVisible(R.id.tv_cancle,true);
+            helper.addOnClickListener(R.id.tv_cancle);
             helper.setVisible(R.id.tv_pay,true);
             helper.setText(R.id.tv_pay,item.getIntroduce());
 

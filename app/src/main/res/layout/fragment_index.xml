@@ -89,6 +89,7 @@
      android:layout_width="match_parent"
      android:layout_height="wrap_content">
   <RelativeLayout
+      android:id="@+id/rl_1"
       android:background="@drawable/index_hot_border"
       android:gravity="center"
       android:layout_weight="1"
@@ -99,7 +100,7 @@
        android:textSize="@dimen/sp_22"
        android:id="@+id/tv_amount"
        android:gravity="center"
-       android:text="2000元"
+       android:text=""
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" />
    <TextView
@@ -108,11 +109,12 @@
        android:layout_below="@+id/tv_amount"
        android:id="@+id/tv_des"
        android:gravity="center"
-       android:text="户口办理"
+       android:text=""
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" />
   </RelativeLayout>
   <RelativeLayout
+      android:id="@+id/rl_2"
       android:background="@drawable/index_hot_border"
       android:gravity="center"
       android:layout_weight="1"
@@ -123,7 +125,7 @@
        android:textSize="@dimen/sp_22"
        android:id="@+id/tv_amount_mind"
        android:gravity="center"
-       android:text="2000元"
+       android:text=""
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" />
    <TextView
@@ -132,11 +134,12 @@
        android:layout_below="@+id/tv_amount_mind"
        android:id="@+id/tv_des_mind"
        android:gravity="center"
-       android:text="户口办理"
+       android:text=""
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" />
   </RelativeLayout>
   <RelativeLayout
+      android:id="@+id/rl_3"
       android:background="@drawable/index_hot_border"
       android:gravity="center"
       android:layout_weight="1"
@@ -147,7 +150,7 @@
        android:textSize="@dimen/sp_22"
        android:id="@+id/tv_amount_last"
        android:gravity="center"
-       android:text="2000元"
+       android:text=""
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" />
    <TextView
@@ -156,7 +159,7 @@
        android:layout_below="@+id/tv_amount_last"
        android:id="@+id/tv_des_last"
        android:gravity="center"
-       android:text="户口办理"
+       android:text=""
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" />
   </RelativeLayout>
@@ -184,7 +187,7 @@
        android:textSize="@dimen/sp_18"
        android:id="@+id/tv_name_company"
        android:gravity="center"
-       android:text="公司注册/记账"
+       android:text=""
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" />
    <TextView
@@ -212,7 +215,7 @@
        android:textSize="@dimen/sp_18"
        android:id="@+id/tv_name"
        android:gravity="center"
-       android:text="人力资源服务"
+       android:text=""
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" />
    <TextView
@@ -250,7 +253,7 @@
        android:textSize="@dimen/sp_18"
        android:id="@+id/tv_name_brand"
        android:gravity="center"
-       android:text="品牌商标注册"
+       android:text=""
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" />
    <TextView
@@ -278,7 +281,7 @@
        android:textSize="@dimen/sp_18"
        android:id="@+id/tv_name_last"
        android:gravity="center"
-       android:text="高新补贴申请"
+       android:text=""
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" />
    <TextView

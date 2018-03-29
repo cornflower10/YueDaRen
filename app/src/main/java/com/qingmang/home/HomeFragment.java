@@ -15,6 +15,7 @@ import com.qingmang.moudle.entity.Banner;
 import com.qingmang.moudle.entity.HotMessage;
 import com.qingmang.moudle.entity.HotService;
 import com.qingmang.moudle.entity.Message;
+import com.qingmang.serviceIntroduce.ServiceIntroduceActivity;
 import com.qingmang.uilibrary.banner.BannerLayout;
 import com.qingmang.uilibrary.marqueen.SimpleMF;
 import com.qingmang.uilibrary.marqueen.SimpleMarqueeView;
@@ -72,7 +73,9 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
     @BindView(R.id.marqueeView)
     SimpleMarqueeView marqueeView;
 
+
     private MessageAdapter messageAdapter;
+    private List<HotService> services = new ArrayList<>();
 
     @Override
     protected View getRootView() {
@@ -111,7 +114,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
         SimpleMF<String> marqueeFactory3 = new SimpleMF<>(mContext);
         List<String> datas3 = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            if(i>4)
+            if (i > 4)
                 break;
             datas3.add(list.get(i).getContent());
         }
@@ -123,7 +126,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
             @Override
             public void onItemClickListener(TextView mView, Object mData, int mPosition) {
 
-               list.get(mPosition);
+                list.get(mPosition);
 
             }
         });
@@ -144,20 +147,40 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
     }
 
 
-    @OnClick({R.id.rL_gszc, R.id.rl_rlzy, R.id.rl_ppsb, R.id.rl_gwbt, R.id.tv_more})
+    @OnClick({R.id.rL_gszc, R.id.rl_rlzy, R.id.rl_ppsb,
+            R.id.rl_gwbt, R.id.tv_more,R.id.rl_1, R.id.rl_2, R.id.rl_3})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.rL_gszc:
-                break;
-            case R.id.rl_rlzy:
-                break;
-            case R.id.rl_ppsb:
-                break;
-            case R.id.rl_gwbt:
-                break;
-            case R.id.tv_more:
-                break;
+        if (services.size() >= 7){
+            int tip = 0;
+            switch (view.getId()) {
+                case R.id.rL_gszc:
+                    tip = 3;
+                    break;
+                case R.id.rl_rlzy:
+                    tip = 4;
+                    break;
+                case R.id.rl_ppsb:
+                    tip = 5;
+                    break;
+                case R.id.rl_gwbt:
+                    tip = 6;
+                    break;
+//                case R.id.tv_more:
+//                    break;
+                case R.id.rl_1:
+                    tip = 0;
+                    break;
+                case R.id.rl_2:
+                    tip = 1;
+                    break;
+                case R.id.rl_3:
+                    tip = 2;
+                    break;
+
+            }
+            ServiceIntroduceActivity.startActivity(mContext, services.get(tip).getId());
         }
+
     }
 
     @Override
@@ -195,6 +218,23 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
 
     @Override
     public void onHotServieSuccess(List<HotService> services) {
+        this.services = services;
+        HotService hotService1 = services.get(0);
+        tvAmount.setText(hotService1.getPrice() + "元");
+        tvDes.setText(hotService1.getName());
+
+        HotService hotService2 = services.get(1);
+        tvAmountMind.setText(hotService2.getPrice() + "元");
+        tvDesMind.setText(hotService2.getName());
+
+        HotService hotService3 = services.get(2);
+        tvAmountLast.setText(hotService3.getPrice() + "元");
+        tvDesLast.setText(hotService3.getName());
+
+        tvNameCompany.setText(services.get(3).getName());
+        tvName.setText(services.get(4).getName());
+        tvNameBrand.setText(services.get(5).getName());
+        tvNameLast.setText(services.get(6).getName());
 
     }
 
@@ -208,5 +248,6 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
     protected HomePresenter createPresenter() {
         return new HomePresenter();
     }
+
 
 }

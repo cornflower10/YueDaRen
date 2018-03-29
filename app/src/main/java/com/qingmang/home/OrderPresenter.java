@@ -57,9 +57,34 @@ public class OrderPresenter extends BaseMvpPresenter<OrderView> {
 
     }
 
+    public void cancleOrder(long id){
+
+            addSubscribe(App.getInstance().getRetrofitServiceManager()
+                    .create(ApiService.class).CancleOrder(id)
+                    .compose(ResponseTransformer.<String>handleResult())
+                    .compose(RxSchedulers.<String>ObToMain())
+                    .subscribe(new Consumer<String>() {
+                        @Override
+                        public void accept(String s) throws Exception {
+                            getMvpView().onCancelSuccess();
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            getMvpView().onError(throwable.getMessage());
+                        }
+                    }));
+        }
+
+
+
+
+
 //    class myConsumer implements Consumer<ApiException> {
 //
 //
 //    }
+
+
 
 }

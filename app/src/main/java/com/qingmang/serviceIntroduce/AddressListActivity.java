@@ -108,6 +108,15 @@ public class AddressListActivity extends BaseMvpActivity<AddressListPresenter, A
 
             }
         });
+        adressListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = getIntent();
+                intent.putExtra("address",adresses.get(position));
+                setResult(RESULT_OK,intent);
+                finish();
+            }
+        });
         rvList.setAdapter(adressListAdapter);
         rvList.setLayoutManager(new LinearLayoutManager(mContext));
         loadViewHelper.showLoading("");

@@ -30,6 +30,12 @@ public class App extends Application {
     public static App getInstance() {
         return singleton;
     }
+    private String token ;
+
+    public String getToken() {
+        return getSharedPreferences("token",MODE_PRIVATE).getString("token","");
+    }
+
 
     public ForegroundCallbacks getForegroundCallbacks() {
         return foregroundCallbacks;
@@ -58,7 +64,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         singleton = this;
-        retrofitServiceManager  = RetrofitServiceManager.getInstance(BuildConfig.URL);
+        retrofitServiceManager  = RetrofitServiceManager.getInstance(BuildConfig.URL,this);
         foregroundCallbacks = ForegroundCallbacks.init(this);
 
 //        /**

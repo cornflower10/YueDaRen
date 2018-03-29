@@ -7,6 +7,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,6 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lljjcoder.Interface.OnCityItemClickListener;
 import com.lljjcoder.bean.CityBean;
 import com.lljjcoder.bean.DistrictBean;
@@ -21,12 +26,15 @@ import com.lljjcoder.bean.ProvinceBean;
 import com.lljjcoder.citywheel.CityConfig;
 import com.lljjcoder.style.citypickerview.CityPickerView;
 import com.qingmang.R;
+import com.qingmang.adapter.ServiceObjectAdapter;
 import com.qingmang.adapter.ServicePagerAdapter;
 import com.qingmang.base.BaseMvpActivity;
 import com.qingmang.base.Presenter;
 import com.qingmang.base.PresenterFactory;
 import com.qingmang.base.PresenterLoder;
+import com.qingmang.moudle.entity.Item;
 import com.qingmang.moudle.entity.ServiceInfo;
+import com.qingmang.moudle.entity.ServiceObject;
 import com.qingmang.utils.imageload.ImageLoaderUtil;
 
 import java.util.ArrayList;
@@ -51,10 +59,7 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
     TextView tvServiceOb;
     @BindView(R.id.tv_pro)
     TextView tvPro;
-    @BindView(R.id.tv_yj)
-    TextView tvYj;
-    @BindView(R.id.tv_jf)
-    TextView tvJf;
+
     @BindView(R.id.tv_palce)
     TextView tvPalce;
     @BindView(R.id.iv_minus)
@@ -79,12 +84,19 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
     ViewPager vp;
     @BindView(R.id.tb)
     TabLayout tb;
+    @BindView(R.id.rv_object)
+    RecyclerView rvObject;
+    @BindView(R.id.rv_project)
+    RecyclerView rvProject;
     private ServiceInfo serviceInfo;
     private int id;
     CityPickerView mCityPickerView = new CityPickerView();
-    private int count  = 1;
-    private List<String> list =new ArrayList<>();
-    private String [] titles ={"服务说明","服务流程","服务承诺","常见问题"};
+    private int count = 1;
+    private List<String> list = new ArrayList<>();
+    private String[] titles = {"服务说明", "服务流程", "服务承诺", "常见问题"};
+    private String chooseObject;
+    private String chooseProject;
+
 
     @Override
     public String setTitleName() {
@@ -111,23 +123,23 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
 
     }
 
-    public static void startActivity(Context context,int id){
-        Intent intent = new Intent(context,ServiceIntroduceActivity.class);
-        intent.putExtra("id",id);
+    public static void startActivity(Context context, int id) {
+        Intent intent = new Intent(context, ServiceIntroduceActivity.class);
+        intent.putExtra("id", id);
         context.startActivity(intent);
     }
 
     private void initTb(List<String> list) {
-        vp.setAdapter(new ServicePagerAdapter(getSupportFragmentManager(),list,titles));
-        tb.addTab( tb.newTab());
-        tb.addTab( tb.newTab());
-        tb.addTab( tb.newTab());
-        tb.addTab( tb.newTab());
+        vp.setAdapter(new ServicePagerAdapter(getSupportFragmentManager(), list, titles));
+        tb.addTab(tb.newTab());
+        tb.addTab(tb.newTab());
+        tb.addTab(tb.newTab());
+        tb.addTab(tb.newTab());
         tb.setupWithViewPager(vp);
     }
 
     @OnClick({R.id.tv_per_service,
-            R.id.tv_service_ob, R.id.tv_yj, R.id.tv_jf, R.id.iv_minus,
+            R.id.tv_service_ob, R.id.iv_minus,
             R.id.iv_add, R.id.bt_yy, R.id.bt_buy, R.id.tv_palce})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -135,10 +147,7 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
                 break;
             case R.id.tv_service_ob:
                 break;
-            case R.id.tv_yj:
-                break;
-            case R.id.tv_jf:
-                break;
+
             case R.id.iv_minus:
                 count--;
                 if (count < 0)
@@ -150,22 +159,41 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
                 tvCount.setText(String.valueOf(count));
                 break;
             case R.id.bt_yy:
+                buy();
                 break;
             case R.id.tv_palce:
                 mCityPickerView.showCityPicker();
                 break;
             case R.id.bt_buy:
-                if (count == 0) {
-                    showToast(" 请选择服务数量！");
-                    return;
-                }
-                Intent intent = new Intent(mContext, OrderSureActivity.class);
-                intent.putExtra("serviceInfo", serviceInfo);
-                startActivity(OrderSureActivity.class);
+                buy();
                 break;
         }
     }
 
+    private void buy(){
+        if (count == 0) {
+            showToast(" 请选择服务数量！");
+            return;
+        }
+
+        Intent intent = new Intent(mContext, OrderSureActivity.class);
+
+        if(!TextUtils.isEmpty(chooseObject)&& !TextUtils.isEmpty(chooseProject)){
+            serviceInfo.setChoose(chooseObject+","+chooseProject);
+        }else{
+            serviceInfo.setChoose("");
+        }
+
+        if(TextUtils.isEmpty(tvPalce.getText().toString())){
+            serviceInfo.setPlace("");
+
+        }else {
+            serviceInfo.setPlace(tvPalce.getText().toString());
+        }
+        serviceInfo.setNum(count);
+        intent.putExtra("serviceInfo", serviceInfo);
+        startActivity(intent);
+    }
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
         return new PresenterLoder(mContext, new PresenterFactory() {
@@ -190,7 +218,7 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
         tvTitle.setText(serviceIntroduce.getName());
         tvContext.setText(serviceIntroduce.getPoster());
         tvAmount.setText(String.valueOf(serviceIntroduce.getPrice()));
-        ImageLoaderUtil.getInstance().loadLocalImage(serviceIntroduce.getLogo(), iv, 0);
+        ImageLoaderUtil.getInstance().showImage(serviceIntroduce.getLogo(), iv, 0);
         if (!TextUtils.isEmpty(serviceIntroduce.getLights())) {
             String[] strings = serviceIntroduce.getLights().split("，");
             if (strings.length == 2) {
@@ -202,6 +230,68 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
 
         } else {
             rlLight.setVisibility(View.GONE);
+        }
+        Gson gson = new Gson();
+        List<Item> items = gson.fromJson(serviceInfo.getSpecial(), new TypeToken<List<Item>>() {
+        }.getType());
+        if (null != items && items.size() > 0) {
+            String[] s = items.get(0).getItems().split(",");
+            String[] spe = items.get(1).getItems().split(",");
+            final List<ServiceObject> serviceObjects =new ArrayList<>();
+            final List<ServiceObject> serviceProjects =new ArrayList<>();
+            for (int i = 0; i <s.length ; i++) {
+                ServiceObject serviceObject = new ServiceObject();
+                serviceObject.setName(s[i]);
+                serviceObjects.add(serviceObject);
+            }
+            for (int i = 0; i <spe.length ; i++) {
+                ServiceObject so = new ServiceObject();
+                so.setName(spe[i]);
+                serviceProjects.add(so);
+            }
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            final ServiceObjectAdapter serviceObjectAdapter =  new ServiceObjectAdapter(serviceObjects);
+            serviceObjectAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    if(!serviceObjects.get(position).isChoose()){
+                        serviceObjects.get(position).setChoose(true);
+                        chooseObject = serviceObjects.get(position).getName();
+                        for (ServiceObject s:serviceObjects) {
+                            if (serviceObjects.get(position).getName().equals(s.getName()))
+                                continue;
+                            s.setChoose(false);
+                        }
+                        serviceObjectAdapter.notifyDataSetChanged();
+                    }
+
+                }
+            });
+            rvObject.setAdapter(serviceObjectAdapter);
+            rvObject.setLayoutManager(linearLayoutManager);
+
+            final ServiceObjectAdapter serviceProjectAdapter =  new ServiceObjectAdapter(serviceProjects);
+            serviceProjectAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    if(!serviceProjects.get(position).isChoose()){
+                        serviceProjects.get(position).setChoose(true);
+                        chooseProject = serviceProjects.get(position).getName();
+                        for (ServiceObject s:serviceProjects) {
+                            if (serviceProjects.get(position).getName().equals(s.getName()))
+                                continue;
+                            s.setChoose(false);
+                        }
+                        serviceProjectAdapter.notifyDataSetChanged();
+                    }
+                }
+            });
+
+            LinearLayoutManager linearLayout = new LinearLayoutManager(this);
+            linearLayout.setOrientation(LinearLayoutManager.HORIZONTAL);
+            rvProject.setAdapter(serviceProjectAdapter);
+            rvProject.setLayoutManager(linearLayout);
         }
 
 //        serviceIntroduce.getSpecial()
@@ -234,15 +324,15 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
             public void onSelected(ProvinceBean province, CityBean city, DistrictBean district) {
                 StringBuilder sb = new StringBuilder();
                 if (province != null) {
-                    sb.append(province.getName() + " ");
+                    sb.append(province.getName() + ",");
                 }
 
                 if (city != null) {
-                    sb.append(city.getName() + " ");
+                    sb.append(city.getName() + ",");
                 }
 
                 if (district != null) {
-                    sb.append(district.getName() + " ");
+                    sb.append(district.getName());
                 }
 
                 tvPalce.setText("" + sb.toString());

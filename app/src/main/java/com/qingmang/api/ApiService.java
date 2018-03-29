@@ -159,12 +159,17 @@ public interface ApiService {
                                          @Field("chosecity") String chosecity,
                                          @Field("chosedistrict") String chosedistrict,
                                          @Field("addressid") long addressid,
+                                         @Field("ticket") int ticket,
                                          @Field("invoicetype") int invoicetype,
                                          @Field("invoiceraise") int invoiceraise,
                                          @Field("company") String company,
                                          @Field("taxpayer") String taxpayer
                                          );
 
+    @FormUrlEncoded
+    @POST("orders/cancel")
+    Observable<BaseEntity<String>> CancleOrder(@Field("id") long id
+    );
 
 
 

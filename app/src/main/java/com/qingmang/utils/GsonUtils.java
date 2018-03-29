@@ -17,4 +17,6 @@ public class GsonUtils {
         T[] array = gson.fromJson(json, clazz);
         return Arrays.asList(array);
     }
+
+
 }

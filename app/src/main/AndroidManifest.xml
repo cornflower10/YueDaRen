@@ -16,15 +16,21 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon, android:theme,allowBackup">
         <activity android:name=".MainActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity android:name=".serviceIntroduce.ServiceIntroduceActivity" />
+        <activity android:name=".user.LoginActivity" />
+        <activity android:name=".user.RegisterActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".serviceIntroduce.ServiceIntroduceActivity" />
-        <activity android:name=".user.LoginActivity" />
-        <activity android:name=".user.RegisterActivity" />
         <activity android:name=".user.ForgetPasswdActivity" />
         <activity android:name=".serviceIntroduce.OrderSureActivity" />
         <activity android:name=".serviceIntroduce.AddressListActivity" />

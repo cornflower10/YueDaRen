@@ -44,7 +44,7 @@
                     android:id="@+id/tv_user"
                 android:textSize="@dimen/sp_14"
                 android:textColor="@color/text_333333"
-                android:text="lianxiren:"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
                 <TextView
@@ -52,7 +52,7 @@
                     android:layout_alignParentRight="true"
                     android:textSize="@dimen/sp_14"
                     android:textColor="@color/text_333333"
-                    android:text="15856193725"
+                    android:text=""
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </RelativeLayout>
@@ -62,7 +62,7 @@
                 android:layout_marginTop="10dp"
                 android:textSize="@dimen/sp_14"
                 android:textColor="@color/text_333333"
-                android:text="联系地址:卡号疯狂卡夫卡发挥空间錒回复卡号发开发哈哈"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -201,14 +201,14 @@
             android:layout_margin="@dimen/margin_16"
             android:textColor="@color/text_333333"
             android:textSize="@dimen/sp_14"
-            android:text="fdsjkfhjdshfjhfshfhjd"
+            android:text=""
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Button
             android:layout_marginRight="@dimen/margin_16"
             android:layout_marginLeft="@dimen/margin_16"
             android:id="@+id/bt_add_address"
-            android:text="+   新建地址"
+            android:text="下单"
             android:background="@color/red_ff2a31"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_18"

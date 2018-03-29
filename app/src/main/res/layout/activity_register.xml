@@ -44,6 +44,7 @@
     <View
         style="@style/divide_line_match"/>
     <android.support.v7.widget.AppCompatEditText
+        android:inputType="textPassword"
         android:textSize="@dimen/sp_16"
         android:textColor="@color/text_333333"
         android:id="@+id/et_passwd"

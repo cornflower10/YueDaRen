@@ -32,6 +32,7 @@
         </RelativeLayout>
 
         <android.support.v7.widget.AppCompatEditText
+            android:inputType="phone"
             android:layout_gravity="center_horizontal"
             android:textSize="@dimen/sp_16"
             android:textColor="@color/text_333333"
@@ -48,6 +49,7 @@
             android:layout_width="280dp"
             style="@style/divide_line_match"/>
         <android.support.v7.widget.AppCompatEditText
+            android:inputType="textPassword"
             android:layout_gravity="center_horizontal"
             android:textSize="@dimen/sp_16"
             android:textColor="@color/text_333333"

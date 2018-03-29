@@ -108,6 +108,35 @@ public class ServiceInfo implements Serializable{
     private String guarantee;
     private String problem;
 
+
+    private int num;
+    private String choose;
+    private String place;
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public String getChoose() {
+        return choose;
+    }
+
+    public void setChoose(String choose) {
+        this.choose = choose;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
     public int getId() {
         return id;
     }

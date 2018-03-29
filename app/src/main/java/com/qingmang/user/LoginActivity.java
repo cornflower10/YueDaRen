@@ -1,5 +1,6 @@
 package com.qingmang.user;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.AppCompatEditText;
@@ -74,6 +75,9 @@ public class LoginActivity extends BaseMvpActivity<LoginPresenter,LoginView> imp
     @Override
     public void onDataSuccess(String o) {
             stopProgressDialog();
+        SharedPreferences sharedPreferences = getSharedPreferences("token",MODE_PRIVATE);
+        sharedPreferences.edit().putString("token",o).commit();
+
             startActivity(MainActivity.class);
     }
 

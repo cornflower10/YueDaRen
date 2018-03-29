@@ -59,9 +59,16 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter,OrderView> imp
     protected void initView() {
         loadViewHelper.showLoading("");
         orderAdapter = new OrderAdapter(contentBeans);
+        orderAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                startProgressDialog();
+                mPresenter.cancleOrder(contentBeans.get(position).getId());
+            }
+        });
         rv.setAdapter(orderAdapter);
         rv.setLayoutManager(new LinearLayoutManager(mContext));
-        mPresenter.loadData(1,"","");
+
 
         popupObject.add(new Popup("citizen","市民服务"));
         popupObject.add(new Popup("job","创业服务"));
@@ -74,6 +81,12 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter,OrderView> imp
         popupStatus.add(new Popup("close","已关闭"));
         popupStatus.add(new Popup("all","全部支付状态"));
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.loadData(1,"","");
     }
 
     public static OrderFragment newInstance() {
@@ -106,15 +119,25 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter,OrderView> imp
     public void onError(String msg) {
         showToast(msg);
         loadViewHelper.restore();
+        stopProgressDialog();
     }
 
     @Override
     public void onDataSuccess(Order order) {
+        stopProgressDialog();
         if(null!=order.getContent() &&order.getContent().size()>0){
             listAll = order.getContent();
             loadViewHelper.restore();
             orderAdapter.replaceData(order.getContent());
+            tvObject.setText("全部对象");
+            tvPay.setText("全部支付状态");
         }
+    }
+
+    @Override
+    public void onCancelSuccess() {
+        startProgressDialog();
+        mPresenter.loadData(1,"","");
     }
 
     @Override
