@@ -8,4 +8,5 @@ import com.qingmang.base.BaseView;
 
 public interface AddAddressView<D> extends BaseView{
     void onDataSuccess(D d);
+    void onDataUpdateSuccess();
 }

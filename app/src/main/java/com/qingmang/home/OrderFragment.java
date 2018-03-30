@@ -117,7 +117,6 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter,OrderView> imp
 
     @Override
     public void onError(String msg) {
-        showToast(msg);
         loadViewHelper.restore();
         stopProgressDialog();
     }

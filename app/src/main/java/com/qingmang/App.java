@@ -31,11 +31,16 @@ public class App extends Application {
     public static App getInstance() {
         return singleton;
     }
+
     private String token ;
     private boolean isLogin;
 
     public String getToken() {
         return getSharedPreferences("token",MODE_PRIVATE).getString("token","");
+    }
+
+    public void clearCache() {
+         getSharedPreferences("token",MODE_PRIVATE).edit().clear();
     }
 
     public boolean isLogin() {

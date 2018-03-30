@@ -14,6 +14,7 @@ import com.qingmang.base.CommonView;
 import com.qingmang.base.Presenter;
 import com.qingmang.base.PresenterFactory;
 import com.qingmang.base.PresenterLoder;
+import com.qingmang.moudle.entity.Invoice;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -27,6 +28,7 @@ public class InvoiceChooseActivity extends BaseMvpActivity<CommonPresenter, Comm
     @BindView(R.id.rb_invoice)
     RadioButton rbInvoice;
     private boolean un_invoice;
+    private Invoice invoice;
 
     @Override
     public String setTitleName() {
@@ -46,11 +48,12 @@ public class InvoiceChooseActivity extends BaseMvpActivity<CommonPresenter, Comm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int type = getIntent().getIntExtra("invoice", 0);
-        if (type == 0) {
-            rbUnInvoice.setChecked(true);
-        }else {
+        invoice = getIntent().getParcelableExtra("invoice");
+        if (invoice.isInvoice()) {
             rbInvoice.setChecked(true);
+
+        }else {
+            rbUnInvoice.setChecked(true);
         }
         rgInvoice.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -85,13 +88,26 @@ public class InvoiceChooseActivity extends BaseMvpActivity<CommonPresenter, Comm
     @OnClick(R.id.bt_sure)
     public void onViewClicked() {
         if (un_invoice) {
+            invoice.setInvoice(false);
             Intent intent = getIntent();
-            intent.putExtra("invoice", 0);
+            intent.putExtra("invoice", invoice);
             setResult(RESULT_OK, intent);
         } else {
+            invoice.setInvoice(true);
             Intent in = new Intent(mContext, InvoiceSettingActivity.class);
-            in.putExtra("invoice", 1);
-            startActivity(in);
+            in.putExtra("invoice", invoice);
+            startActivityForResult(in,888);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK){
+            Intent intent = getIntent();
+            intent.putExtra("invoice", data.getParcelableExtra("invoice"));
+            setResult(RESULT_OK, intent);
+            finish();
         }
     }
 }

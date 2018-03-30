@@ -161,7 +161,7 @@ public class SettingActivity extends BaseMvpActivity<SettingPresenter, SettingVi
                 startProgressDialog();
                 presenter.updateInfo2(tvName.getText().toString(),
                         imageFile,province,city,areas,tvPlaceDetail.getText().toString(),
-                        etRealName.getText().toString(),idCard);
+                        etRealName.getText().toString(),idCard,etEmail.getText().toString());
                 break;
         }
     }

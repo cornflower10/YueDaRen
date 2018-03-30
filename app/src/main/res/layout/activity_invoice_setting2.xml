@@ -33,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <RadioGroup
+            android:layout_marginLeft="@dimen/margin_16"
             android:layout_marginBottom="@dimen/margin_16"
             android:layout_below="@+id/tv_type"
             android:orientation="horizontal"
@@ -49,6 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <RadioButton
+                android:layout_marginLeft="4dp"
                 android:background="@drawable/raddio_button_bg"
                 android:padding="@dimen/margin_16"
                 android:textColor="@color/text_333333"
@@ -58,6 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <RadioButton
+                android:layout_marginLeft="4dp"
                 android:background="@drawable/raddio_button_bg"
                 android:padding="@dimen/margin_16"
                 android:drawablePadding="10dp"

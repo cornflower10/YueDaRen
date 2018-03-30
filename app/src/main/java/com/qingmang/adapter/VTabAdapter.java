@@ -32,7 +32,7 @@ public class VTabAdapter implements TabAdapter {
 
     @Override
     public int getBadge(int position) {
-        if (position == 5) return position;
+//        if (position == 5) return position;
         return 0;
     }
 

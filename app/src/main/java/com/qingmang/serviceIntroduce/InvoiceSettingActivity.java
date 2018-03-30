@@ -1,7 +1,9 @@
 package com.qingmang.serviceIntroduce;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -15,8 +17,10 @@ import com.qingmang.base.CommonView;
 import com.qingmang.base.Presenter;
 import com.qingmang.base.PresenterFactory;
 import com.qingmang.base.PresenterLoder;
+import com.qingmang.moudle.entity.Invoice;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class InvoiceSettingActivity extends BaseMvpActivity<CommonPresenter, CommonView> implements CommonView {
 
@@ -43,6 +47,8 @@ public class InvoiceSettingActivity extends BaseMvpActivity<CommonPresenter, Com
 
     private boolean personal = true;
     private int invoiceType;
+    private Invoice invoice = new Invoice();
+
     @Override
     public String setTitleName() {
         return "设置发票信息";
@@ -61,6 +67,7 @@ public class InvoiceSettingActivity extends BaseMvpActivity<CommonPresenter, Com
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        invoice = getIntent().getParcelableExtra("invoice");
         rgType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -72,6 +79,7 @@ public class InvoiceSettingActivity extends BaseMvpActivity<CommonPresenter, Com
                         personal = false;
                         break;
                 }
+                isPersonal(personal);
             }
         });
 
@@ -93,13 +101,19 @@ public class InvoiceSettingActivity extends BaseMvpActivity<CommonPresenter, Com
         });
         rb_person.setChecked(true);
         rbPaper.setChecked(true);
+        isPersonal(personal);
 
-        if(personal){
+    }
+
+    private void isPersonal(boolean isPersonal) {
+        if (isPersonal) {
+            rbPaper.setChecked(true);
             llDetail.setVisibility(View.GONE);
             rbPaper.setVisibility(View.VISIBLE);
             rbEle.setVisibility(View.GONE);
             rbZengzhi.setVisibility(View.GONE);
-        }else {
+        } else {
+            rbEle.setChecked(true);
             rbPaper.setVisibility(View.GONE);
             llDetail.setVisibility(View.VISIBLE);
             rbEle.setVisibility(View.VISIBLE);
@@ -122,4 +136,27 @@ public class InvoiceSettingActivity extends BaseMvpActivity<CommonPresenter, Com
         });
     }
 
+    @OnClick(R.id.bt_sure)
+    public void onViewClicked() {
+        if(!personal){
+            if(TextUtils.isEmpty(etCompanyName.getText().toString())){
+                showToast("请填写单位名称");
+                return;
+            }
+
+            if(TextUtils.isEmpty(etInvoice.getText().toString())){
+                showToast("请填写纳税人识别号");
+                return;
+            }
+            invoice.setCompanyName(etCompanyName.getText().toString());
+            invoice.setInvoiceNo(etInvoice.getText().toString());
+        }
+        invoice.setHeader(personal?0:1);
+
+        invoice.setInvoiceType(invoiceType);
+        Intent intent = getIntent();
+        intent.putExtra("invoice",invoice);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
 }

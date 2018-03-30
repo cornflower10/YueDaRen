@@ -80,7 +80,8 @@ public class SettingPresenter extends BaseMvpPresenter<SettingView> {
                            String district,
                            String address,
                            String realname,
-                           String idcard
+                           String idcard,
+                            String email
     ){
 
         RequestBody requestFile =
@@ -91,7 +92,9 @@ public class SettingPresenter extends BaseMvpPresenter<SettingView> {
 
 
 
-        RequestBody nameRequest = null,provinceRequest= null,cityR= null,districtR= null,addressR= null,realnameR= null,idcardR= null;
+        RequestBody nameRequest = null,
+                provinceRequest= null,cityR= null,districtR= null,
+                addressR= null,realnameR= null,idcardR= null,emailR = null;
 
         LogManager.i("file"+file.length());
         Map<String, RequestBody> params =new HashMap<>();
@@ -133,6 +136,11 @@ public class SettingPresenter extends BaseMvpPresenter<SettingView> {
                     RequestBody.create(
                             MediaType.parse("multipart/form-data"), idcard);
         }
+        if(!TextUtils.isEmpty(email)){
+            emailR =
+                    RequestBody.create(
+                            MediaType.parse("multipart/form-data"), email);
+        }
         addSubscribe(App.getInstance()
                 .getRetrofitServiceManager()
                 .create(ApiService.class).UpdateCustomer2(nameRequest,
@@ -142,9 +150,8 @@ public class SettingPresenter extends BaseMvpPresenter<SettingView> {
                         districtR,
                         addressR,
                         realnameR,
-                        idcardR
-
-                        )
+                        idcardR,
+                        emailR)
                 .compose(ResponseTransformer.<String>handleResult())
                 .compose(RxSchedulers.<String>ObToMain())
                 .subscribe(new Consumer<String>() {

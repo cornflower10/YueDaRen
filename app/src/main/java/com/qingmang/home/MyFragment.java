@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.qingmang.App;
 import com.qingmang.R;
 import com.qingmang.adapter.UtilBoxAdapter;
 import com.qingmang.base.BaseMvpFragment;
@@ -16,6 +17,7 @@ import com.qingmang.baselibrary.utils.LogManager;
 import com.qingmang.moudle.entity.CustomerInfo;
 import com.qingmang.moudle.entity.UtilBox;
 import com.qingmang.user.AuthCompanyActivity;
+import com.qingmang.user.LoginActivity;
 import com.qingmang.user.SettingActivity;
 import com.qingmang.utils.imageload.ImageLoaderUtil;
 
@@ -101,7 +103,7 @@ public class MyFragment extends BaseMvpFragment<MyPresenter, MyView> implements 
 
     @Override
     public void onError(String msg) {
-        showToast(msg);
+//        showToast(msg);
     }
 
     @Override
@@ -124,6 +126,10 @@ public class MyFragment extends BaseMvpFragment<MyPresenter, MyView> implements 
 
     @OnClick({R.id.iv_setting, R.id.ll_rzqy})
     public void onViewClicked(View view) {
+        if(!App.getInstance().isLogin()){
+            startActivity(LoginActivity.class);
+            return;
+        }
         switch (view.getId()) {
             case R.id.iv_setting:
 //                startActivity();

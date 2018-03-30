@@ -93,7 +93,8 @@ public interface ApiService {
                                                    @Part("district") RequestBody district,
                                                    @Part("address") RequestBody address,
                                                    @Part("realname") RequestBody realname,
-                                                   @Part("idcard") RequestBody idcard);
+                                                   @Part("idcard") RequestBody idcard,
+                                                   @Part("email") RequestBody email);
 
     @Multipart
     @POST("customer/authen")
@@ -224,7 +225,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("customer/address/add")
-    Observable<BaseEntity<String>> AddAddress(@Field("collector") String collector,
+    Observable<BaseEntity<Adress>> AddAddress(@Field("collector") String collector,
                                          @Field("mobile") String mobile,
                                          @Field("province") String province,
                                          @Field("city") String city,

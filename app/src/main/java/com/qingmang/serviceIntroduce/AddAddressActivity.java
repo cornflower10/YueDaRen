@@ -25,7 +25,7 @@ import com.qingmang.moudle.entity.Adress;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class AddAddressActivity extends BaseMvpActivity<AddAddressPresenter, AddAddressView> implements AddAddressView<String> {
+public class AddAddressActivity extends BaseMvpActivity<AddAddressPresenter, AddAddressView> implements AddAddressView<Adress> {
 
     @BindView(R.id.et_name)
     AppCompatEditText etName;
@@ -101,11 +101,16 @@ public class AddAddressActivity extends BaseMvpActivity<AddAddressPresenter, Add
     }
 
     @Override
-    public void onDataSuccess(String s) {
+    public void onDataSuccess(Adress s) {
         stopProgressDialog();
         setResult(RESULT_OK);
         finish();
 
+    }
+
+    @Override
+    public void onDataUpdateSuccess() {
+        onDataSuccess(null);
     }
 
 

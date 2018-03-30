@@ -15,6 +15,7 @@ import com.qingmang.base.Presenter;
 import com.qingmang.base.PresenterFactory;
 import com.qingmang.base.PresenterLoder;
 import com.qingmang.moudle.entity.Adress;
+import com.qingmang.moudle.entity.Invoice;
 import com.qingmang.moudle.entity.ServiceInfo;
 import com.qingmang.utils.imageload.ImageLoaderUtil;
 
@@ -47,6 +48,7 @@ public class OrderSureActivity extends BaseMvpActivity<OrderSurePresenter, Order
     TextView tvLiuyan;
     @BindView(R.id.tv_address)
     TextView tvAddress;
+    private Invoice invoice = new Invoice();
 
    private ServiceInfo serviceInfo;
     @Override
@@ -91,11 +93,13 @@ public class OrderSureActivity extends BaseMvpActivity<OrderSurePresenter, Order
             case R.id.tv_fa_piao:
                 Intent intentFP = new Intent(this, InvoiceChooseActivity.class);
                 if (tvFaPiao.getText().equals("不开发票")) {
-                    intentFP.putExtra("invoice", 0);
-                } else {
-                    intentFP.putExtra("invoice", 1);
-                }
+                    invoice.setInvoice(false);
 
+                } else {
+                    invoice.setInvoice(true);
+
+                }
+                intentFP.putExtra("invoice",invoice);
                 startActivityForResult(intentFP, REQ);
 
                 break;
@@ -108,8 +112,9 @@ public class OrderSureActivity extends BaseMvpActivity<OrderSurePresenter, Order
                 presenter.loadData(serviceInfo.getId(),serviceInfo.getNum(),
                         serviceInfo.getChoose(),
                         cityAndDis(serviceInfo.getPlace())[0],
-                        cityAndDis(serviceInfo.getPlace())[1],adress.getId(),0,0,
-                        0,"",""
+                        cityAndDis(serviceInfo.getPlace())[1],adress.getId(),
+                        invoice.isInvoice()?1:0,invoice.getInvoiceType(),invoice.getHeader(),
+                        invoice.getCompanyName(),invoice.getInvoiceNo()
                         );
                 break;
         }
@@ -149,8 +154,8 @@ public class OrderSureActivity extends BaseMvpActivity<OrderSurePresenter, Order
 
         if (resultCode == RESULT_OK) {
             if (REQ == requestCode) {
-                int type = data.getIntExtra("invoice", 0);
-                tvFaPiao.setText(type == 0 ? "不开发票" : "开发票");
+                invoice = data.getParcelableExtra("invoice");
+                tvFaPiao.setText(invoice.isInvoice() ? "开发票" : "不开发票");
             } else if (requestCode == REQ_ADDRESS) {
                 adress = data.getParcelableExtra("address");
                 tvUser.setText("联系人："+adress.getCollector());

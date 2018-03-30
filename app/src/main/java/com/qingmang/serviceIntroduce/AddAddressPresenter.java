@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.qingmang.App;
 import com.qingmang.api.ApiService;
 import com.qingmang.base.BaseMvpPresenter;
+import com.qingmang.moudle.entity.Adress;
 import com.qingmang.utils.RxSchedulers;
 import com.qingmang.utils.rx.ResponseTransformer;
 
@@ -32,7 +33,7 @@ public class AddAddressPresenter extends BaseMvpPresenter<AddAddressView> {
                     .subscribe(new Consumer<String>() {
                         @Override
                         public void accept(String str) throws Exception {
-                            getMvpView().onDataSuccess(str);
+                            getMvpView().onDataUpdateSuccess();
                         }
                     }, new Consumer<Throwable>() {
                         @Override
@@ -45,11 +46,11 @@ public class AddAddressPresenter extends BaseMvpPresenter<AddAddressView> {
                     .getRetrofitServiceManager()
                     .create(ApiService.class)
                     .AddAddress(collector,mobile,province,city,areas,address,top)
-                    .compose(ResponseTransformer.<String>handleResult())
-                    .compose(RxSchedulers.<String>ObToMain())
-                    .subscribe(new Consumer<String>() {
+                    .compose(ResponseTransformer.<Adress>handleResult())
+                    .compose(RxSchedulers.<Adress>ObToMain())
+                    .subscribe(new Consumer<Adress>() {
                         @Override
-                        public void accept(String str) throws Exception {
+                        public void accept(Adress str) throws Exception {
                             getMvpView().onDataSuccess(str);
                         }
                     }, new Consumer<Throwable>() {

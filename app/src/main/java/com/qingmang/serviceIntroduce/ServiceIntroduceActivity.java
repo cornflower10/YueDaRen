@@ -3,7 +3,6 @@ package com.qingmang.serviceIntroduce;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
@@ -13,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,6 +25,7 @@ import com.lljjcoder.bean.DistrictBean;
 import com.lljjcoder.bean.ProvinceBean;
 import com.lljjcoder.citywheel.CityConfig;
 import com.lljjcoder.style.citypickerview.CityPickerView;
+import com.qingmang.App;
 import com.qingmang.R;
 import com.qingmang.adapter.ServiceObjectAdapter;
 import com.qingmang.adapter.ServicePagerAdapter;
@@ -32,9 +33,11 @@ import com.qingmang.base.BaseMvpActivity;
 import com.qingmang.base.Presenter;
 import com.qingmang.base.PresenterFactory;
 import com.qingmang.base.PresenterLoder;
+import com.qingmang.moudle.entity.Invoice;
 import com.qingmang.moudle.entity.Item;
 import com.qingmang.moudle.entity.ServiceInfo;
 import com.qingmang.moudle.entity.ServiceObject;
+import com.qingmang.user.LoginActivity;
 import com.qingmang.utils.imageload.ImageLoaderUtil;
 
 import java.util.ArrayList;
@@ -73,7 +76,7 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
     @BindView(R.id.nsv)
     NestedScrollView nsv;
     @BindView(R.id.ll_root)
-    CoordinatorLayout llRoot;
+    LinearLayout llRoot;
     @BindView(R.id.tv_per_service)
     TextView tvPerService;
     @BindView(R.id.tv_one_one)
@@ -96,6 +99,7 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
     private String[] titles = {"服务说明", "服务流程", "服务承诺", "常见问题"};
     private String chooseObject;
     private String chooseProject;
+
 
 
     @Override
@@ -171,6 +175,12 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
     }
 
     private void buy(){
+
+        if(!App.getInstance().isLogin()){
+            startActivity(LoginActivity.class);
+            return;
+        }
+
         if (count == 0) {
             showToast(" 请选择服务数量！");
             return;
