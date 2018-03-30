@@ -17,6 +17,7 @@
     <include layout="@layout/toolbar"/>
     <View style="@style/divide_line_match"/>
     <android.support.v4.widget.NestedScrollView
+        android:descendantFocusability="blocksDescendants"
         android:fillViewport="true"
         android:id="@+id/nsv"
         android:layout_width="match_parent"

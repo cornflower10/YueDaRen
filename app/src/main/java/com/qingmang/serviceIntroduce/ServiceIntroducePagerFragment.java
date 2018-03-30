@@ -6,9 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.qingmang.R;
+import com.qingmang.custom.MyWebview;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +28,7 @@ public class ServiceIntroducePagerFragment extends Fragment {
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
     @BindView(R.id.wv)
-    WebView wv;
+    MyWebview wv;
     Unbinder unbinder;
 
 
@@ -61,7 +63,7 @@ public class ServiceIntroducePagerFragment extends Fragment {
 
 
     private void init(WebView webView,String mUrl) {
-
+        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
         StringBuilder data = new StringBuilder("<html><body >");
         data.append(mUrl) ;
         data.append("</body></html>");
