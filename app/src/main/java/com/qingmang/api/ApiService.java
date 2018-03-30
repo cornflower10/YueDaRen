@@ -16,12 +16,14 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 
 /**
@@ -82,10 +84,26 @@ public interface ApiService {
     Observable<BaseEntity<String>> UpdateCustomer(@PartMap Map<String, RequestBody> params);
 //   params.put("operatorIdentityImages"+"\";fileName=\""+file1.getName(),RequestBody.create(MediaType.parse(TYPE_STREAM), file1));
 
+    @Multipart
+    @POST("customer/info/update")
+    Observable<BaseEntity<String>> UpdateCustomer2(@Part("name") RequestBody name,
+                                                   @Part MultipartBody.Part file,
+                                                   @Part("province") RequestBody province,
+                                                   @Part("city") RequestBody city,
+                                                   @Part("district") RequestBody district,
+                                                   @Part("address") RequestBody address,
+                                                   @Part("realname") RequestBody realname,
+                                                   @Part("idcard") RequestBody idcard);
 
     @Multipart
     @POST("customer/authen")
     Observable<BaseEntity<String>> Authcompany(@PartMap Map<String, RequestBody> params);
+    @Multipart
+    @POST("customer/authen")
+    Observable<BaseEntity<String>> Authcompany2(@Part("company") RequestBody company,
+                                                   @Part MultipartBody.Part file,
+                                                   @Part("legal") RequestBody legal
+                                                 );
     /**
      * 首页banner
      * @return

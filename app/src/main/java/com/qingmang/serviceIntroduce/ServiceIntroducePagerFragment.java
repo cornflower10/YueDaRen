@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.webkit.WebView;
 
 import com.qingmang.R;
 
@@ -25,8 +25,8 @@ public class ServiceIntroducePagerFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
-    @BindView(R.id.tv_content)
-    TextView textView;
+    @BindView(R.id.wv)
+    WebView wv;
     Unbinder unbinder;
 
 
@@ -53,9 +53,20 @@ public class ServiceIntroducePagerFragment extends Fragment {
         Log.d("Debug", "creating fragment "
                 + getArguments().getString(ARG_SECTION_NUMBER));
         unbinder = ButterKnife.bind(this, rootView);
-        textView.setText(getArguments().getString(ARG_SECTION_NUMBER));
+
+        init(wv,getArguments().getString(ARG_SECTION_NUMBER));
 
         return rootView;
+    }
+
+
+    private void init(WebView webView,String mUrl) {
+
+        StringBuilder data = new StringBuilder("<html><body >");
+        data.append(mUrl) ;
+        data.append("</body></html>");
+
+        webView.loadDataWithBaseURL("", data.toString(), "text/html", "UTF-8","");
     }
 
     @Override

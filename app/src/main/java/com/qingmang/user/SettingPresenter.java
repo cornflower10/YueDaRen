@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.qingmang.App;
 import com.qingmang.api.ApiService;
 import com.qingmang.base.BaseMvpPresenter;
+import com.qingmang.baselibrary.utils.LogManager;
 import com.qingmang.utils.RxSchedulers;
 import com.qingmang.utils.rx.ResponseTransformer;
 
@@ -14,6 +15,7 @@ import java.util.Map;
 
 import io.reactivex.functions.Consumer;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 /**
@@ -23,7 +25,7 @@ import okhttp3.RequestBody;
 public class SettingPresenter extends BaseMvpPresenter<SettingView> {
 
     private static final String TYPE_TEXT = "text/plain";
-    private static final String TYPE_STREAM = "application/otcet-stream";
+    private static final String TYPE_STREAM = "image/*";
 
     public void updateInfo(String name,
                            File file,
@@ -34,11 +36,12 @@ public class SettingPresenter extends BaseMvpPresenter<SettingView> {
                            String realname,
                            String idcard
                            ){
+        LogManager.i("file"+file.length());
         Map<String, RequestBody> params =new HashMap<>();
         if(!TextUtils.isEmpty(name))
         params.put("name",RequestBody.create(MediaType.parse(TYPE_TEXT),name));
         if(null!=file)
-        params.put("file",RequestBody.create(MediaType.parse(TYPE_STREAM),file));
+        params.put("file"+"\";fileName=\""+file.getName(),RequestBody.create(MediaType.parse(TYPE_STREAM),file));
         if(!TextUtils.isEmpty(province))
         params.put("province",RequestBody.create(MediaType.parse(TYPE_TEXT),province));
         if(!TextUtils.isEmpty(city))
@@ -60,6 +63,94 @@ public class SettingPresenter extends BaseMvpPresenter<SettingView> {
                     @Override
                     public void accept(String sms) throws Exception {
                             getMvpView().onDataSuccess(sms);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        getMvpView().onError(throwable.getMessage());
+                    }
+                }));
+
+    }
+
+    public void updateInfo2(String name,
+                           File file,
+                           String province,
+                           String city,
+                           String district,
+                           String address,
+                           String realname,
+                           String idcard
+    ){
+
+        RequestBody requestFile =
+                RequestBody.create(MediaType.parse("application/otcet-stream"), file);
+
+        MultipartBody.Part body =
+                MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+
+
+
+        RequestBody nameRequest = null,provinceRequest= null,cityR= null,districtR= null,addressR= null,realnameR= null,idcardR= null;
+
+        LogManager.i("file"+file.length());
+        Map<String, RequestBody> params =new HashMap<>();
+        if(!TextUtils.isEmpty(name)){
+             nameRequest =
+                    RequestBody.create(
+                            MediaType.parse("multipart/form-data"), name);
+        }
+
+        if(null!=file)
+            params.put("file"+"\";fileName=\""+file.getName(),RequestBody.create(MediaType.parse(TYPE_STREAM),file));
+        if(!TextUtils.isEmpty(province)){
+            provinceRequest =
+                    RequestBody.create(
+                            MediaType.parse("multipart/form-data"), province);
+        }
+        if(!TextUtils.isEmpty(city)){
+            cityR =
+                    RequestBody.create(
+                            MediaType.parse("multipart/form-data"), city);
+        }
+        if(!TextUtils.isEmpty(district)){
+            districtR =
+                    RequestBody.create(
+                            MediaType.parse("multipart/form-data"), district);
+        }
+        if(!TextUtils.isEmpty(address)){
+            addressR =
+                    RequestBody.create(
+                            MediaType.parse("multipart/form-data"), address);
+        }
+        if(!TextUtils.isEmpty(realname)){
+            realnameR =
+                    RequestBody.create(
+                            MediaType.parse("multipart/form-data"), realname);
+        }
+        if(!TextUtils.isEmpty(idcard)){
+            idcardR =
+                    RequestBody.create(
+                            MediaType.parse("multipart/form-data"), idcard);
+        }
+        addSubscribe(App.getInstance()
+                .getRetrofitServiceManager()
+                .create(ApiService.class).UpdateCustomer2(nameRequest,
+                        body,
+                        provinceRequest,
+                        cityR,
+                        districtR,
+                        addressR,
+                        realnameR,
+                        idcardR
+
+                        )
+                .compose(ResponseTransformer.<String>handleResult())
+                .compose(RxSchedulers.<String>ObToMain())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String sms) throws Exception {
+                        getMvpView().onDataSuccess(sms);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

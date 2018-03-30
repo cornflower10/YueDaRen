@@ -16,28 +16,36 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon, android:theme,allowBackup">
         <activity android:name=".MainActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
-        <activity android:name=".serviceIntroduce.ServiceIntroduceActivity" />
-        <activity android:name=".user.LoginActivity" />
-        <activity android:name=".user.RegisterActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".user.ForgetPasswdActivity" />
-        <activity android:name=".serviceIntroduce.OrderSureActivity" />
+        <activity android:name=".serviceIntroduce.ServiceIntroduceActivity" />
+        <activity
+            android:name=".user.LoginActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+        <activity
+            android:name=".user.RegisterActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".user.ForgetPasswdActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".serviceIntroduce.OrderSureActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".serviceIntroduce.AddressListActivity" />
         <activity android:name=".serviceIntroduce.InvoiceChooseActivity" />
-        <activity android:name=".serviceIntroduce.AddAddressActivity" />
-        <activity android:name=".serviceIntroduce.InvoiceSettingActivity" />
-        <activity android:name=".user.AuthCompanyActivity">
+        <activity
+            android:name=".serviceIntroduce.AddAddressActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".serviceIntroduce.InvoiceSettingActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".user.AuthCompanyActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -47,10 +55,13 @@
             <!-- </intent-filter> -->
         </activity>
         <activity android:name=".serviceIntroduce.HotMessageActivity" />
-        <activity android:name=".user.SettingActivity" />
+        <activity
+            android:name=".user.SettingActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <!-- &lt;!&ndash; 适配Android7.0 APP更新问题 &ndash;&gt; -->
         <!-- <provider -->
         <!-- android:name="android.support.v4.content.FileProvider" -->
@@ -64,7 +75,10 @@
         <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
         <!-- android:resource="@xml/file_paths" /> -->
         <!-- </provider> -->
-        <activity android:name=".hotmessage.HotMessageActivity"></activity>
+        <activity android:name=".hotmessage.HotMessageActivity" />
+        <activity android:name=".WebActivity" />
+        <activity android:name=".WebViewLoadHtmlActivity" />
+        <activity android:name=".WelComeActivity"></activity>
     </application>
 
 </manifest>

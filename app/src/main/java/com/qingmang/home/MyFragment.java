@@ -17,6 +17,7 @@ import com.qingmang.moudle.entity.CustomerInfo;
 import com.qingmang.moudle.entity.UtilBox;
 import com.qingmang.user.AuthCompanyActivity;
 import com.qingmang.user.SettingActivity;
+import com.qingmang.utils.imageload.ImageLoaderUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +76,12 @@ public class MyFragment extends BaseMvpFragment<MyPresenter, MyView> implements 
                 showToast("正在维护中...");
             }
         });
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         mPresenter.loadData();
     }
 
@@ -104,6 +111,7 @@ public class MyFragment extends BaseMvpFragment<MyPresenter, MyView> implements 
         tvAmount.setText(String.valueOf(customerInfo.getScore()));
         tvYhj.setText(String.valueOf(customerInfo.getCouponum()));
         tvDzf.setText(String.valueOf(customerInfo.getOrdersnum()));
+        ImageLoaderUtil.getInstance().loadCircleImage(customerInfo.getAvatar(),ivHeader,R.drawable.my_portrait);
 
 
     }

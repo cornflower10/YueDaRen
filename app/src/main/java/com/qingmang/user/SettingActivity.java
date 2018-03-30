@@ -91,6 +91,7 @@ public class SettingActivity extends BaseMvpActivity<SettingPresenter, SettingVi
         if (null != customerInfo) {
             ImageLoaderUtil.getInstance().loadCircleImage(customerInfo.getAvatar(),ivHeader,R.drawable.icon_my);
             etUserName.setText(customerInfo.getName());
+            tvName.setText(customerInfo.getName());
             tvPhone.setText(customerInfo.getMobile());
             if(!TextUtils.isEmpty(customerInfo.getProvince()))
             tvPlace.setText(customerInfo.getProvince()+","+customerInfo.getCity()+","+customerInfo.getDistrict());
@@ -158,7 +159,7 @@ public class SettingActivity extends BaseMvpActivity<SettingPresenter, SettingVi
                 }
 
                 startProgressDialog();
-                presenter.updateInfo(etUserName.getText().toString(),
+                presenter.updateInfo2(tvName.getText().toString(),
                         imageFile,province,city,areas,tvPlaceDetail.getText().toString(),
                         etRealName.getText().toString(),idCard);
                 break;

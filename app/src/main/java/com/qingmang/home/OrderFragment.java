@@ -125,9 +125,9 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter,OrderView> imp
     @Override
     public void onDataSuccess(Order order) {
         stopProgressDialog();
+        loadViewHelper.restore();
         if(null!=order.getContent() &&order.getContent().size()>0){
             listAll = order.getContent();
-            loadViewHelper.restore();
             orderAdapter.replaceData(order.getContent());
             tvObject.setText("全部对象");
             tvPay.setText("全部支付状态");

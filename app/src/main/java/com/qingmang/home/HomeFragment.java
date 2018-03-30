@@ -6,7 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.qingmang.R;
+import com.qingmang.WebActivity;
 import com.qingmang.adapter.MessageAdapter;
 import com.qingmang.adapter.WebBannerAdapter;
 import com.qingmang.base.BaseMvpFragment;
@@ -99,12 +101,20 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
         mzBannerAdapter.setOnBannerItemClickListener(new BannerLayout.OnBannerItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                WebActivity.startWebViewActivity(mContext,list.get(position).getTitle(),
+                        String.valueOf(list.get(position).getId()));
             }
         });
         bl.setAdapter(mzBannerAdapter);
 
 
         messageAdapter = new MessageAdapter(hotMessages);
+        messageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+               WebActivity.startWebViewActivity(mContext,hotMessages.get(position).getTitle(),String.valueOf(hotMessages.get(position).getId()));
+            }
+        });
         rvMessage.setAdapter(messageAdapter);
         rvMessage.setLayoutManager(new LinearLayoutManager(mContext));
 
@@ -116,7 +126,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
         for (int i = 0; i < list.size(); i++) {
             if (i > 4)
                 break;
-            datas3.add(list.get(i).getContent());
+            datas3.add(list.get(i).getIntroduce());
         }
         marqueeFactory3.setData(datas3);
         marqueeView.setMarqueeFactory(marqueeFactory3);
@@ -125,9 +135,8 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
         marqueeView.setOnItemClickListener(new OnItemClickListener<TextView, Object>() {
             @Override
             public void onItemClickListener(TextView mView, Object mData, int mPosition) {
-
-                list.get(mPosition);
-
+                WebActivity.startWebViewActivity(mContext,list.get(mPosition).getTitle(),
+                        String.valueOf(list.get(mPosition).getId()));
             }
         });
     }
@@ -208,11 +217,19 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
         listMindBanner = banner.getContent();
         if (null == listMindBanner)
             return;
-        List<String> list = new ArrayList<>();
+        final List<String> list = new ArrayList<>();
         for (int i = 0; i < listMindBanner.size(); i++) {
             list.add(listMindBanner.get(i).getLogo());
         }
         iv.setViewUrls(list);
+        iv.setOnBannerItemClickListener(new com.yyydjk.library.BannerLayout.OnBannerItemClickListener() {
+            @Override
+            public void onItemClick(int i) {
+                WebActivity.startWebViewActivity(mContext,listMindBanner.get(i).getTitle(),
+                        String.valueOf(listMindBanner.get(i).getId()));
+
+            }
+        });
 
     }
 
