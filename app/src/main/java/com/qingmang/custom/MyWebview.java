@@ -37,6 +37,7 @@ public class MyWebview extends WebView {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+
         int x = (int) ev.getRawX();
         int y = (int) ev.getRawY();
         int dealtX = 0;

@@ -265,6 +265,7 @@ public class MainActivity extends BaseMvpActivity<CommonPresenter,CommonView> im
                 exitTime = System.currentTimeMillis();
             } else {
                 finish();
+                App.getInstance().getForegroundCallbacks().appExit();
             }
             return true;
         }

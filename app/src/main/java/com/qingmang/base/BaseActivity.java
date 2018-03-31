@@ -3,8 +3,10 @@ package com.qingmang.base;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.qingmang.baselibrary.utils.LogManager;
@@ -21,14 +23,26 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        doBeforeSetcontentView();
         LogManager.i("新建"+this.getClass().getName());
         super.onCreate(savedInstanceState);
-
         mContext=this;
-
 //        MyApplication.getInstance().addActivity(this);
 //        PushAgent.getInstance(this).onAppStart();
+    }
+
+    /**
+     * 设置layout前配置
+     */
+    private void doBeforeSetcontentView() {
+        // 把actvity放到application栈中管理
+//        AppManager.getAppManager().addActivity(this);
+        // 无标题
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // 设置竖屏
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+
     }
 
 
