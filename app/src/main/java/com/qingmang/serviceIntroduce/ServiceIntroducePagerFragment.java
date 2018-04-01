@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.qingmang.R;
 import com.qingmang.custom.MyWebview;
@@ -62,13 +63,24 @@ public class ServiceIntroducePagerFragment extends Fragment {
     }
 
 
-    private void init(WebView webView,String mUrl) {
+    private void init(final WebView webView, String mUrl) {
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
         StringBuilder data = new StringBuilder("<html><body >");
         data.append(mUrl) ;
         data.append("</body></html>");
 
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+//                LogManager.i("WebView..getContentHeight.."+webView.getContentHeight());
+//                LogManager.i("WebView..getHeight.."+webView.getHeight());
+//                LogManager.i("WebView..getMeasuredHeight.."+webView.getMeasuredHeight());
+//                EventBus.getDefault().post(new MessageEvent(view.getMeasuredHeight()));
+            }
+        });
         webView.loadDataWithBaseURL("", data.toString(), "text/html", "UTF-8","");
+
     }
 
     @Override

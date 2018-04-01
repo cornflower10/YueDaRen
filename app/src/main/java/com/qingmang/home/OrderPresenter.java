@@ -17,8 +17,8 @@ import io.reactivex.functions.Consumer;
 
 public class OrderPresenter extends BaseMvpPresenter<OrderView> {
 
-    public void loadData(int page,String type,String step){
-        if(TextUtils.isEmpty(type)||TextUtils.isEmpty(step)){
+    public void loadData(int page, String type, String step, final boolean isLoadMore){
+        if(TextUtils.isEmpty(type)||TextUtils.isEmpty(step)||(type.equals("all")&&step.equals("all"))){
             addSubscribe(App.getInstance().getRetrofitServiceManager()
                     .create(ApiService.class).OrderList(page,10)
                     .compose(ResponseTransformer.<Order>handleResult())
@@ -26,29 +26,47 @@ public class OrderPresenter extends BaseMvpPresenter<OrderView> {
                     .subscribe(new Consumer<Order>() {
                         @Override
                         public void accept(Order orderBaseEntity) throws Exception {
-                            getMvpView().onDataSuccess(orderBaseEntity);
+                            if(isLoadMore){
+                                getMvpView().onLoadMoreSuccess(orderBaseEntity) ;
+                            }else {
+                                getMvpView().onDataSuccess(orderBaseEntity) ;
+                            }
                         }
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
-                            getMvpView().onError(throwable.getMessage());
+                            if(isLoadMore){
+                                getMvpView().onLoadMoreFail(throwable.getMessage());
+                            }else {
+                                getMvpView().onError(throwable.getMessage());
+                            }
                         }
                     }));
 
         }else {
             addSubscribe(App.getInstance().getRetrofitServiceManager()
-                    .create(ApiService.class).OrderList(page,10,type,step)
+                    .create(ApiService.class).OrderList(page,10,
+                            "all".equals(type)?"":type,"all".equals(step)?"":step)
                     .compose(ResponseTransformer.<Order>handleResult())
                     .compose(RxSchedulers.<Order>ObToMain())
                     .subscribe(new Consumer<Order>() {
                         @Override
                         public void accept(Order orderBaseEntity) throws Exception {
-                            getMvpView().onDataSuccess(orderBaseEntity);
+                            if(isLoadMore){
+                                getMvpView().onLoadMoreSuccess(orderBaseEntity) ;
+                            }else {
+                                getMvpView().onDataSuccess(orderBaseEntity) ;
+                            }
                         }
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
-                            getMvpView().onError(throwable.getMessage());
+                            if(isLoadMore){
+                                getMvpView().onLoadMoreFail(throwable.getMessage());
+                            }else {
+                                getMvpView().onError(throwable.getMessage());
+                            }
+
                         }
                     }));
         }

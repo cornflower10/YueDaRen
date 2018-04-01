@@ -33,12 +33,13 @@ import com.qingmang.base.BaseMvpActivity;
 import com.qingmang.base.Presenter;
 import com.qingmang.base.PresenterFactory;
 import com.qingmang.base.PresenterLoder;
-import com.qingmang.moudle.entity.Invoice;
 import com.qingmang.moudle.entity.Item;
 import com.qingmang.moudle.entity.ServiceInfo;
 import com.qingmang.moudle.entity.ServiceObject;
 import com.qingmang.user.LoginActivity;
 import com.qingmang.utils.imageload.ImageLoaderUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,6 +125,7 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
         mCityPickerView.init(mContext);
         initWheel();
         tvCount.setText(String.valueOf(count));
+        EventBus.getDefault().register(this);
 
     }
 
@@ -355,5 +357,22 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
             }
         });
 
+    }
+
+
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onMessageEvent(MessageEvent event) {
+//        /* Do something */
+//        if(event.getHeight()>0){
+//         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) vp.getLayoutParams();
+//         layoutParams.height = event.getHeight();
+//         vp.setLayoutParams(layoutParams);
+//        }
+//
+//    };
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

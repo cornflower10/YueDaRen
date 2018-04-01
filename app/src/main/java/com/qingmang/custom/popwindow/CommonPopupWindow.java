@@ -1,6 +1,8 @@
 package com.qingmang.custom.popwindow;
 
 import android.content.Context;
+import android.graphics.Rect;
+import android.os.Build;
 import android.view.View;
 import android.widget.PopupWindow;
 
@@ -137,6 +139,16 @@ public class CommonPopupWindow extends PopupWindow
         int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         view.measure(widthMeasureSpec, heightMeasureSpec);
+    }
+    @Override
+    public void showAsDropDown(View anchor) {
+        if(Build.VERSION.SDK_INT >= 24){
+            Rect visibleFrame = new Rect();
+            anchor.getGlobalVisibleRect(visibleFrame);
+            int height = anchor.getResources().getDisplayMetrics().heightPixels - visibleFrame.bottom;
+            setHeight(height);
+        }
+        super.showAsDropDown(anchor);
     }
 
 }

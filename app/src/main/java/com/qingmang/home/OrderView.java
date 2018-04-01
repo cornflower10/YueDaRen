@@ -9,4 +9,6 @@ import com.qingmang.base.BaseView;
 public interface OrderView<D> extends BaseView{
     void onDataSuccess(D d);
     void onCancelSuccess();
+    void onLoadMoreSuccess(D d);
+    void onLoadMoreFail(String error);
 }
