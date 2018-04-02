@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.qingmang.R;
+import com.qingmang.base.Constans;
 import com.qingmang.moudle.entity.VenService;
 import com.qingmang.utils.imageload.ImageLoaderUtil;
 
@@ -26,7 +27,8 @@ public class VentureServiceAdapter extends BaseQuickAdapter<VenService.ContentBe
     protected void convert(BaseViewHolder helper, VenService.ContentBean item) {
         helper.setText(R.id.tv_title,item.getName());
         helper.setText(R.id.tv_des,item.getPoster());
-        ImageLoaderUtil.getInstance().showImage(item.getLogo(),(ImageView) helper.getView(R.id.iv),0);
+            helper.setBackgroundRes(R.id.tv_type,item.getTypeColor()) ;
+        ImageLoaderUtil.getInstance().showImage(Constans.DRAWABLE_URL+item.getDrawableId(),(ImageView) helper.getView(R.id.iv),0);
 
     }
 

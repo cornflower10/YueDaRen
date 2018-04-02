@@ -19,19 +19,29 @@ public class HotMessagePresenter extends BaseMvpPresenter<HotMessageView> {
     /**
      * 热点资讯
      */
-    public void loadHotMessage(){
-        addSubscribe(App.getInstance().getRetrofitServiceManager().create(ApiService.class).HotMessages()
+    public void loadHotMessage(int page,final boolean isLoadMore){
+        addSubscribe(App.getInstance().getRetrofitServiceManager().create(ApiService.class).HotMessages(page,10)
                 .compose(ResponseTransformer.<HotMessage>handleResult())
                 .compose(RxSchedulers.<HotMessage>ObToMain())
                 .subscribe(new Consumer<HotMessage>() {
                     @Override
                     public void accept(HotMessage hotMessage) throws Exception {
-                        getMvpView().onHotMessageSuccess(hotMessage);
+                        if(isLoadMore){
+                            getMvpView().onLoadMoreSuccess(hotMessage);
+                        }else {
+                            getMvpView().onHotMessageSuccess(hotMessage);
+                        }
+
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        getMvpView().onError(throwable.getMessage());
+                        if(isLoadMore){
+                            getMvpView().onLoadMoreFail(throwable.getMessage());
+                        }else {
+                            getMvpView().onError(throwable.getMessage());
+                        }
+
                     }
                 }));
 

@@ -14,7 +14,7 @@
      android:layout_height="120dp">
   <ImageView
       android:id="@+id/iv"
-      android:scaleType="centerCrop"
+      android:scaleType="fitXY"
       android:layout_width="match_parent"
       android:layout_height="match_parent" />
   <LinearLayout
@@ -27,7 +27,7 @@
     android:layout_gravity="center_vertical"
     android:layout_weight="1.5"
     android:layout_width="0dp"
-    android:layout_height="wrap_content">x
+    android:layout_height="wrap_content">
    <TextView
        android:textSize="@dimen/sp_16"
        android:textColor="@color/white"
@@ -46,6 +46,7 @@
        android:layout_height="wrap_content" />
 </RelativeLayout>
    <TextView
+       android:id="@+id/tv_type"
        android:gravity="center"
        android:background="@drawable/coner_trans"
        android:layout_marginRight="@dimen/margin_16"

@@ -39,10 +39,12 @@ public class PeopleChildFragment extends BaseMvpFragment<FindPresenter,FindView>
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static PeopleChildFragment newInstance(int sectionNumber) {
+    public static PeopleChildFragment newInstance(int sectionNumber,int drawableId) {
         PeopleChildFragment fragment = new PeopleChildFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+        args.putInt("drawableId", drawableId);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -83,6 +85,18 @@ public class PeopleChildFragment extends BaseMvpFragment<FindPresenter,FindView>
 
     @Override
     public void onDataSuccess(Service service) {
+        for (int i = 0; i <service.getGoods().getContent().size() ; i++) {
+
+                if (i % 4 == 0) {
+                    service.getGoods().getContent().get(i).setDrawableId(R.drawable.index_gszc);
+                } else if (i % 4 == 1) {
+                    service.getGoods().getContent().get(i).setDrawableId(R.drawable.index_ppsb);
+                } else if (i % 4 == 2) {
+                    service.getGoods().getContent().get(i).setDrawableId(R.drawable.index_rlzy);
+                } else if (i % 4 == 3) {
+                    service.getGoods().getContent().get(i).setDrawableId(R.drawable.index_gxbt);
+                }
+        }
         peopleChildAdapter.replaceData(service.getGoods().getContent());
     }
 

@@ -1,5 +1,8 @@
 package com.qingmang.moudle.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -141,6 +144,15 @@ public class Service {
             private Object flow;
             private Object guarantee;
             private Object problem;
+            private int drawableId;
+
+            public int getDrawableId() {
+                return drawableId;
+            }
+
+            public void setDrawableId(int drawableId) {
+                this.drawableId = drawableId;
+            }
 
             public int getId() {
                 return id;
@@ -304,7 +316,7 @@ public class Service {
         }
     }
 
-    public static class CatesBean {
+    public static class CatesBean implements Parcelable {
         /**
          * id : 1
          * type : job
@@ -316,6 +328,15 @@ public class Service {
         private String type;
         private String name;
         private int sort;
+        private int drawableId;
+
+        public int getDrawableId() {
+            return drawableId;
+        }
+
+        public void setDrawableId(int drawableId) {
+            this.drawableId = drawableId;
+        }
 
         public int getId() {
             return id;
@@ -348,5 +369,42 @@ public class Service {
         public void setSort(int sort) {
             this.sort = sort;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(this.id);
+            dest.writeString(this.type);
+            dest.writeString(this.name);
+            dest.writeInt(this.sort);
+            dest.writeInt(this.drawableId);
+        }
+
+        public CatesBean() {
+        }
+
+        protected CatesBean(Parcel in) {
+            this.id = in.readInt();
+            this.type = in.readString();
+            this.name = in.readString();
+            this.sort = in.readInt();
+            this.drawableId = in.readInt();
+        }
+
+        public static final Creator<CatesBean> CREATOR = new Creator<CatesBean>() {
+            @Override
+            public CatesBean createFromParcel(Parcel source) {
+                return new CatesBean(source);
+            }
+
+            @Override
+            public CatesBean[] newArray(int size) {
+                return new CatesBean[size];
+            }
+        };
     }
 }

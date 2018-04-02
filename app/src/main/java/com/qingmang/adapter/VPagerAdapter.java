@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.qingmang.R;
 import com.qingmang.home.PeopleChildFragment;
 import com.qingmang.moudle.entity.Service;
 
@@ -23,7 +24,19 @@ public class VPagerAdapter extends FragmentPagerAdapter {
         super(fm);
         this.catesBeanList = catesBeanList;
         for (int i = 0; i < catesBeanList.size(); i++) {
-            fragments.add(PeopleChildFragment.newInstance(catesBeanList.get(i).getId()));
+            if(i%4==0){
+                catesBeanList.get(i).setDrawableId(R.drawable.entrep_gszc);
+            }else if(i%4==1){
+                catesBeanList.get(i).setDrawableId(R.drawable.entrep_dljz);
+            }
+            else if(i%4==2){
+                catesBeanList.get(i).setDrawableId(R.drawable.entrep_zzq);
+            }
+            else if(i%4==3){
+                catesBeanList.get(i).setDrawableId(R.drawable.entrep_flfw);
+            }
+            fragments.add(PeopleChildFragment.newInstance(catesBeanList.get(i).getId(),
+                    catesBeanList.get(i).getDrawableId()));
         }
     }
 

@@ -7,12 +7,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.qingmang.MainActivity;
 import com.qingmang.R;
 import com.qingmang.WebActivity;
 import com.qingmang.adapter.MessageAdapter;
 import com.qingmang.adapter.WebBannerAdapter;
 import com.qingmang.base.BaseMvpFragment;
 import com.qingmang.baselibrary.utils.LogManager;
+import com.qingmang.hotmessage.HotMessageActivity;
 import com.qingmang.moudle.entity.Banner;
 import com.qingmang.moudle.entity.HotMessage;
 import com.qingmang.moudle.entity.HotService;
@@ -70,10 +72,13 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
     RecyclerView rvMessage;
     WebBannerAdapter mzBannerAdapter;
     List<Banner.ContentBean> list = new ArrayList<>();
+    List<String> banners = new ArrayList<>();
     List<Banner.ContentBean> listMindBanner = new ArrayList<>();
     List<HotMessage.ContentBean> hotMessages = new ArrayList<>();
     @BindView(R.id.marqueeView)
     SimpleMarqueeView marqueeView;
+    @BindView(R.id.tv_more)
+    TextView tvMore;
 
 
     private MessageAdapter messageAdapter;
@@ -97,26 +102,23 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
         mPresenter.loadMindBanner();
         mPresenter.loadHotService();
         mPresenter.loadHotMessage();
-        mzBannerAdapter = new WebBannerAdapter(mContext, list);
-        mzBannerAdapter.setOnBannerItemClickListener(new BannerLayout.OnBannerItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                WebActivity.startWebViewActivity(mContext,list.get(position).getTitle(),
-                        String.valueOf(list.get(position).getId()));
-            }
-        });
-        bl.setAdapter(mzBannerAdapter);
 
 
         messageAdapter = new MessageAdapter(hotMessages);
         messageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-               WebActivity.startWebViewActivity(mContext,hotMessages.get(position).getTitle(),String.valueOf(hotMessages.get(position).getId()));
+                WebActivity.startWebViewActivity(mContext, hotMessages.get(position).getTitle(), String.valueOf(hotMessages.get(position).getId()));
             }
         });
         rvMessage.setAdapter(messageAdapter);
         rvMessage.setLayoutManager(new LinearLayoutManager(mContext));
+        tvMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    startActivity(HotMessageActivity.class);
+            }
+        });
 
     }
 
@@ -135,7 +137,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
         marqueeView.setOnItemClickListener(new OnItemClickListener<TextView, Object>() {
             @Override
             public void onItemClickListener(TextView mView, Object mData, int mPosition) {
-                WebActivity.startWebViewActivity(mContext,list.get(mPosition).getTitle(),
+                WebActivity.startWebViewActivity(mContext, list.get(mPosition).getTitle(),
                         String.valueOf(list.get(mPosition).getId()));
             }
         });
@@ -157,9 +159,9 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
 
 
     @OnClick({R.id.rL_gszc, R.id.rl_rlzy, R.id.rl_ppsb,
-            R.id.rl_gwbt, R.id.tv_more,R.id.rl_1, R.id.rl_2, R.id.rl_3})
+            R.id.rl_gwbt, R.id.rl_1, R.id.rl_2, R.id.rl_3})
     public void onViewClicked(View view) {
-        if (services.size() >= 7){
+        if (services.size() >= 7) {
             int tip = 0;
             switch (view.getId()) {
                 case R.id.rL_gszc:
@@ -207,7 +209,24 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
         if (null != banner.getContent() && banner.getContent().size() > 0) {
             list.clear();
             list.addAll(banner.getContent());
-            mzBannerAdapter.notifyDataSetChanged();
+            banners.clear();
+            for (int i = 0; i <list.size() ; i++) {
+                banners.add(list.get(i).getLogo());
+            }
+
+            mzBannerAdapter = new WebBannerAdapter(mContext, banners);
+            mzBannerAdapter.setOnBannerItemClickListener(new BannerLayout.OnBannerItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    WebActivity.startWebViewActivity(mContext, list.get(position).getTitle(),
+                            String.valueOf(list.get(position).getId()));
+                }
+            });
+            bl.setAdapter(mzBannerAdapter);
+            bl.setAutoPlaying(true);
+            LogManager.i("bl----"+bl.isPlaying());
+
+
         }
 
     }
@@ -225,7 +244,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
         iv.setOnBannerItemClickListener(new com.yyydjk.library.BannerLayout.OnBannerItemClickListener() {
             @Override
             public void onItemClick(int i) {
-                WebActivity.startWebViewActivity(mContext,listMindBanner.get(i).getTitle(),
+                WebActivity.startWebViewActivity(mContext, listMindBanner.get(i).getTitle(),
                         String.valueOf(listMindBanner.get(i).getId()));
 
             }
@@ -265,6 +284,13 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
     protected HomePresenter createPresenter() {
         return new HomePresenter();
     }
+
+
+    @OnClick(R.id.tv_service_more)
+    public void onViewClicked() {
+        ((MainActivity) mContext).chooseTab(1);
+    }
+
 
 
 }

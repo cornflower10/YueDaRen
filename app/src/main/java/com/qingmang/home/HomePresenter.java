@@ -6,7 +6,6 @@ import com.qingmang.base.BaseMvpPresenter;
 import com.qingmang.moudle.entity.Banner;
 import com.qingmang.moudle.entity.HotMessage;
 import com.qingmang.moudle.entity.HotService;
-import com.qingmang.moudle.entity.Service;
 import com.qingmang.utils.RxSchedulers;
 import com.qingmang.utils.rx.ResponseTransformer;
 
@@ -87,7 +86,7 @@ public class HomePresenter extends BaseMvpPresenter<HomeView> {
      * 热点资讯
      */
     public void loadHotMessage(){
-        addSubscribe(App.getInstance().getRetrofitServiceManager().create(ApiService.class).HotMessages()
+        addSubscribe(App.getInstance().getRetrofitServiceManager().create(ApiService.class).HotMessages(1,10)
                 .compose(ResponseTransformer.<HotMessage>handleResult())
                 .compose(RxSchedulers.<HotMessage>ObToMain())
                 .subscribe(new Consumer<HotMessage>() {

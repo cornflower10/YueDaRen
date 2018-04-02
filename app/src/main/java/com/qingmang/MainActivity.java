@@ -161,6 +161,9 @@ public class MainActivity extends BaseMvpActivity<CommonPresenter,CommonView> im
     }
 
 
+    public void chooseTab(int pos){
+        mBottomBar.setCurrentItem(pos);
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

@@ -98,6 +98,15 @@ public class Banner {
         private String logo;
         private String introduce;
         private String content;
+        private int drawableId;
+
+        public int getDrawableId() {
+            return drawableId;
+        }
+
+        public void setDrawableId(int drawableId) {
+            this.drawableId = drawableId;
+        }
 
         public int getId() {
             return id;
