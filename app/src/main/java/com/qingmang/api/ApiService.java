@@ -130,8 +130,10 @@ public interface ApiService {
      * 热点资讯
      * @return
      */
-    @GET("article/hot")
-    Observable<BaseEntity<HotMessage>> HotMessages();
+    @FormUrlEncoded
+    @POST("article/hot")
+    Observable<BaseEntity<HotMessage>> HotMessages(@Field("pageNumber") int pageNumber,
+                                                   @Field("pageSize") int pageSize);
 
 
     /**
@@ -144,8 +146,10 @@ public interface ApiService {
      * 市民服务列表
      * @return
      */
-    @GET("goods/list/citizen")
-    Observable<BaseEntity<VenService>> VentureServices();
+    @FormUrlEncoded
+    @POST("goods/list/citizen")
+    Observable<BaseEntity<VenService>> VentureServices(@Field("pageNumber") int pageNumber,
+                                                       @Field("pageSize") int pageSize);
 
     /**
      * 服务详情

@@ -9,7 +9,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.qingmang.R;
-import com.qingmang.moudle.entity.Banner;
 import com.qingmang.uilibrary.banner.BannerLayout;
 
 import java.util.List;
@@ -22,10 +21,10 @@ import java.util.List;
 public class WebBannerAdapter extends RecyclerView.Adapter<WebBannerAdapter.MzViewHolder> {
 
     private Context context;
-    private List<Banner.ContentBean> urlList;
+    private List<String> urlList;
     private BannerLayout.OnBannerItemClickListener onBannerItemClickListener;
 
-    public WebBannerAdapter(Context context, List<Banner.ContentBean> urlList) {
+    public WebBannerAdapter(Context context, List<String> urlList) {
         this.context = context;
         this.urlList = urlList;
     }
@@ -44,7 +43,7 @@ public class WebBannerAdapter extends RecyclerView.Adapter<WebBannerAdapter.MzVi
         if (urlList == null || urlList.isEmpty())
             return;
         final int P = position % urlList.size();
-        String url = urlList.get(P).getLogo();
+        String url = urlList.get(P);
         ImageView img = (ImageView) holder.imageView;
         Glide.with(context).load(url).into(img);
         img.setOnClickListener(new View.OnClickListener() {

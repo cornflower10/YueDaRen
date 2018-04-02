@@ -18,7 +18,7 @@ android {
         versionCode 1
         versionName "1.1.1"
 
-        buildConfigField 'String', 'URL', '"http://47.74.133.184/SERVER_PROJECT"'
+        buildConfigField 'String', 'URL', '"https://yd.haiyunsmart.com"'
         buildConfigField 'String', 'WHITELIST', '"release"'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

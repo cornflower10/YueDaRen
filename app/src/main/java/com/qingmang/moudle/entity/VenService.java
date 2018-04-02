@@ -107,6 +107,24 @@ public class VenService {
         private Object flow;
         private Object guarantee;
         private Object problem;
+        private int drawableId;
+        private int typeColor;
+
+        public int getTypeColor() {
+            return typeColor;
+        }
+
+        public void setTypeColor(int typeColor) {
+            this.typeColor = typeColor;
+        }
+
+        public int getDrawableId() {
+            return drawableId;
+        }
+
+        public void setDrawableId(int drawableId) {
+            this.drawableId = drawableId;
+        }
 
         public int getId() {
             return id;

@@ -10,4 +10,6 @@ import com.qingmang.moudle.entity.HotMessage;
 public interface HotMessageView extends BaseView{
 
     void onHotMessageSuccess(HotMessage hotMessage);
+    void onLoadMoreSuccess(HotMessage hotMessage);
+    void onLoadMoreFail(String error);
 }

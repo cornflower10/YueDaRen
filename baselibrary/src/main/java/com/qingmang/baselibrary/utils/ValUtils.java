@@ -52,7 +52,7 @@ public class ValUtils {
     }
 
     /**
-     * 验证登录密码格式是否是8-16位，同时包含字母与数字
+     * 验证登录密码格式是否是6-16位，同时包含字母与数字
      * @param password
      * @return
      */

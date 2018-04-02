@@ -16,22 +16,34 @@ import io.reactivex.functions.Consumer;
 
 public class VentureServicePresenter extends BaseMvpPresenter<VentureServeceView> {
 
-    public void loadData(){
+    public void loadData(int page, final boolean isloadMore){
         addSubscribe(App.getInstance()
                 .getRetrofitServiceManager()
                 .create(ApiService.class)
-                .VentureServices()
+                .VentureServices(page,10)
                 .compose(ResponseTransformer.<VenService>handleResult())
                 .compose(RxSchedulers.<VenService>ObToMain())
                 .subscribe(new Consumer<VenService>() {
                     @Override
                     public void accept(VenService venServiceBaseEntity) throws Exception {
+                        if(isloadMore){
+                            getMvpView().onLoadMoreSuccess(venServiceBaseEntity);
+                        }
+                        else{
                             getMvpView().onDataSuccess(venServiceBaseEntity);
+                        }
+
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        getMvpView().onError(throwable.getMessage());
+                        if(isloadMore){
+                            getMvpView().onLoadMoreFail(throwable.getMessage());
+                        }
+                        else{
+                            getMvpView().onError(throwable.getMessage());
+                        }
+
                     }
                 }));
     }

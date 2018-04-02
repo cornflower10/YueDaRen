@@ -20,7 +20,7 @@
      app:itemSpace="20"
      app:centerScale="1.0"
      app:showIndicator = "false"
-     app:moveSpeed="1.5"
+     app:moveSpeed="1.8"
      android:layout_height="100dp"/>
  <LinearLayout
      android:layout_width="match_parent"
@@ -75,9 +75,11 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content" />
   <TextView
+      android:id="@+id/tv_service_more"
+      android:drawableRight="@drawable/icon_more"
       android:textSize="@dimen/sp_14"
      android:layout_alignParentRight="true"
-      android:text="15个服务"
+      android:text="更多服务"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content" />
  </RelativeLayout>
@@ -344,6 +346,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content" />
   <TextView
+      android:onClick="click"
       android:id="@+id/tv_more"
       android:drawableRight="@drawable/icon_more"
       android:textColor="@color/text_999999"
