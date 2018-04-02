@@ -39,8 +39,6 @@ import com.qingmang.moudle.entity.ServiceObject;
 import com.qingmang.user.LoginActivity;
 import com.qingmang.utils.imageload.ImageLoaderUtil;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,7 +123,7 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
         mCityPickerView.init(mContext);
         initWheel();
         tvCount.setText(String.valueOf(count));
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
 
     }
 
@@ -373,6 +371,6 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
     }
 }

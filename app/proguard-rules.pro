@@ -195,3 +195,6 @@
 -keep class net.sourceforge.pinyin4j.** { *;}
 -keep class demo.** { *;}
 -keep class com.hp.** { *;}
+
+-dontwarn com.lljjcoder.**
+-keep class com.lljjcoder.** { *;}

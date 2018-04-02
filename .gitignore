@@ -1,4 +1,5 @@
 *.iml
+*.apk
 /local.properties
 /.idea
 .DS_Store
