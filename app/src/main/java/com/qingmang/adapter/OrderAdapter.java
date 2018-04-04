@@ -27,7 +27,7 @@ public class OrderAdapter extends BaseQuickAdapter<Order.ContentBean, BaseViewHo
     @Override
     protected void convert(BaseViewHolder helper, Order.ContentBean item) {
          helper.setText(R.id.tv_no,item.getOrdersno());
-        helper.setText(R.id.tv_context,item.getGname());
+//        helper.setText(R.id.tv_context,item.getGname());
         helper.setText(R.id.tv_tip_context,item.getLeavemsg());
         helper.setText(R.id.tv_price, AmountUtils.amountFormat((double) (item.getPrice())));
         helper.setText(R.id.tv_status,code2Str(item.getStep()));

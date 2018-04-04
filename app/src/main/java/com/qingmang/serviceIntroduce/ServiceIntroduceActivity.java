@@ -7,7 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -125,7 +125,10 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
         tvCount.setText(String.valueOf(count));
 //        EventBus.getDefault().register(this);
 
+
+
     }
+
 
     public static void startActivity(Context context, int id) {
         Intent intent = new Intent(context, ServiceIntroduceActivity.class);
@@ -259,8 +262,10 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
                 so.setName(spe[i]);
                 serviceProjects.add(so);
             }
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+            GridLayoutManager layoutManager = new GridLayoutManager(mContext, 2);
+//            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+//            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
             final ServiceObjectAdapter serviceObjectAdapter =  new ServiceObjectAdapter(serviceObjects);
             serviceObjectAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
@@ -279,7 +284,7 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
                 }
             });
             rvObject.setAdapter(serviceObjectAdapter);
-            rvObject.setLayoutManager(linearLayoutManager);
+            rvObject.setLayoutManager(layoutManager);
 
             final ServiceObjectAdapter serviceProjectAdapter =  new ServiceObjectAdapter(serviceProjects);
             serviceProjectAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -298,10 +303,11 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
                 }
             });
 
-            LinearLayoutManager linearLayout = new LinearLayoutManager(this);
-            linearLayout.setOrientation(LinearLayoutManager.HORIZONTAL);
+//            LinearLayoutManager linearLayout = new LinearLayoutManager(this);
+//            linearLayout.setOrientation(LinearLayoutManager.HORIZONTAL);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2);
             rvProject.setAdapter(serviceProjectAdapter);
-            rvProject.setLayoutManager(linearLayout);
+            rvProject.setLayoutManager(gridLayoutManager);
         }
 
 //        serviceIntroduce.getSpecial()
@@ -312,6 +318,40 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
 
         initTb(list);
 
+        initProvinceData();
+
+    }
+
+    private void  initProvinceData(){
+
+        if(serviceInfo.getRegions().size()>1){
+            ProvinceBean provinceBean = new ProvinceBean();
+            provinceBean.setId("10000");
+            provinceBean.setName("广东省");
+            ArrayList<CityBean> cityBeans = new ArrayList<>();
+            for (int i = 0; i < serviceInfo.getRegions().size(); i++) {
+                CityBean cityBean = new CityBean();
+                cityBean.setId("10000"+i);
+                ServiceInfo.RegionsBean regionsBean = serviceInfo.getRegions().get(i);
+                cityBean.setName(regionsBean.getC());
+                ArrayList<DistrictBean> districtBeans = new ArrayList<>();
+                String [] p = regionsBean.getP().split(",");
+                for (int j = 0; j <p.length; j++) {
+                    DistrictBean districtBean = new DistrictBean();
+                    districtBean.setId(cityBean.getId()+j);
+                    districtBean.setName(p[i]);
+                    districtBeans.add(districtBean);
+                }
+                cityBean.setCityList(districtBeans);
+                cityBeans.add(cityBean);
+            }
+            provinceBean.setCityList(cityBeans);
+            Gson gsons = new Gson();
+            mCityPickerView.init(mContext,gsons.toJson(provinceBean));
+
+        }else if(serviceInfo.getRegions().size()==1){
+            mCityPickerView.init(mContext);
+        }
     }
 
     /**

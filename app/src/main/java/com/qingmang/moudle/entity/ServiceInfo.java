@@ -1,6 +1,7 @@
 package com.qingmang.moudle.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by xiejingbao on 2018/3/24.
@@ -9,22 +10,22 @@ import java.io.Serializable;
 public class ServiceInfo implements Serializable{
 
     /**
-     * id : 7
-     * createtime : 1521354542000
-     * name : 税务服务
-     * type : job
-     * cateid : 3
+     * id : 41
+     * createtime : 1522658196000
+     * name : 社保代缴
+     * type : citizen
+     * cateid : null
      * catename : null
-     * poster : 粤大人十年办理经验，交给我们，其他我们办。
+     * poster : 社保是养老及享受市民服务的基本要求。
      * price : 2000
      * state : active
      * logo : http://livehaiyunx.oss-cn-shanghai.aliyuncs.com/picture/2018/02/011517467317803886.jpg
      * logos : http://livehaiyunx.oss-cn-shanghai.aliyuncs.com/picture/2018/02/011517467317803886.jpg,http://livehaiyunx.oss-cn-shanghai.aliyuncs.com/picture/2018/02/011517467317803886.jpg
      * lights : 十年专业服务，王牌一对一服务
-     * special : [{"key":"服务对象","type":0},{"key":"服务项目","type":1,"items":"人才引进入户,积分入户"}]
-     * region : [{"p":"江苏","c":"南京,无锡,徐州,苏州"},{"p":"上海","c":"上海"},{"p":"浙江","c":"杭州,宁波,温州,绍兴"}]
-     * protocoltitle : 户口办理服务协议
-     * protocolcontent : 户口办理服务协议内容
+     * special : [{"key":"服务对象","type":1,"items":"工人,农民,军人"},{"key":"服务项目","type":1,"items":"人才引进入户,积分入户"}]
+     * specials : [{"key":"服务对象","type":1,"items":"工人,农民,军人","value":null},{"key":"服务项目","type":1,"items":"人才引进入户,积分入户","value":null}]
+     * region : [{"p":"全市","c":"全区"}]
+     * regions : [{"p":"全市","c":"全区"}]
      * introduce : <p>
      <img src="http://livehaiyunx.oss-cn-shanghai.aliyuncs.com/picture/2018/03/151521093721467099.png" alt="" />
      </p>
@@ -85,13 +86,16 @@ public class ServiceInfo implements Serializable{
      <p>
      <img src="http://livehaiyunx.oss-cn-shanghai.aliyuncs.com/picture/2018/03/151521093765325928.png" alt="" />
      </p>
+     * ordersday : null
+     * ordersmonth : null
+     * orderstotal : null
      */
 
     private int id;
     private long createtime;
     private String name;
     private String type;
-    private int cateid;
+    private Object cateid;
     private Object catename;
     private String poster;
     private int price;
@@ -101,25 +105,18 @@ public class ServiceInfo implements Serializable{
     private String lights;
     private String special;
     private String region;
-    private String protocoltitle;
-    private String protocolcontent;
     private String introduce;
     private String flow;
     private String guarantee;
     private String problem;
-
-
-    private int num;
+    private Object ordersday;
+    private Object ordersmonth;
+    private Object orderstotal;
+    private List<SpecialsBean> specials;
+    private List<RegionsBean> regions;
     private String choose;
     private String place;
-
-    public int getNum() {
-        return num;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
-    }
+    private int num;
 
     public String getChoose() {
         return choose;
@@ -135,6 +132,14 @@ public class ServiceInfo implements Serializable{
 
     public void setPlace(String place) {
         this.place = place;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
     }
 
     public int getId() {
@@ -169,11 +174,11 @@ public class ServiceInfo implements Serializable{
         this.type = type;
     }
 
-    public int getCateid() {
+    public Object getCateid() {
         return cateid;
     }
 
-    public void setCateid(int cateid) {
+    public void setCateid(Object cateid) {
         this.cateid = cateid;
     }
 
@@ -249,22 +254,6 @@ public class ServiceInfo implements Serializable{
         this.region = region;
     }
 
-    public String getProtocoltitle() {
-        return protocoltitle;
-    }
-
-    public void setProtocoltitle(String protocoltitle) {
-        this.protocoltitle = protocoltitle;
-    }
-
-    public String getProtocolcontent() {
-        return protocolcontent;
-    }
-
-    public void setProtocolcontent(String protocolcontent) {
-        this.protocolcontent = protocolcontent;
-    }
-
     public String getIntroduce() {
         return introduce;
     }
@@ -295,5 +284,117 @@ public class ServiceInfo implements Serializable{
 
     public void setProblem(String problem) {
         this.problem = problem;
+    }
+
+    public Object getOrdersday() {
+        return ordersday;
+    }
+
+    public void setOrdersday(Object ordersday) {
+        this.ordersday = ordersday;
+    }
+
+    public Object getOrdersmonth() {
+        return ordersmonth;
+    }
+
+    public void setOrdersmonth(Object ordersmonth) {
+        this.ordersmonth = ordersmonth;
+    }
+
+    public Object getOrderstotal() {
+        return orderstotal;
+    }
+
+    public void setOrderstotal(Object orderstotal) {
+        this.orderstotal = orderstotal;
+    }
+
+    public List<SpecialsBean> getSpecials() {
+        return specials;
+    }
+
+    public void setSpecials(List<SpecialsBean> specials) {
+        this.specials = specials;
+    }
+
+    public List<RegionsBean> getRegions() {
+        return regions;
+    }
+
+    public void setRegions(List<RegionsBean> regions) {
+        this.regions = regions;
+    }
+
+    public static class SpecialsBean {
+        /**
+         * key : 服务对象
+         * type : 1
+         * items : 工人,农民,军人
+         * value : null
+         */
+
+        private String key;
+        private int type;
+        private String items;
+        private Object value;
+
+        public String getKey() {
+            return key;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+
+        public String getItems() {
+            return items;
+        }
+
+        public void setItems(String items) {
+            this.items = items;
+        }
+
+        public Object getValue() {
+            return value;
+        }
+
+        public void setValue(Object value) {
+            this.value = value;
+        }
+    }
+
+    public static class RegionsBean {
+        /**
+         * p : 全市
+         * c : 全区
+         */
+
+        private String p;
+        private String c;
+
+        public String getP() {
+            return p;
+        }
+
+        public void setP(String p) {
+            this.p = p;
+        }
+
+        public String getC() {
+            return c;
+        }
+
+        public void setC(String c) {
+            this.c = c;
+        }
     }
 }

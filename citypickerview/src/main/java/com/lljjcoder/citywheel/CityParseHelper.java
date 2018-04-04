@@ -1,6 +1,7 @@
 package com.lljjcoder.citywheel;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -152,9 +153,14 @@ public class CityParseHelper {
     /**
      * 初始化数据，解析json数据
      */
-    public void initData(Context context) {
-        
-        String cityJson = utils.getJson(context, Constant.CITY_DATA);
+    public void initData(Context context,String data) {
+        String cityJson = null;
+        if(!TextUtils.isEmpty(data)){
+            cityJson = data;
+        }else {
+            cityJson =  utils.getJson(context, Constant.CITY_DATA);
+        }
+
         Type type = new TypeToken<ArrayList<ProvinceBean>>() {
         }.getType();
         

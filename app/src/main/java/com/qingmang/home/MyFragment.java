@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.qingmang.App;
+import com.qingmang.MainActivity;
 import com.qingmang.R;
 import com.qingmang.adapter.UtilBoxAdapter;
 import com.qingmang.base.BaseMvpFragment;
@@ -124,7 +125,7 @@ public class MyFragment extends BaseMvpFragment<MyPresenter, MyView> implements 
     }
 
 
-    @OnClick({R.id.iv_setting, R.id.ll_rzqy})
+    @OnClick({R.id.iv_setting, R.id.ll_rzqy,R.id.rl_dzf})
     public void onViewClicked(View view) {
         if(!App.getInstance().isLogin()){
             startActivity(LoginActivity.class);
@@ -139,6 +140,9 @@ public class MyFragment extends BaseMvpFragment<MyPresenter, MyView> implements 
                 break;
             case R.id.ll_rzqy:
                 startActivity(AuthCompanyActivity.class);
+                break;
+            case R.id.rl_dzf:
+                ((MainActivity) mContext).chooseTab(3);
                 break;
         }
     }

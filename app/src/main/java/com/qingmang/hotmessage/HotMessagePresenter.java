@@ -5,8 +5,10 @@ import com.qingmang.api.ApiService;
 import com.qingmang.base.BaseMvpPresenter;
 import com.qingmang.moudle.entity.HotMessage;
 import com.qingmang.utils.RxSchedulers;
+import com.qingmang.utils.rx.CommonSubscriber;
 import com.qingmang.utils.rx.ResponseTransformer;
 
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -44,6 +46,16 @@ public class HotMessagePresenter extends BaseMvpPresenter<HotMessageView> {
 
                     }
                 }));
+
+    }
+
+
+
+    public void loadHotMessages(int page,final boolean isLoadMore){
+        addSubscribe((Disposable) App.getInstance().getRetrofitServiceManager().create(ApiService.class).HotMessages(page,10)
+                .compose(ResponseTransformer.<HotMessage>handleResult())
+                .compose(RxSchedulers.<HotMessage>ObToMain())
+                .subscribeWith(new CommonSubscriber<HotMessage>(getMvpView())));
 
     }
 }

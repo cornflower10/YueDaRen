@@ -18,6 +18,10 @@ public class CityBean implements Parcelable {
     
     private String name; /*东城区*/
 
+    public CityBean(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     private ArrayList<DistrictBean> cityList;
 
