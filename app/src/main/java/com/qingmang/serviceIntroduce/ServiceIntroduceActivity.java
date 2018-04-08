@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -34,10 +33,15 @@ import com.qingmang.base.Presenter;
 import com.qingmang.base.PresenterFactory;
 import com.qingmang.base.PresenterLoder;
 import com.qingmang.moudle.entity.Item;
+import com.qingmang.moudle.entity.MessageEvent;
 import com.qingmang.moudle.entity.ServiceInfo;
 import com.qingmang.moudle.entity.ServiceObject;
 import com.qingmang.user.LoginActivity;
 import com.qingmang.utils.imageload.ImageLoaderUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,8 +76,8 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
     ImageView ivAdd;
     //    @BindView(R.id.cb_agreement)
 //    AppCompatCheckBox cbAgreement;
-    @BindView(R.id.nsv)
-    NestedScrollView nsv;
+//    @BindView(R.id.nsv)
+//    NestedScrollView nsv;
     @BindView(R.id.ll_root)
     LinearLayout llRoot;
     @BindView(R.id.tv_per_service)
@@ -90,6 +94,8 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
     RecyclerView rvObject;
     @BindView(R.id.rv_project)
     RecyclerView rvProject;
+    @BindView(R.id.ll_scroll)
+    LinearLayout llScroll;
     private ServiceInfo serviceInfo;
     private int id;
     CityPickerView mCityPickerView = new CityPickerView();
@@ -98,7 +104,6 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
     private String[] titles = {"服务说明", "服务流程", "服务承诺", "常见问题"};
     private String chooseObject;
     private String chooseProject;
-
 
 
     @Override
@@ -113,18 +118,17 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
 
     @Override
     public int setContentView() {
-        return R.layout.activity_service_introduce;
+        return R.layout.activity_service_introduce_test;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         id = getIntent().getIntExtra("id", 0);
-        mCityPickerView.init(mContext);
+//        mCityPickerView.init(mContext);
         initWheel();
         tvCount.setText(String.valueOf(count));
-//        EventBus.getDefault().register(this);
-
+        EventBus.getDefault().register(this);
 
 
     }
@@ -177,9 +181,9 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
         }
     }
 
-    private void buy(){
+    private void buy() {
 
-        if(!App.getInstance().isLogin()){
+        if (!App.getInstance().isLogin()) {
             startActivity(LoginActivity.class);
             return;
         }
@@ -191,22 +195,25 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
 
         Intent intent = new Intent(mContext, OrderSureActivity.class);
 
-        if(!TextUtils.isEmpty(chooseObject)&& !TextUtils.isEmpty(chooseProject)){
-            serviceInfo.setChoose(chooseObject+","+chooseProject);
-        }else{
+        if (!TextUtils.isEmpty(chooseObject) && !TextUtils.isEmpty(chooseProject)) {
+            serviceInfo.setChoose(chooseObject + "," + chooseProject);
+        } else {
             serviceInfo.setChoose("");
         }
 
-        if(TextUtils.isEmpty(tvPalce.getText().toString())){
+        if (TextUtils.isEmpty(tvPalce.getText().toString())) {
             serviceInfo.setPlace("");
+            showToast("请选择服务区域！");
+            return;
 
-        }else {
+        } else {
             serviceInfo.setPlace(tvPalce.getText().toString());
         }
         serviceInfo.setNum(count);
         intent.putExtra("serviceInfo", serviceInfo);
         startActivity(intent);
     }
+
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
         return new PresenterLoder(mContext, new PresenterFactory() {
@@ -250,14 +257,14 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
         if (null != items && items.size() > 0) {
             String[] s = items.get(0).getItems().split(",");
             String[] spe = items.get(1).getItems().split(",");
-            final List<ServiceObject> serviceObjects =new ArrayList<>();
-            final List<ServiceObject> serviceProjects =new ArrayList<>();
-            for (int i = 0; i <s.length ; i++) {
+            final List<ServiceObject> serviceObjects = new ArrayList<>();
+            final List<ServiceObject> serviceProjects = new ArrayList<>();
+            for (int i = 0; i < s.length; i++) {
                 ServiceObject serviceObject = new ServiceObject();
                 serviceObject.setName(s[i]);
                 serviceObjects.add(serviceObject);
             }
-            for (int i = 0; i <spe.length ; i++) {
+            for (int i = 0; i < spe.length; i++) {
                 ServiceObject so = new ServiceObject();
                 so.setName(spe[i]);
                 serviceProjects.add(so);
@@ -266,14 +273,14 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
             GridLayoutManager layoutManager = new GridLayoutManager(mContext, 2);
 //            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 //            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-            final ServiceObjectAdapter serviceObjectAdapter =  new ServiceObjectAdapter(serviceObjects);
+            final ServiceObjectAdapter serviceObjectAdapter = new ServiceObjectAdapter(serviceObjects);
             serviceObjectAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    if(!serviceObjects.get(position).isChoose()){
+                    if (!serviceObjects.get(position).isChoose()) {
                         serviceObjects.get(position).setChoose(true);
                         chooseObject = serviceObjects.get(position).getName();
-                        for (ServiceObject s:serviceObjects) {
+                        for (ServiceObject s : serviceObjects) {
                             if (serviceObjects.get(position).getName().equals(s.getName()))
                                 continue;
                             s.setChoose(false);
@@ -286,14 +293,14 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
             rvObject.setAdapter(serviceObjectAdapter);
             rvObject.setLayoutManager(layoutManager);
 
-            final ServiceObjectAdapter serviceProjectAdapter =  new ServiceObjectAdapter(serviceProjects);
+            final ServiceObjectAdapter serviceProjectAdapter = new ServiceObjectAdapter(serviceProjects);
             serviceProjectAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    if(!serviceProjects.get(position).isChoose()){
+                    if (!serviceProjects.get(position).isChoose()) {
                         serviceProjects.get(position).setChoose(true);
                         chooseProject = serviceProjects.get(position).getName();
-                        for (ServiceObject s:serviceProjects) {
+                        for (ServiceObject s : serviceProjects) {
                             if (serviceProjects.get(position).getName().equals(s.getName()))
                                 continue;
                             s.setChoose(false);
@@ -322,34 +329,37 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
 
     }
 
-    private void  initProvinceData(){
+    private void initProvinceData() {
 
-        if(serviceInfo.getRegions().size()>1){
+        if (serviceInfo.getRegions().size() > 1) {
+            ArrayList<ProvinceBean> arrayList = new ArrayList<>();
             ProvinceBean provinceBean = new ProvinceBean();
             provinceBean.setId("10000");
             provinceBean.setName("广东省");
             ArrayList<CityBean> cityBeans = new ArrayList<>();
             for (int i = 0; i < serviceInfo.getRegions().size(); i++) {
                 CityBean cityBean = new CityBean();
-                cityBean.setId("10000"+i);
+                cityBean.setId("10000" + i);
                 ServiceInfo.RegionsBean regionsBean = serviceInfo.getRegions().get(i);
-                cityBean.setName(regionsBean.getC());
+                cityBean.setName(regionsBean.getP());
                 ArrayList<DistrictBean> districtBeans = new ArrayList<>();
-                String [] p = regionsBean.getP().split(",");
-                for (int j = 0; j <p.length; j++) {
+                String[] p = regionsBean.getC().split(",");
+                for (int j = 0; j < p.length; j++) {
                     DistrictBean districtBean = new DistrictBean();
-                    districtBean.setId(cityBean.getId()+j);
-                    districtBean.setName(p[i]);
+                    districtBean.setId(cityBean.getId() + j);
+                    districtBean.setName(p[j]);
                     districtBeans.add(districtBean);
                 }
                 cityBean.setCityList(districtBeans);
                 cityBeans.add(cityBean);
             }
             provinceBean.setCityList(cityBeans);
+            arrayList.add(provinceBean);
             Gson gsons = new Gson();
-            mCityPickerView.init(mContext,gsons.toJson(provinceBean));
+            String data = gsons.toJson(arrayList);
+            mCityPickerView.init(mContext, data);
 
-        }else if(serviceInfo.getRegions().size()==1){
+        } else if (serviceInfo.getRegions().size() == 1) {
             mCityPickerView.init(mContext);
         }
     }
@@ -398,19 +408,15 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
     }
 
 
-//    @Subscribe(threadMode = ThreadMode.MAIN)
-//    public void onMessageEvent(MessageEvent event) {
-//        /* Do something */
-//        if(event.getHeight()>0){
-//         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) vp.getLayoutParams();
-//         layoutParams.height = event.getHeight();
-//         vp.setLayoutParams(layoutParams);
-//        }
-//
-//    };
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        /* Do something */
+      llScroll.requestDisallowInterceptTouchEvent(true);
+
+    };
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
     }
 }

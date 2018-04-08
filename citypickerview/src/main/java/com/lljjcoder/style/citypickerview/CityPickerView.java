@@ -360,8 +360,8 @@ public class CityPickerView implements CanShow, OnWheelChangedListener {
         mViewCity.setVisibleItems(config.getVisibleItems());
         mViewDistrict.setVisibleItems(config.getVisibleItems());
         mViewProvince.setCyclic(false);
-        mViewCity.setCyclic(config.isCityCyclic());
-        mViewDistrict.setCyclic(config.isDistrictCyclic());
+        mViewCity.setCyclic(false);
+        mViewDistrict.setCyclic(false);
         
         //显示滚轮模糊效果
         mViewProvince.setDrawShadows(config.isDrawShadows());

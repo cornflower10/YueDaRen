@@ -12,6 +12,9 @@ import android.webkit.WebViewClient;
 
 import com.qingmang.R;
 import com.qingmang.custom.MyWebview;
+import com.qingmang.moudle.entity.MessageEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,6 +84,12 @@ public class ServiceIntroducePagerFragment extends Fragment {
         });
         webView.loadDataWithBaseURL("", data.toString(), "text/html", "UTF-8","");
 
+        wv.setScrollInterface(new MyWebview.ScrollInterface() {
+            @Override
+            public void onTop() {
+                EventBus.getDefault().post(new MessageEvent(0));
+            }
+        });
     }
 
     @Override

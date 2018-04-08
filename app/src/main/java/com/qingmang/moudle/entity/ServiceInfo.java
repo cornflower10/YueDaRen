@@ -326,7 +326,7 @@ public class ServiceInfo implements Serializable{
         this.regions = regions;
     }
 
-    public static class SpecialsBean {
+    public static class SpecialsBean implements Serializable {
         /**
          * key : 服务对象
          * type : 1
@@ -372,7 +372,7 @@ public class ServiceInfo implements Serializable{
         }
     }
 
-    public static class RegionsBean {
+    public static class RegionsBean implements Serializable{
         /**
          * p : 全市
          * c : 全区
