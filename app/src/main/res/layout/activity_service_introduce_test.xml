@@ -280,21 +280,10 @@
     <!--</android.support.v4.widget.NestedScrollView>-->
     <!--</LinearLayout>-->
     <LinearLayout
-        android:visibility="visible"
         android:layout_gravity="bottom"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="48dp">
-        <Button
-            android:visibility="gone"
-            android:id="@+id/bt_yy"
-            android:textSize="@dimen/sp_16"
-            android:text="预约下单"
-            android:textColor="@color/text_333333"
-            android:background="@color/divide_line"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
         <Button
             android:id="@+id/bt_buy"
             android:textSize="@dimen/sp_16"
@@ -303,7 +292,7 @@
             android:background="@color/red_ff2a31"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_height="48dp" />
     </LinearLayout>
 
 </LinearLayout>

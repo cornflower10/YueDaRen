@@ -24,6 +24,9 @@ import com.qingmang.uilibrary.banner.BannerLayout;
 import com.qingmang.uilibrary.marqueen.SimpleMF;
 import com.qingmang.uilibrary.marqueen.SimpleMarqueeView;
 import com.qingmang.uilibrary.marqueen.util.OnItemClickListener;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +38,8 @@ import butterknife.OnClick;
  * Created by xiejingbao on 2017/9/14.
  */
 
-public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> implements HomeView<Message> {
+public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> implements
+        HomeView<Message> ,OnRefreshListener{
     @BindView(R.id.bl)
     BannerLayout bl;
     @BindView(R.id.tv_amount)
@@ -79,6 +83,8 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
     SimpleMarqueeView marqueeView;
     @BindView(R.id.tv_more)
     TextView tvMore;
+    @BindView(R.id.srl)
+    SmartRefreshLayout srl;
 
 
     private MessageAdapter messageAdapter;
@@ -97,13 +103,8 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
     @Override
     protected void initView() {
         LogManager.i("HomeFragment-----");
-
-        mPresenter.loadTopBanner();
-        mPresenter.loadMindBanner();
-        mPresenter.loadHotService();
-        mPresenter.loadHotMessage();
-
-
+        loadData();
+        srl.setOnRefreshListener(this);
         messageAdapter = new MessageAdapter(hotMessages);
         messageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -116,10 +117,17 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
         tvMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    startActivity(HotMessageActivity.class);
+                startActivity(HotMessageActivity.class);
             }
         });
 
+    }
+
+    private void loadData(){
+        mPresenter.loadTopBanner();
+        mPresenter.loadMindBanner();
+        mPresenter.loadHotService();
+        mPresenter.loadHotMessage();
     }
 
     private void initQuickMessage(final List<HotMessage.ContentBean> list) {
@@ -197,20 +205,22 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
     @Override
     public void onError(String msg) {
         showToast(msg);
+        srl.finishRefresh();
     }
 
     @Override
     public void onDataSuccess(Message message) {
-
+        srl.finishRefresh();
     }
 
     @Override
     public void onBannerSuccess(Banner banner) {
+        srl.finishRefresh();
         if (null != banner.getContent() && banner.getContent().size() > 0) {
             list.clear();
             list.addAll(banner.getContent());
             banners.clear();
-            for (int i = 0; i <list.size() ; i++) {
+            for (int i = 0; i < list.size(); i++) {
                 banners.add(list.get(i).getLogo());
             }
 
@@ -224,7 +234,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
             });
             bl.setAdapter(mzBannerAdapter);
             bl.setAutoPlaying(true);
-            LogManager.i("bl----"+bl.isPlaying());
+            LogManager.i("bl----" + bl.isPlaying());
 
 
         }
@@ -233,6 +243,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
 
     @Override
     public void onMindBannerSuccess(Banner banner) {
+        srl.finishRefresh();
         listMindBanner = banner.getContent();
         if (null == listMindBanner)
             return;
@@ -254,6 +265,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
 
     @Override
     public void onHotServieSuccess(List<HotService> services) {
+        srl.finishRefresh();
         this.services = services;
         HotService hotService1 = services.get(0);
         tvAmount.setText(hotService1.getPrice() + "元");
@@ -276,6 +288,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
 
     @Override
     public void onHotMessageSuccess(HotMessage hotMessage) {
+        srl.finishRefresh();
         messageAdapter.replaceData(hotMessage.getContent());
         initQuickMessage(hotMessage.getContent());
     }
@@ -291,6 +304,8 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
         ((MainActivity) mContext).chooseTab(1);
     }
 
-
-
+    @Override
+    public void onRefresh(RefreshLayout refreshlayout) {
+        loadData();
+    }
 }

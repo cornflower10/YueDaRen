@@ -138,6 +138,7 @@ public class MyWebview extends WebView {
                 //来执行。
                 if (getScrollY()==0) {     //是否滑到顶部
                     getParent().getParent().requestDisallowInterceptTouchEvent(false);
+                    if(null!=scrollInterface)
                     scrollInterface.onTop();
                 }else
                 {

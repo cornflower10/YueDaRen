@@ -1,16 +1,28 @@
 package com.qingmang.baselibrary.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 public final class SizeUtils {
 
     private SizeUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
+
+
+    public static  int getHeight(Activity context){
+        WindowManager manager = context.getWindowManager();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(outMetrics);
+//        int width = outMetrics.widthPixels;
+       return outMetrics.heightPixels;
+    }
+
 
     /**
      * dp转px

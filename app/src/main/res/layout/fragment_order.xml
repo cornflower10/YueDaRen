@@ -5,6 +5,7 @@
              android:background="@color/white"
              android:orientation="vertical">
  <TextView
+     android:id="@+id/tv_title"
      style="@style/titleStytle"
      android:text="我的订单/服务"
      />
@@ -12,6 +13,7 @@
    style="@style/divide_line_match"/>
 
 <LinearLayout
+    android:id="@+id/ll_type"
     android:padding="10dp"
     android:orientation="horizontal"
     android:layout_width="match_parent"

@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.Toast;
 
 import com.qingmang.baselibrary.utils.LogManager;
+import com.qingmang.user.LoginActivity;
 
 
 /**
@@ -155,6 +156,14 @@ public class BaseActivity extends AppCompatActivity {
         }
         startActivity(intent);
     }
+
+    public void startLoginActivity() {
+        Intent intent = new Intent();
+        intent.setClass(mContext, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+    }
+
 
 
 }

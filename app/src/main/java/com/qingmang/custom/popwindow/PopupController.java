@@ -10,6 +10,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 
+import com.qingmang.baselibrary.utils.LogManager;
+
 /**
  * Created by xiejingbao on 2018/3/26.
  */
@@ -62,6 +64,8 @@ public class PopupController {
         } else {
             popupWindow.setWidth(width);
             popupWindow.setHeight(height);
+            LogManager.i("width" +popupWindow.getWidth());
+            LogManager.i("height" +popupWindow.getHeight());
         }
     }
 

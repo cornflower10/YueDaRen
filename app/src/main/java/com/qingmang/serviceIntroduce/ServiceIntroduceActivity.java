@@ -33,15 +33,9 @@ import com.qingmang.base.Presenter;
 import com.qingmang.base.PresenterFactory;
 import com.qingmang.base.PresenterLoder;
 import com.qingmang.moudle.entity.Item;
-import com.qingmang.moudle.entity.MessageEvent;
 import com.qingmang.moudle.entity.ServiceInfo;
 import com.qingmang.moudle.entity.ServiceObject;
-import com.qingmang.user.LoginActivity;
 import com.qingmang.utils.imageload.ImageLoaderUtil;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,7 +122,7 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
 //        mCityPickerView.init(mContext);
         initWheel();
         tvCount.setText(String.valueOf(count));
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
 
 
     }
@@ -151,7 +145,7 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
 
     @OnClick({R.id.tv_per_service,
             R.id.tv_service_ob, R.id.iv_minus,
-            R.id.iv_add, R.id.bt_yy, R.id.bt_buy, R.id.tv_palce})
+            R.id.iv_add, R.id.bt_buy, R.id.tv_palce})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_per_service:
@@ -184,7 +178,7 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
     private void buy() {
 
         if (!App.getInstance().isLogin()) {
-            startActivity(LoginActivity.class);
+            startLoginActivity();
             return;
         }
 
@@ -417,15 +411,15 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
     }
 
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(MessageEvent event) {
-        /* Do something */
-      llScroll.requestDisallowInterceptTouchEvent(true);
-
-    };
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onMessageEvent(MessageEvent event) {
+//        /* Do something */
+//      llScroll.requestDisallowInterceptTouchEvent(true);
+//
+//    };
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
     }
 }

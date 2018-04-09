@@ -5,14 +5,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.qingmang.MainActivity;
 import com.qingmang.R;
 import com.qingmang.adapter.OrderAdapter;
 import com.qingmang.adapter.PopItemAdapter;
 import com.qingmang.base.BaseMvpFragment;
 import com.qingmang.baselibrary.utils.LogManager;
+import com.qingmang.baselibrary.utils.SizeUtils;
 import com.qingmang.custom.popwindow.CommonPopupWindow;
 import com.qingmang.moudle.entity.Order;
 import com.qingmang.moudle.entity.Popup;
@@ -32,7 +35,7 @@ import butterknife.OnClick;
  */
 
 public class OrderFragment extends BaseMvpFragment<OrderPresenter, OrderView>
-        implements OrderView<Order> ,OnRefreshListener,OnLoadmoreListener {
+        implements OrderView<Order>, OnRefreshListener, OnLoadmoreListener {
     @BindView(R.id.tv_object)
     TextView tvObject;
     @BindView(R.id.tv_pay)
@@ -41,6 +44,10 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter, OrderView>
     RecyclerView rv;
     @BindView(R.id.srl)
     SmartRefreshLayout srl;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.ll_type)
+    LinearLayout llType;
     private OrderAdapter orderAdapter;
     private List<Order.ContentBean> contentBeans = new ArrayList<>();
 
@@ -63,6 +70,7 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter, OrderView>
     private String typeObject = "all";
 
     private String typeStatus = "all";
+    private int height = 0;
 
     @Override
     protected void initView() {
@@ -78,6 +86,8 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter, OrderView>
         rv.setAdapter(orderAdapter);
         rv.setLayoutManager(new LinearLayoutManager(mContext));
 
+//        height = SizeUtils.getHeight((MainActivity)mContext)
+//                -SizeUtils.dp2px( 48,mContext);
 
         popupObject.add(new Popup("citizen", "市民服务"));
         popupObject.add(new Popup("job", "创业服务"));
@@ -93,16 +103,23 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter, OrderView>
         srl.setEnableLoadmore(true);
         srl.setOnRefreshListener(this);
         srl.setOnLoadmoreListener(this);
-        mPresenter.loadData(1, "", "",false);
+
+
+    }
+
+    private void initData() {
+
+        mPresenter.loadData(1, "", "", false);
         tvObject.setText("全部对象");
         tvPay.setText("全部支付状态");
-
+        typeObject = "all";
+        typeStatus = "all";
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
+        initData();
     }
 
     public static OrderFragment newInstance() {
@@ -153,19 +170,19 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter, OrderView>
     @Override
     public void onCancelSuccess() {
         startProgressDialog();
-        mPresenter.loadData(1, typeObject, typeObject,false);
+        mPresenter.loadData(1, typeObject, typeObject, false);
     }
 
     @Override
     public void onLoadMoreSuccess(Order order) {
         srl.finishLoadmore();
-      orderAdapter.addData(order.getContent());
+        orderAdapter.addData(order.getContent());
     }
 
     @Override
     public void onLoadMoreFail(String error) {
         srl.finishLoadmore();
-        if(page==1)
+        if (page == 1)
             return;
         page--;
     }
@@ -175,12 +192,19 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter, OrderView>
         return new OrderPresenter();
     }
 
+    private int getHeight() {
+      return   SizeUtils.getHeight((MainActivity) mContext) -
+                tvTitle.getHeight() -llType.getHeight()-SizeUtils.dp2px(92,mContext);
+    }
+
     //向下弹出
     public void showDownPop(View view) {
+
         if (popupWindow != null && popupWindow.isShowing()) return;
         popupWindow = new CommonPopupWindow.Builder(mContext)
                 .setView(R.layout.popup_down)
-                .setWidthAndHeight(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+                .setWidthAndHeight(ViewGroup.LayoutParams.MATCH_PARENT, getHeight()
+                )
                 .setAnimationStyle(R.style.AnimDown)
                 .setViewOnclickListener(new CommonPopupWindow.ViewInterface() {
                     @Override
@@ -197,7 +221,7 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter, OrderView>
                                 }
                                 typeObject = popupObject.get(position).getKey();
                                 startProgressDialog();
-                                mPresenter.loadData(1,typeObject,typeStatus,false);
+                                mPresenter.loadData(1, typeObject, typeStatus, false);
                                 tvObject.setText(popupObject.get(position).getName());
 
                             }
@@ -207,6 +231,7 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter, OrderView>
                 .setOutsideTouchable(true)
                 .create();
         popupWindow.showAsDropDown(view);
+
     }
 
 
@@ -215,7 +240,7 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter, OrderView>
         if (popupWindowStatus != null && popupWindowStatus.isShowing()) return;
         popupWindowStatus = new CommonPopupWindow.Builder(mContext)
                 .setView(R.layout.popup_down)
-                .setWidthAndHeight(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+                .setWidthAndHeight(ViewGroup.LayoutParams.MATCH_PARENT, getHeight())
                 .setAnimationStyle(R.style.AnimDown)
                 .setViewOnclickListener(new CommonPopupWindow.ViewInterface() {
                     @Override
@@ -234,7 +259,7 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter, OrderView>
 //                                orderAdapter.replaceData(sortType(typeObject, typeStatus, listAll));
                                 tvPay.setText(popupStatus.get(position).getName());
                                 startProgressDialog();
-                                mPresenter.loadData(1,typeObject,typeStatus,false);
+                                mPresenter.loadData(1, typeObject, typeStatus, false);
 
                             }
                         });
@@ -243,40 +268,44 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter, OrderView>
                 .setOutsideTouchable(true)
                 .create();
         popupWindowStatus.showAsDropDown(view);
+        LogManager.i("popupWindow" + popupWindowStatus.getHeight());
     }
 
 
-    private List<Order.ContentBean> sortType(String type, String status, List<Order.ContentBean> contentBeanList) {
-        if ("all".equals(type) && "all".equals(status)) {
-            return contentBeanList;
-        }
-        List<Order.ContentBean> list = new ArrayList<>();
-        for (Order.ContentBean data : contentBeanList) {
-            if ("all".equals(type)) {
-                if (status.equals(data.getStep())) {
-                    list.add(data);
-                }
-
-            } else if ("all".equals(status)) {
-                if (type.equals(data.getGtype())) {
-                    list.add(data);
-                }
-            } else if (type.equals(data.getStep()) && status.equals(data.getGtype())) {
-                list.add(data);
-            }
-        }
-        return list;
-    }
+//    private List<Order.ContentBean> sortType(String type, String status, List<Order.ContentBean> contentBeanList) {
+//        if ("all".equals(type) && "all".equals(status)) {
+//            return contentBeanList;
+//        }
+//        List<Order.ContentBean> list = new ArrayList<>();
+//        for (Order.ContentBean data : contentBeanList) {
+//            if ("all".equals(type)) {
+//                if (status.equals(data.getStep())) {
+//                    list.add(data);
+//                }
+//
+//            } else if ("all".equals(status)) {
+//                if (type.equals(data.getGtype())) {
+//                    list.add(data);
+//                }
+//            } else if (type.equals(data.getStep()) && status.equals(data.getGtype())) {
+//                list.add(data);
+//            }
+//        }
+//        return list;
+//    }
 
     private int page = 1;
+
     @Override
     public void onLoadmore(RefreshLayout refreshlayout) {
         page++;
-        mPresenter.loadData(page,typeObject,typeStatus,true);
+        mPresenter.loadData(page, typeObject, typeStatus, true);
     }
 
     @Override
     public void onRefresh(RefreshLayout refreshlayout) {
-       mPresenter.loadData(1,typeObject,typeStatus,false);
+        mPresenter.loadData(1, typeObject, typeStatus, false);
     }
+
+
 }
