@@ -36,12 +36,12 @@ public class OrderAdapter extends BaseQuickAdapter<Order.ContentBean, BaseViewHo
             helper.setVisible(R.id.tv_wait,false);
             helper.setVisible(R.id.tv_cancle,true);
             helper.addOnClickListener(R.id.tv_cancle);
-            helper.setVisible(R.id.tv_pay,true);
-            helper.setText(R.id.tv_pay,item.getIntroduce());
+//            helper.setVisible(R.id.tv_pay,true);
+//            helper.setText(R.id.tv_pay,item.getIntroduce());
 
         }else {
             helper.setVisible(R.id.tv_cancle,false);
-            helper.setVisible(R.id.tv_pay,false);
+//            helper.setVisible(R.id.tv_pay,false);
             helper.setVisible(R.id.tv_wait,true);
             helper.setText(R.id.tv_wait,item.getIntroduce());
         }

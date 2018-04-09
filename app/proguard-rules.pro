@@ -198,3 +198,26 @@
 
 -dontwarn com.lljjcoder.**
 -keep class com.lljjcoder.** { *;}
+
+# 对于带有回调函数onXXEvent的，不能被混淆
+-keepclassmembers class * {
+    void *(*Event);
+}
+
+ # EventBus 3.0
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
+
+#EventBus
+-keepclassmembers class ** {
+    public void onEvent*(**);
+}
+-keepclassmembers class ** {
+public void xxxxxx(**);
+}

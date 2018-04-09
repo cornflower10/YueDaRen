@@ -273,6 +273,10 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
             GridLayoutManager layoutManager = new GridLayoutManager(mContext, 2);
 //            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 //            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            if(null!= serviceObjects &&serviceObjects.size()>0){
+                chooseObject = serviceObjects.get(0).getName();
+                serviceObjects.get(0).setChoose(true);
+            }
             final ServiceObjectAdapter serviceObjectAdapter = new ServiceObjectAdapter(serviceObjects);
             serviceObjectAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
@@ -292,6 +296,11 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
             });
             rvObject.setAdapter(serviceObjectAdapter);
             rvObject.setLayoutManager(layoutManager);
+
+            if(null!= serviceProjects && serviceProjects.size()>0){
+                chooseProject = serviceProjects.get(0).getName();
+                serviceProjects.get(0).setChoose(true);
+            }
 
             final ServiceObjectAdapter serviceProjectAdapter = new ServiceObjectAdapter(serviceProjects);
             serviceProjectAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

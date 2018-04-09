@@ -6,6 +6,7 @@ import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qingmang.App;
@@ -16,8 +17,11 @@ import com.qingmang.base.PresenterFactory;
 import com.qingmang.base.PresenterLoder;
 import com.qingmang.moudle.entity.Adress;
 import com.qingmang.moudle.entity.Invoice;
+import com.qingmang.moudle.entity.MessageEvent;
 import com.qingmang.moudle.entity.ServiceInfo;
 import com.qingmang.utils.imageload.ImageLoaderUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -48,9 +52,14 @@ public class OrderSureActivity extends BaseMvpActivity<OrderSurePresenter, Order
     TextView tvLiuyan;
     @BindView(R.id.tv_address)
     TextView tvAddress;
+    @BindView(R.id.tv_write)
+    TextView tvWrite;
+    @BindView(R.id.ll_address)
+    LinearLayout llAddress;
     private Invoice invoice = new Invoice();
 
-   private ServiceInfo serviceInfo;
+    private ServiceInfo serviceInfo;
+
     @Override
     public String setTitleName() {
         return "确认订单";
@@ -70,14 +79,14 @@ public class OrderSureActivity extends BaseMvpActivity<OrderSurePresenter, Order
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        serviceInfo  = (ServiceInfo) getIntent().getSerializableExtra("serviceInfo");
-        if(null!=serviceInfo){
-            ImageLoaderUtil.getInstance().showImage(serviceInfo.getLogo(),iv,0);
-            tvTitle.setText("服务名称："+serviceInfo.getName());
+        serviceInfo = (ServiceInfo) getIntent().getSerializableExtra("serviceInfo");
+        if (null != serviceInfo) {
+            ImageLoaderUtil.getInstance().showImage(serviceInfo.getLogo(), iv, 0);
+            tvTitle.setText("服务名称：" + serviceInfo.getName());
             String choose = serviceInfo.getChoose();
-            if(!TextUtils.isEmpty(choose)){
-                tvContext.setText("服务对象："+ choose.split(",")[0]);
-                tvAmount.setText("服务项目："+choose.split(",")[1]);
+            if (!TextUtils.isEmpty(choose)) {
+                tvContext.setText("服务对象：" + choose.split(",")[0]);
+                tvAmount.setText("服务项目：" + choose.split(",")[1]);
             }
 
         }
@@ -99,37 +108,38 @@ public class OrderSureActivity extends BaseMvpActivity<OrderSurePresenter, Order
                     invoice.setInvoice(true);
 
                 }
-                intentFP.putExtra("invoice",invoice);
+                intentFP.putExtra("invoice", invoice);
                 startActivityForResult(intentFP, REQ);
 
                 break;
             case R.id.bt_add_address:
-                if(null==adress){
+                if (null == adress) {
                     showToast("请选择收货地址！");
                     return;
                 }
                 startProgressDialog();
-                presenter.loadData(serviceInfo.getId(),serviceInfo.getNum(),
+                presenter.loadData(serviceInfo.getId(), serviceInfo.getNum(),
                         serviceInfo.getChoose(),
                         cityAndDis(serviceInfo.getPlace())[0],
-                        cityAndDis(serviceInfo.getPlace())[1],adress.getId(),
-                        invoice.isInvoice()?1:0,invoice.getInvoiceType(),invoice.getHeader(),
-                        invoice.getCompanyName(),invoice.getInvoiceNo()
-                        );
+                        cityAndDis(serviceInfo.getPlace())[1], adress.getId(),
+                        invoice.isInvoice() ? 1 : 0, invoice.getInvoiceType(), invoice.getHeader(),
+                        invoice.getCompanyName(), invoice.getInvoiceNo()
+                );
                 break;
         }
     }
 
-    private String [] cityAndDis(String s){
-        String [] strings = new String[2];
-        if(!TextUtils.isEmpty(s)){
-           String[] strings1 = s.split(",");
+    private String[] cityAndDis(String s) {
+        String[] strings = new String[2];
+        if (!TextUtils.isEmpty(s)) {
+            String[] strings1 = s.split(",");
             strings[0] = strings1[1];
             strings[1] = strings1[2];
         }
         return strings;
 
     }
+
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
         return new PresenterLoder(mContext, new PresenterFactory() {
@@ -139,15 +149,46 @@ public class OrderSureActivity extends BaseMvpActivity<OrderSurePresenter, Order
             }
         });
     }
+
+    @Override
+    public void onLoadFinished(Loader<OrderSurePresenter> loader, OrderSurePresenter data) {
+        super.onLoadFinished(loader, data);
+        startProgressDialog();
+        presenter.addressDefult();
+    }
+
     @Override
     public void onDataSuccess(String s) {
+        EventBus.getDefault().post(new MessageEvent(1));
         stopProgressDialog();
         showToast("购买成功");
         App.getInstance().getForegroundCallbacks().finishActivity(ServiceIntroduceActivity.class);
         finish();
     }
 
+    @Override
+    public void onAddressDefult(Adress adress) {
+        stopProgressDialog();
+        tvWrite.setVisibility(View.GONE);
+        llAddress.setVisibility(View.VISIBLE);
+        this.adress = adress;
+        tvUser.setText("联系人：" + adress.getCollector());
+        tvPhone.setText(adress.getMobile());
+        String str = adress.getProvince() + "," + adress.getCity() + ","
+                + adress.getAreas() + "," + adress.getAddress();
+        tvAddressTop.setText("联系地址：" + str);
+        tvAddress.setText("送至：" + str);
+    }
+
+    @Override
+    public void onEmptyDedult() {
+        stopProgressDialog();
+        tvWrite.setVisibility(View.VISIBLE);
+        llAddress.setVisibility(View.GONE);
+    }
+
     private Adress adress;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -157,13 +198,15 @@ public class OrderSureActivity extends BaseMvpActivity<OrderSurePresenter, Order
                 invoice = data.getParcelableExtra("invoice");
                 tvFaPiao.setText(invoice.isInvoice() ? "开发票" : "不开发票");
             } else if (requestCode == REQ_ADDRESS) {
+                tvWrite.setVisibility(View.GONE);
+                llAddress.setVisibility(View.VISIBLE);
                 adress = data.getParcelableExtra("address");
-                tvUser.setText("联系人："+adress.getCollector());
+                tvUser.setText("联系人：" + adress.getCollector());
                 tvPhone.setText(adress.getMobile());
-                String str = adress.getProvince()+","+adress.getCity()+","
-                        +adress.getAreas()+","+adress.getAddress();
-                tvAddressTop.setText("联系地址："+str);
-                tvAddress.setText("送至："+str);
+                String str = adress.getProvince() + "," + adress.getCity() + ","
+                        + adress.getAreas() + "," + adress.getAddress();
+                tvAddressTop.setText("联系地址：" + str);
+                tvAddress.setText("送至：" + str);
 
             }
         }

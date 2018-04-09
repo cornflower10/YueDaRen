@@ -22,8 +22,14 @@ import com.qingmang.home.MyFragment;
 import com.qingmang.home.OrderFragment;
 import com.qingmang.home.PeopleFragment;
 import com.qingmang.home.VentureServiceFragment;
+import com.qingmang.moudle.entity.MessageEvent;
 import com.qingmang.uilibrary.BottomBar;
 import com.qingmang.uilibrary.BottomBarTab;
+import com.qingmang.user.LoginActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +72,7 @@ public class MainActivity extends BaseMvpActivity<CommonPresenter,CommonView> im
         super.onCreate(savedInstanceState);
         initFragment(savedInstanceState);
         initView();
+        EventBus.getDefault().register(this);
     }
 
 
@@ -105,6 +112,11 @@ public class MainActivity extends BaseMvpActivity<CommonPresenter,CommonView> im
                        showHideFragment(ventureServiceFragment);
                        break;
                    case 3:
+                       if(!App.getInstance().isLogin()){
+                           startActivity(LoginActivity.class);
+                           chooseTab(0);
+                           return;
+                       }
                        if(null==orderFragment){
                            orderFragment = OrderFragment.newInstance();
                            transaction.add(R.id.fl_container,orderFragment);
@@ -112,6 +124,11 @@ public class MainActivity extends BaseMvpActivity<CommonPresenter,CommonView> im
                        showHideFragment(orderFragment);
                        break;
                    case 4:
+                       if(!App.getInstance().isLogin()){
+                           startActivity(LoginActivity.class);
+                           chooseTab(0);
+                           return;
+                       }
                        if(null==myFragment){
                            myFragment = MyFragment.newInstance();
                            transaction.add(R.id.fl_container,myFragment);
@@ -120,7 +137,7 @@ public class MainActivity extends BaseMvpActivity<CommonPresenter,CommonView> im
                        break;
 
                }
-                transaction.commit();
+                transaction.commitAllowingStateLoss();
 
             }
 
@@ -167,7 +184,7 @@ public class MainActivity extends BaseMvpActivity<CommonPresenter,CommonView> im
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+//        super.onSaveInstanceState(outState);
      FragmentManager manager = getSupportFragmentManager();
         if (null!=homeFragment&&homeFragment.isAdded()) {
             manager.putFragment(outState, "homeFragment", homeFragment);
@@ -187,6 +204,16 @@ public class MainActivity extends BaseMvpActivity<CommonPresenter,CommonView> im
             manager.putFragment(outState, "myFragment", myFragment);
         }
 
+
+    }
+
+    @Override
+    public void onAttachedToWindow() {
+        try {
+            super.onAttachedToWindow();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -256,7 +283,7 @@ public class MainActivity extends BaseMvpActivity<CommonPresenter,CommonView> im
                 fragmentTransaction.hide(f);
 
         }
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     private long exitTime = 0;
@@ -288,5 +315,19 @@ public class MainActivity extends BaseMvpActivity<CommonPresenter,CommonView> im
                 return new CommonPresenter();
             }
         });
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        /* Do something */
+       chooseTab(3);
+
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }
