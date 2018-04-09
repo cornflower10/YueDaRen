@@ -250,20 +250,24 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
         }.getType());
         if (null != items && items.size() > 0) {
             String[] s = items.get(0).getItems().split(",");
-            String[] spe = items.get(1).getItems().split(",");
-            final List<ServiceObject> serviceObjects = new ArrayList<>();
             final List<ServiceObject> serviceProjects = new ArrayList<>();
+            if(items.size()==2){
+                String[] spe = items.get(1).getItems().split(",");
+                for (int i = 0; i < spe.length; i++) {
+                    ServiceObject so = new ServiceObject();
+                    so.setName(spe[i]);
+                    serviceProjects.add(so);
+                }
+
+            }
+
+            final List<ServiceObject> serviceObjects = new ArrayList<>();
+
             for (int i = 0; i < s.length; i++) {
                 ServiceObject serviceObject = new ServiceObject();
                 serviceObject.setName(s[i]);
                 serviceObjects.add(serviceObject);
             }
-            for (int i = 0; i < spe.length; i++) {
-                ServiceObject so = new ServiceObject();
-                so.setName(spe[i]);
-                serviceProjects.add(so);
-            }
-
             GridLayoutManager layoutManager = new GridLayoutManager(mContext, 2);
 //            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 //            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
