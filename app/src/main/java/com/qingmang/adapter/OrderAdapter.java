@@ -46,11 +46,18 @@ public class OrderAdapter extends BaseQuickAdapter<Order.ContentBean, BaseViewHo
             helper.setText(R.id.tv_wait,item.getIntroduce());
         }
         code2Color(item.getStep(),(TextView) helper.getView(R.id.tv_wait));
+        if("close".equals(item.getStep())){
+            helper.setVisible(R.id.tv_delete,true);
+            helper.addOnClickListener(R.id.tv_delete);
+        }else {
+            helper.setVisible(R.id.tv_delete,false);
+        }
 
     }
 
 
     private String code2Str(String code){
+
         if("wait".equals(code)){
             return "预约订单";
         }else   if("ensure".equals(code)){

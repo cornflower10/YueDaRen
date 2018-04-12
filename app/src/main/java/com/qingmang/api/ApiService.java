@@ -194,6 +194,10 @@ public interface ApiService {
     Observable<BaseEntity<String>> CancleOrder(@Field("id") long id
     );
 
+    @FormUrlEncoded
+    @POST("orders/delete")
+    Observable<BaseEntity<String>> DeleteOrder(@Field("id") long id
+    );
 
 
     @FormUrlEncoded

@@ -96,6 +96,24 @@ public class OrderPresenter extends BaseMvpPresenter<OrderView> {
 
 
 
+    public void deleteOrder(long id){
+
+        addSubscribe(App.getInstance().getRetrofitServiceManager()
+                .create(ApiService.class).DeleteOrder((id))
+                .compose(ResponseTransformer.<String>handleResult())
+                .compose(RxSchedulers.<String>ObToMain())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        getMvpView().onDeleteSuccess();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        getMvpView().onError(throwable.getMessage());
+                    }
+                }));
+    }
 
 
 //    class myConsumer implements Consumer<ApiException> {

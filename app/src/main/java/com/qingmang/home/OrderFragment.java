@@ -80,6 +80,9 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter, OrderView>
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 startProgressDialog();
+                if(view.getId()==R.id.tv_delete){
+                    mPresenter.deleteOrder(contentBeans.get(position).getId());
+                }else
                 mPresenter.cancleOrder(contentBeans.get(position).getId());
             }
         });
@@ -170,6 +173,12 @@ public class OrderFragment extends BaseMvpFragment<OrderPresenter, OrderView>
     @Override
     public void onCancelSuccess() {
         startProgressDialog();
+        mPresenter.loadData(1, typeObject, typeObject, false);
+    }
+
+    @Override
+    public void onDeleteSuccess() {
+        showToast("删除订单成功！");
         mPresenter.loadData(1, typeObject, typeObject, false);
     }
 

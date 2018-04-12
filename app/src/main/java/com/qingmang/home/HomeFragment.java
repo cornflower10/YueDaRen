@@ -105,6 +105,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
         LogManager.i("HomeFragment-----");
         loadData();
         srl.setOnRefreshListener(this);
+        srl.setEnableLoadmore(false);
         messageAdapter = new MessageAdapter(hotMessages);
         messageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
