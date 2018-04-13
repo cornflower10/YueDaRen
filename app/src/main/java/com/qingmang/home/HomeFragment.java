@@ -246,7 +246,7 @@ public class HomeFragment extends BaseMvpFragment<HomePresenter, HomeView> imple
     public void onMindBannerSuccess(Banner banner) {
         srl.finishRefresh();
         listMindBanner = banner.getContent();
-        if (null == listMindBanner)
+        if (null == listMindBanner||listMindBanner.size()==0)
             return;
         final List<String> list = new ArrayList<>();
         for (int i = 0; i < listMindBanner.size(); i++) {

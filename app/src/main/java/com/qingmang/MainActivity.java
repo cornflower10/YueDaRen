@@ -97,14 +97,14 @@ public class MainActivity extends BaseMvpActivity<CommonPresenter,CommonView> im
                        }
                            showHideFragment(homeFragment);
                        break;
-                   case 1:
+                   case 2:
                        if(null==findFragment){
                            findFragment = PeopleFragment.newInstance();
                            transaction.add(R.id.fl_container,findFragment);
                        }
                        showHideFragment(findFragment);
                        break;
-                   case 2:
+                   case 1:
                        if(null==ventureServiceFragment){
                            ventureServiceFragment = VentureServiceFragment.newInstance();
                            transaction.add(R.id.fl_container,ventureServiceFragment);

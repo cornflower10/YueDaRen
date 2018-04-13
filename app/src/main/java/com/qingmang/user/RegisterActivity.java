@@ -1,5 +1,6 @@
 package com.qingmang.user;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.AppCompatCheckBox;
@@ -7,6 +8,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.qingmang.MainActivity;
 import com.qingmang.R;
 import com.qingmang.base.BaseMvpActivity;
 import com.qingmang.base.Presenter;
@@ -60,9 +62,12 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter, Registe
     }
 
     @Override
-    public void onRegister() {
+    public void onRegister(String o) {
         stopProgressDialog();
-        startActivity(LoginActivity.class);
+        SharedPreferences sharedPreferences = getSharedPreferences("token",MODE_PRIVATE);
+        sharedPreferences.edit().putString("token",o).commit();
+        startActivity(MainActivity.class);
+        finish();
     }
 
     @Override

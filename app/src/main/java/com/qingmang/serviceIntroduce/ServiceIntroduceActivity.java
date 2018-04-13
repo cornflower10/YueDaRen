@@ -32,6 +32,7 @@ import com.qingmang.base.BaseMvpActivity;
 import com.qingmang.base.Presenter;
 import com.qingmang.base.PresenterFactory;
 import com.qingmang.base.PresenterLoder;
+import com.qingmang.baselibrary.utils.AmountUtils;
 import com.qingmang.moudle.entity.Item;
 import com.qingmang.moudle.entity.ServiceInfo;
 import com.qingmang.moudle.entity.ServiceObject;
@@ -90,6 +91,10 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
     RecyclerView rvProject;
     @BindView(R.id.ll_scroll)
     LinearLayout llScroll;
+    @BindView(R.id.rl_ob)
+    RelativeLayout rlOb;
+    @BindView(R.id.rl_pro)
+    RelativeLayout rlPro;
     private ServiceInfo serviceInfo;
     private int id;
     CityPickerView mCityPickerView = new CityPickerView();
@@ -98,6 +103,8 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
     private String[] titles = {"服务说明", "服务流程", "服务承诺", "常见问题"};
     private String chooseObject;
     private String chooseProject;
+    private String chooseObjectKey;
+    private String chooseProjectKey;
 
 
     @Override
@@ -188,12 +195,22 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
         }
 
         Intent intent = new Intent(mContext, OrderSureActivity.class);
+        List<ServiceInfo.Choose> chooseList =new ArrayList<>();
 
-        if (!TextUtils.isEmpty(chooseObject) && !TextUtils.isEmpty(chooseProject)) {
-            serviceInfo.setChoose(chooseObject + "," + chooseProject);
-        } else {
-            serviceInfo.setChoose("");
+        if(!TextUtils.isEmpty(chooseObjectKey)){
+            ServiceInfo.Choose choose = new ServiceInfo.Choose();
+            choose.setKey(chooseObjectKey);
+            choose.setValue(chooseObject);
+            chooseList.add(choose);
         }
+
+        if(!TextUtils.isEmpty(chooseProjectKey)){
+            ServiceInfo.Choose choose = new ServiceInfo.Choose();
+            choose.setKey(chooseProjectKey);
+            choose.setValue(chooseProject);
+            chooseList.add(choose);
+        }
+     serviceInfo.setChooses(chooseList);
 
         if (TextUtils.isEmpty(tvPalce.getText().toString())) {
             serviceInfo.setPlace("");
@@ -231,7 +248,7 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
         serviceInfo = serviceIntroduce;
         tvTitle.setText(serviceIntroduce.getName());
         tvContext.setText(serviceIntroduce.getPoster());
-        tvAmount.setText(String.valueOf(serviceIntroduce.getPrice()));
+        tvAmount.setText(AmountUtils.amountFormat(serviceIntroduce.getPrice()));
         ImageLoaderUtil.getInstance().showImage(serviceIntroduce.getLogo(), iv, 0);
         if (!TextUtils.isEmpty(serviceIntroduce.getLights())) {
             String[] strings = serviceIntroduce.getLights().split("，");
@@ -250,15 +267,21 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
         }.getType());
         if (null != items && items.size() > 0) {
             String[] s = items.get(0).getItems().split(",");
+            chooseObjectKey = items.get(0).getKey();
+            tvServiceOb.setText(chooseObjectKey);
             final List<ServiceObject> serviceProjects = new ArrayList<>();
-            if(items.size()==2){
+            if (items.size() == 2) {
                 String[] spe = items.get(1).getItems().split(",");
                 for (int i = 0; i < spe.length; i++) {
                     ServiceObject so = new ServiceObject();
                     so.setName(spe[i]);
                     serviceProjects.add(so);
                 }
+                chooseProjectKey = items.get(1).getKey();
+                tvPro.setText(chooseProjectKey);
 
+            } else {
+                rlPro.setVisibility(View.GONE);
             }
 
             final List<ServiceObject> serviceObjects = new ArrayList<>();
@@ -271,7 +294,7 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
             GridLayoutManager layoutManager = new GridLayoutManager(mContext, 2);
 //            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 //            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-            if(null!= serviceObjects &&serviceObjects.size()>0){
+            if (null != serviceObjects && serviceObjects.size() > 0) {
                 chooseObject = serviceObjects.get(0).getName();
                 serviceObjects.get(0).setChoose(true);
             }
@@ -295,7 +318,7 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
             rvObject.setAdapter(serviceObjectAdapter);
             rvObject.setLayoutManager(layoutManager);
 
-            if(null!= serviceProjects && serviceProjects.size()>0){
+            if (null != serviceProjects && serviceProjects.size() > 0) {
                 chooseProject = serviceProjects.get(0).getName();
                 serviceProjects.get(0).setChoose(true);
             }
@@ -322,6 +345,9 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
             GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2);
             rvProject.setAdapter(serviceProjectAdapter);
             rvProject.setLayoutManager(gridLayoutManager);
+        } else {
+            rlOb.setVisibility(View.GONE);
+            rlPro.setVisibility(View.GONE);
         }
 
 //        serviceIntroduce.getSpecial()
@@ -415,7 +441,7 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
     }
 
 
-//    @Subscribe(threadMode = ThreadMode.MAIN)
+    //    @Subscribe(threadMode = ThreadMode.MAIN)
 //    public void onMessageEvent(MessageEvent event) {
 //        /* Do something */
 //      llScroll.requestDisallowInterceptTouchEvent(true);

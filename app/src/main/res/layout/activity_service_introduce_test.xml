@@ -70,7 +70,7 @@
                             android:layout_below="@+id/tv_context"
                             android:textSize="@dimen/sp_16"
                             android:textColor="@color/red_ff2a31"
-                            android:text="2000"
+                            android:text=""
                             android:id="@+id/tv_amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -106,6 +106,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_ob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -132,6 +133,7 @@
                 <View
                     style="@style/divide_line_match"/>
                 <RelativeLayout
+                    android:id="@+id/rl_pro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"

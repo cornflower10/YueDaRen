@@ -117,6 +117,15 @@ public class ServiceInfo implements Serializable{
     private String choose;
     private String place;
     private int num;
+    private List<Choose> chooses;
+
+    public List<Choose> getChooses() {
+        return chooses;
+    }
+
+    public void setChooses(List<Choose> chooses) {
+        this.chooses = chooses;
+    }
 
     public String getChoose() {
         return choose;
@@ -325,6 +334,29 @@ public class ServiceInfo implements Serializable{
     public void setRegions(List<RegionsBean> regions) {
         this.regions = regions;
     }
+
+
+    public static class Choose implements Serializable{
+        private String key;
+        private String value;
+
+        public String getKey() {
+            return key;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+    }
+
 
     public static class SpecialsBean implements Serializable {
         /**

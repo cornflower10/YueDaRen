@@ -42,8 +42,8 @@ public class RegisterPresenter extends BaseMvpPresenter<RegisterView> {
                 .compose(RxSchedulers.<String>ObToMain())
                 .subscribe(new Consumer<String>() {
                     @Override
-                    public void accept(String sms) throws Exception {
-                        getMvpView().onRegister();
+                    public void accept(String o) throws Exception {
+                        getMvpView().onRegister(o);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

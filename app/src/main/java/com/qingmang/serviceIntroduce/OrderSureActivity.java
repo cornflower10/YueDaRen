@@ -23,6 +23,8 @@ import com.qingmang.utils.imageload.ImageLoaderUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -75,18 +77,30 @@ public class OrderSureActivity extends BaseMvpActivity<OrderSurePresenter, Order
         return R.layout.activity_order_sure;
     }
 
+    private StringBuilder stringBuilder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        stringBuilder = new StringBuilder();
         serviceInfo = (ServiceInfo) getIntent().getSerializableExtra("serviceInfo");
         if (null != serviceInfo) {
             ImageLoaderUtil.getInstance().showImage(serviceInfo.getLogo(), iv, 0);
             tvTitle.setText("服务名称：" + serviceInfo.getName());
-            String choose = serviceInfo.getChoose();
-            if (!TextUtils.isEmpty(choose)) {
-                tvContext.setText("服务对象：" + choose.split(",")[0]);
-                tvAmount.setText("服务项目：" + choose.split(",")[1]);
+            List<ServiceInfo.Choose> choose = serviceInfo.getChooses();
+            if (null!=choose&&choose.size()>0) {
+                for (int i = 0; i < choose.size(); i++) {
+                    if(i==0){
+                        tvContext.setText(choose.get(0).getKey()+"：" + choose.get(0).getValue());
+                        stringBuilder.append(choose.get(0).getValue());
+                    }
+                    if(i==1){
+                        tvAmount.setText(choose.get(1).getKey()+"：" + choose.get(1).getValue());
+                        stringBuilder.append(",");
+                        stringBuilder.append(choose.get(1).getValue());
+                    }
+
+                }
+
             }
 
         }
@@ -119,7 +133,7 @@ public class OrderSureActivity extends BaseMvpActivity<OrderSurePresenter, Order
                 }
                 startProgressDialog();
                 presenter.loadData(serviceInfo.getId(), serviceInfo.getNum(),
-                        serviceInfo.getChoose(),
+                        stringBuilder.toString(),
                         cityAndDis(serviceInfo.getPlace())[0],
                         cityAndDis(serviceInfo.getPlace())[1], adress.getId(),
                         invoice.isInvoice() ? 1 : 0, invoice.getInvoiceType(), invoice.getHeader(),
