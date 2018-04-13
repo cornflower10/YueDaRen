@@ -9,9 +9,9 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.qingmang.R;
+import com.qingmang.WebActivity;
 import com.qingmang.adapter.VentureServiceAdapter;
 import com.qingmang.base.BaseMvpFragment;
-import com.qingmang.base.Constans;
 import com.qingmang.baselibrary.utils.LogManager;
 import com.qingmang.moudle.entity.Banner;
 import com.qingmang.moudle.entity.VenService;
@@ -121,18 +121,25 @@ public class VentureServiceFragment extends BaseMvpFragment<VentureServicePresen
             return;
         List<String> list = new ArrayList<>();
         for (int i = 0; i < listMindBanner.size(); i++) {
-            if (i % 4 == 0) {
-                list.add(Constans.DRAWABLE_URL + R.drawable.entrep_gszc);
-            } else if (i % 4 == 1) {
-                list.add(Constans.DRAWABLE_URL + R.drawable.entrep_dljz);
-            } else if (i % 4 == 2) {
-                list.add(Constans.DRAWABLE_URL + R.drawable.entrep_zzq);
-            } else if (i % 4 == 3) {
-                list.add(Constans.DRAWABLE_URL + R.drawable.entrep_flfw);
-            }
-
+//            if (i % 4 == 0) {
+//                list.add(Constans.DRAWABLE_URL + R.drawable.entrep_gszc);
+//            } else if (i % 4 == 1) {
+//                list.add(Constans.DRAWABLE_URL + R.drawable.entrep_dljz);
+//            } else if (i % 4 == 2) {
+//                list.add(Constans.DRAWABLE_URL + R.drawable.entrep_zzq);
+//            } else if (i % 4 == 3) {
+//                list.add(Constans.DRAWABLE_URL + R.drawable.entrep_flfw);
+//            }
+            list.add(listMindBanner.get(i).getLogo());
         }
         iv.setViewUrls(list);
+        iv.setOnBannerItemClickListener(new BannerLayout.OnBannerItemClickListener() {
+            @Override
+            public void onItemClick(int i) {
+                WebActivity.startWebViewActivity(mContext,listMindBanner.get(i).getTitle(),String.valueOf(listMindBanner.get(i).getId()));
+
+            }
+        });
 
     }
 
