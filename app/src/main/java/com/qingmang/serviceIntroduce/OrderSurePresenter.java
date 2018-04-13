@@ -61,11 +61,18 @@ public class OrderSurePresenter extends BaseMvpPresenter<OrderSureView> {
                         if(null==adressList ||adressList.size()==0){
                             getMvpView().onEmptyDedult();
                         }else {
+                            boolean isShow = false;
                             for (Adress a : adressList) {
                                 if(a.getTop()==1){
+                                    isShow = true;
                                     getMvpView().onAddressDefult(a);
                                     break;
                                 }
+                            }
+
+                            if(!isShow)
+                            {
+                                getMvpView().onEmptyDedult();
                             }
 
                         }
