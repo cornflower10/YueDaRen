@@ -6,7 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.qingmang.R;
+import com.qingmang.WebActivity;
 import com.qingmang.adapter.MessageAdapter;
 import com.qingmang.base.BaseMvpActivity;
 import com.qingmang.base.Presenter;
@@ -71,6 +73,12 @@ public class HotMessageActivity extends BaseMvpActivity<HotMessagePresenter, Hot
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         messageAdapter = new MessageAdapter(contentBeans);
         rv.setAdapter(messageAdapter);
+        messageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                WebActivity.startWebViewActivity(mContext, contentBeans.get(position).getTitle(), String.valueOf(contentBeans.get(position).getId()));
+            }
+        });
     }
 
     @Override
