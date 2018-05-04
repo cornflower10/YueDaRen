@@ -65,9 +65,16 @@ public class ServiceIntroducePagerFragment extends Fragment {
 
     private void init(final WebView webView, String mUrl) {
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
-        StringBuilder data = new StringBuilder("<html><body >");
+        StringBuilder data = new StringBuilder("<html><body ><style type=\"text/css\">\n" +
+                "    .contain img{\n" +
+                "        background-size:contain;\n" +
+                "        width:100%;\n" +
+                "        height: auto\n" +
+                "    }\n" +
+                "</style>\n" +
+                "<div class=\"contain\">");
         data.append(mUrl) ;
-        data.append("</body></html>");
+        data.append("</div></body></html>");
 
         webView.setWebViewClient(new WebViewClient(){
             @Override
