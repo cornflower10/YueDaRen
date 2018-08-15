@@ -2,10 +2,13 @@ package com.qingmang;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -39,6 +42,7 @@ public class WebActivity extends BaseMvpActivity<CommonPresenter,CommonView> imp
     private String title;
 //    private String type;
 
+    private boolean need;
     @Override
     public String setTitleName() {
         return title;
@@ -59,6 +63,7 @@ public class WebActivity extends BaseMvpActivity<CommonPresenter,CommonView> imp
         title = getIntent().getStringExtra("title");
         super.onCreate(savedInstanceState);
         mUrl = getIntent().getStringExtra("url");
+        need = getIntent().getBooleanExtra("need",false);
         if (mUrl != null) {
             init();
         }else {
@@ -72,6 +77,16 @@ public class WebActivity extends BaseMvpActivity<CommonPresenter,CommonView> imp
         Intent intent =new Intent(context,WebActivity.class);
         intent.putExtra("title",title);
         intent.putExtra("url",url);
+        context.startActivity(intent);
+
+    }
+
+
+    public static void startWebViewURL(Context context,String title,String url,boolean need){
+        Intent intent =new Intent(context,WebActivity.class);
+        intent.putExtra("title",title);
+        intent.putExtra("url",url);
+        intent.putExtra("need",need);
         context.startActivity(intent);
 
     }
@@ -109,7 +124,9 @@ public class WebActivity extends BaseMvpActivity<CommonPresenter,CommonView> imp
          * 2、LayoutAlgorithm.SINGLE_COLUMN:适应屏幕，内容将自动缩放
          */
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-
+        if(need){
+            webView.loadUrl(mUrl);
+        }else
         webView.loadUrl(com.qingmang.BuildConfig.URL+URL+mUrl);
         //支持javascript
         webView.getSettings().setJavaScriptEnabled(true);
@@ -121,7 +138,9 @@ public class WebActivity extends BaseMvpActivity<CommonPresenter,CommonView> imp
         //
         webView.getSettings().setAllowFileAccessFromFileURLs(false);
         webView.getSettings().setAllowUniversalAccessFromFileURLs(false);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -129,6 +148,11 @@ public class WebActivity extends BaseMvpActivity<CommonPresenter,CommonView> imp
                     webView.loadUrl(url);
                 }
                 return true;
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                handler.proceed();
             }
 
             @Override

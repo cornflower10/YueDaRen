@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.qingmang.App;
+import com.qingmang.BuildConfig;
 import com.qingmang.MainActivity;
 import com.qingmang.R;
+import com.qingmang.WebActivity;
 import com.qingmang.adapter.UtilBoxAdapter;
 import com.qingmang.base.BaseMvpFragment;
 import com.qingmang.baselibrary.utils.LogManager;
@@ -73,13 +75,12 @@ public class MyFragment extends BaseMvpFragment<MyPresenter, MyView> implements 
         rv.setAdapter(utilBoxAdapter);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 4);
         rv.setLayoutManager(layoutManager);
-        utilBoxAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        utilBoxAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                showToast("正在维护中...");
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                showToast("敬请期待");
             }
         });
-
     }
 
     @Override
@@ -125,7 +126,7 @@ public class MyFragment extends BaseMvpFragment<MyPresenter, MyView> implements 
     }
 
 
-    @OnClick({R.id.iv_setting, R.id.ll_rzqy,R.id.rl_dzf})
+    @OnClick({R.id.iv_setting, R.id.ll_rzqy,R.id.rl_dzf,R.id.ll_about_us,R.id.ll_flsm,R.id.ll_my_yhq})
     public void onViewClicked(View view) {
         if(!App.getInstance().isLogin()){
             startActivity(LoginActivity.class);
@@ -144,6 +145,16 @@ public class MyFragment extends BaseMvpFragment<MyPresenter, MyView> implements 
             case R.id.rl_dzf:
                 ((MainActivity) mContext).chooseTab(3);
                 break;
+            case R.id.ll_about_us:
+                WebActivity.startWebViewURL(mContext,"关于我们", BuildConfig.ABOUT_URL,true);
+                break;
+            case R.id.ll_flsm:
+                WebActivity.startWebViewURL(mContext,"法律声明", BuildConfig.LAW_URL,true);
+                break;
+            case R.id.ll_my_yhq:
+                showToast("敬请期待");
+                break;
+
         }
     }
 }

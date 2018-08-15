@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:background="@color/page_bg_color"
              android:orientation="vertical">
-
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 <FrameLayout
     android:background="@drawable/my_bg"
     android:layout_width="match_parent"
@@ -161,6 +164,78 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content" />
  </RelativeLayout>
+ <View style="@style/divide_line_match"/>
+ <RelativeLayout
+     android:id="@+id/ll_my_yhq"
+     android:background="@color/white"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content">
+  <TextView
+      android:layout_centerVertical="true"
+      android:text="我的优惠券"
+      android:drawablePadding="@dimen/margin_16"
+      android:drawableLeft="@drawable/icon_my_yhq"
+      android:layout_margin="@dimen/margin_16"
+      android:textSize="@dimen/sp_16"
+      android:textColor="@color/text_333333"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+  <ImageView
+      android:layout_marginRight="@dimen/margin_16"
+      android:layout_centerVertical="true"
+      android:layout_alignParentRight="true"
+      android:src="@drawable/icon_more"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+ </RelativeLayout>
+ <View style="@style/divide_line_match"/>
+ <RelativeLayout
+     android:id="@+id/ll_flsm"
+     android:background="@color/white"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content">
+  <TextView
+      android:layout_centerVertical="true"
+      android:text="法律声明"
+      android:drawablePadding="@dimen/margin_16"
+      android:drawableLeft="@drawable/icon_my_flsm"
+      android:layout_margin="@dimen/margin_16"
+      android:textSize="@dimen/sp_16"
+      android:textColor="@color/text_333333"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+  <ImageView
+      android:layout_marginRight="@dimen/margin_16"
+      android:layout_centerVertical="true"
+      android:layout_alignParentRight="true"
+      android:src="@drawable/icon_more"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+ </RelativeLayout>
+ <View style="@style/divide_line_match"/>
+ <RelativeLayout
+     android:id="@+id/ll_about_us"
+     android:background="@color/white"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content">
+  <TextView
+      android:layout_centerVertical="true"
+      android:text="关于我们"
+      android:drawablePadding="@dimen/margin_16"
+      android:drawableLeft="@drawable/icon_my_about"
+      android:layout_margin="@dimen/margin_16"
+      android:textSize="@dimen/sp_16"
+      android:textColor="@color/text_333333"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+  <ImageView
+      android:layout_marginRight="@dimen/margin_16"
+      android:layout_centerVertical="true"
+      android:layout_alignParentRight="true"
+      android:src="@drawable/icon_more"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+ </RelativeLayout>
  <RelativeLayout
      android:background="@color/white"
      android:layout_marginTop="10dp"
@@ -176,5 +251,5 @@
       android:layout_height="wrap_content">
   </android.support.v7.widget.RecyclerView>
  </RelativeLayout>
-
 </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

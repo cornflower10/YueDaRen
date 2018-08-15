@@ -19,6 +19,8 @@ android {
         versionName "1.1.1"
 
         buildConfigField 'String', 'URL', '"https://yd.haiyunsmart.com"'
+        buildConfigField 'String', 'ABOUT_URL', '"https://boss.yuedaren.com/about"'
+        buildConfigField 'String', 'LAW_URL', '"https://boss.yuedaren.com/law"'
         buildConfigField 'String', 'WHITELIST', '"release"'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -34,9 +36,13 @@ android {
         develop {
             buildConfigField 'String', 'URL', '"http://120.26.120.100:8282/"'
             buildConfigField 'String', 'WHITELIST', '"dev"'
+            buildConfigField 'String', 'ABOUT_URL', '"https://boss.yuedaren.com/about"'
+            buildConfigField 'String', 'LAW_URL', '"https://boss.yuedaren.com/law"'
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "test", APP_ICON: "@drawable/logo_test", APP_LABEL: "@string/app_name_test"]
         }
         product {
+            buildConfigField 'String', 'ABOUT_URL', '"https://boss.yuedaren.com/about"'
+            buildConfigField 'String', 'LAW_URL', '"https://boss.yuedaren.com/law"'
             buildConfigField 'String', 'URL', '"https://boss.yuedaren.com/"'
         }
 

@@ -70,8 +70,16 @@
                             android:layout_below="@+id/tv_context"
                             android:textSize="@dimen/sp_16"
                             android:textColor="@color/red_ff2a31"
-                            android:text=""
                             android:id="@+id/tv_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_marginLeft="2dp"
+                            android:layout_toRightOf="@+id/tv_amount"
+                            android:layout_below="@+id/tv_context"
+                            android:textSize="@dimen/sp_16"
+                            android:textColor="@color/text_333333"
+                            android:text="起"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </RelativeLayout>

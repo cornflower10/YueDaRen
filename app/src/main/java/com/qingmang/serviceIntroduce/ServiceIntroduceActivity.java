@@ -248,20 +248,21 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
         serviceInfo = serviceIntroduce;
         tvTitle.setText(serviceIntroduce.getName());
         tvContext.setText(serviceIntroduce.getPoster());
-        tvAmount.setText(AmountUtils.amountFormat(serviceIntroduce.getPrice()));
+        tvAmount.setText(AmountUtils.amountFormat(serviceIntroduce.getPrice())+"元");
         ImageLoaderUtil.getInstance().showImage(serviceIntroduce.getLogo(), iv, 0);
-        if (!TextUtils.isEmpty(serviceIntroduce.getLights())) {
-            String[] strings = serviceIntroduce.getLights().split("，");
-            if (strings.length == 2) {
-                tvPerService.setText(strings[0]);
-                tvOneOne.setText(strings[1]);
-            } else {
-                rlLight.setVisibility(View.GONE);
-            }
+//        if (!TextUtils.isEmpty(serviceIntroduce.getLights())) {
+//            String[] strings = serviceIntroduce.getLights().split("，");
+//            if (strings.length == 2) {
+//                tvPerService.setText(strings[0]);
+//                tvOneOne.setText(strings[1]);
+//            } else {
+//                rlLight.setVisibility(View.GONE);
+//            }
+//
+//        } else {
+//            rlLight.setVisibility(View.GONE);
+//        }
 
-        } else {
-            rlLight.setVisibility(View.GONE);
-        }
         Gson gson = new Gson();
         List<Item> items = gson.fromJson(serviceInfo.getSpecial(), new TypeToken<List<Item>>() {
         }.getType());
