@@ -33,12 +33,14 @@ import com.qingmang.base.Presenter;
 import com.qingmang.base.PresenterFactory;
 import com.qingmang.base.PresenterLoder;
 import com.qingmang.baselibrary.utils.AmountUtils;
+import com.qingmang.custom.Banner;
 import com.qingmang.moudle.entity.Item;
 import com.qingmang.moudle.entity.ServiceInfo;
 import com.qingmang.moudle.entity.ServiceObject;
 import com.qingmang.utils.imageload.ImageLoaderUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,7 +51,7 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
         implements ServiceIntroduceView<ServiceInfo> {
 
     @BindView(R.id.iv)
-    ImageView iv;
+    Banner iv;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tv_context)
@@ -249,7 +251,25 @@ public class ServiceIntroduceActivity extends BaseMvpActivity<ServiceIntroducePr
         tvTitle.setText(serviceIntroduce.getName());
         tvContext.setText(serviceIntroduce.getPoster());
         tvAmount.setText(AmountUtils.amountFormat(serviceIntroduce.getPrice())+"元");
-        ImageLoaderUtil.getInstance().showImage(serviceIntroduce.getLogo(), iv, 0);
+
+       String logos = serviceIntroduce.getLogos();
+       if(!TextUtils.isEmpty(logos)){
+           String [] los = logos.split(",");
+           iv.setImageLoader(new Banner.ImageLoader() {
+               @Override
+               public void displayImage(Context context, String path, ImageView imageView) {
+                   ImageLoaderUtil.getInstance().showImage(path,imageView,0);
+               }
+           });
+           iv.setViewUrls(Arrays.asList(los));
+           if(los.length>1){
+               iv.setAutoPlay(true);
+           }else {
+               iv.setAutoPlay(false);
+           }
+
+       }
+
 //        if (!TextUtils.isEmpty(serviceIntroduce.getLights())) {
 //            String[] strings = serviceIntroduce.getLights().split("，");
 //            if (strings.length == 2) {

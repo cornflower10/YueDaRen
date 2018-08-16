@@ -48,13 +48,6 @@ public class InvoiceChooseActivity extends BaseMvpActivity<CommonPresenter, Comm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        invoice = getIntent().getParcelableExtra("invoice");
-        if (invoice.isInvoice()) {
-            rbInvoice.setChecked(true);
-
-        }else {
-            rbUnInvoice.setChecked(true);
-        }
         rgInvoice.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -68,6 +61,13 @@ public class InvoiceChooseActivity extends BaseMvpActivity<CommonPresenter, Comm
                 }
             }
         });
+        invoice = getIntent().getParcelableExtra("invoice");
+        if (invoice.isInvoice()) {
+            rbInvoice.setChecked(true);
+
+        }else {
+            rbUnInvoice.setChecked(true);
+        }
     }
 
     @Override
@@ -92,6 +92,7 @@ public class InvoiceChooseActivity extends BaseMvpActivity<CommonPresenter, Comm
             Intent intent = getIntent();
             intent.putExtra("invoice", invoice);
             setResult(RESULT_OK, intent);
+            finish();
         } else {
             invoice.setInvoice(true);
             Intent in = new Intent(mContext, InvoiceSettingActivity.class);
